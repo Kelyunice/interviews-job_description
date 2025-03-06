@@ -4,6 +4,60 @@ Within the security engineering department, the teams are leading the XYZ projec
 
 Due to its functional scope, this application must integrate advance security measures as well as strong redundancy.
 
-The project involves the implementation of new architectures and components, requiring a significant effort to industrialize the solution as well as supporting a significant transfer of knowledge to the teams who will be responsible for operating the solution.
-
+The project involves the implementation of new architectures and components, requiring a significant effort to industrialize the solution as well as supporting a significant transfer of knowledge to the teams who will be responsible for operating the solution
+ ( they are trying to refactor a monolith. writing the new code base. The person shoud be able to transfer knowledge while decoupling the monolith.)
 The mission aims to industrialize the hosting platform based on containerization technologies on kubernetes.
+
+  Mission
+Contribute to defining the target kubernetes architecture ensuring optimal performance and integrating appropriate securitty measures. 
+(how to design the platform on which the app is going to run. How are you going to design it. Is it going to be on-premise or cloud. If its on-premises how many cp, how many WN, how will you integrate security,
+the kind of image used- is the source traceable, kenel version integrating security measure like external authentication - LDAP, Keycloack, ensuring users are onboarded)  
+
+Integrate essential components like database, keycloak, vault, Nginx, etc
+(you can integrate external database in our cluster using custom resource definition CRD, you cannot use statefulset because of manage. you can use posgresQLR, deploy keycloack through a cloud extension for external authention through 
+ using helms, vaults is userd to manged secretes such as API keys-ssh keys-certificates-password-user names which can also be integrated using helms charts into the cluster just like prometheus, vault will equally encrypt the key,
+nginx is used to expose the app through the ingress controller. We have different companies that provide ingress controllers (NGINX,HR PROXY, TRAFFIC, NGINX INGRESS provided by the K8s community), the ingress controller acts as 
+and if exposing the app externally the nginx ingress act as a load balancer. Here you are going to install it inside the cluster and write the ingress resource role.) It will provide a layer 7 support. It provides path base,
+host base and URL routing. We equally have app that will route traffic based on layer 4 -TCP/UDP ,ip address and ports, source ip hashing. mostly for gaming app . Route traffic Based on geo location.
+
+Develop performance monitoring and supervision solutions, ensuring data security.
+To make sure you install a performance monitoring tool. either in the cluster or outside. If it is for containers and pods then you need to install prometheuse. You can put in place monitoring login solutions like fleuntD
+to be able to have access to the logs. Since security is concern we can haave the logs stored someewhere to be able to have traceability. We shold be able to encrytp data at REST using vault and in transit using 
+
+Implement CI/CD chains and automate the integration of code security, thus ensuring the quality and security of deliverales.
+Being able to build a pipelinee from crash or maintaining a pipeline. If none in place u can suggest one e.g jenkins, Github Actions, GitlabCI. You need to automate the process of continous integration, continous build, continous test
+of codee and artifact via a pull request. As the dev are pushing small changes in the code repo we need to automate the testing for vulnerables, bugs, duplicates lines using sonaqube. We have to see how we can scan the file system of
+to see that issues that create security concerns should be removed using tools like TRIVY. You can equally use check mark for security. AFter the build the image is scan then stored in an image repo like nexus artifactory. 
+
+For CD before the image is taken to be deployed, writing manifest files, you integrate your manifest files in the pipeline, integrate scanning of the image after built in the pipeline to ensure that the image is free from vulnerability, making sure the image built is harden,
+integrate continous scanning during the run time process. Once deployed in the dev environment first for us to see how the code behave then we can create a pull request to move the code to stagging.
+For thr app to be deployed in the stagging env. here we do unit testing, integration testing then end to end testing. Once ok you create a pull request to pull into the UAT. You can equally talk of another deployment tool like \
+
+Here the users come and test the functionality to see if it is working as espected once confirmed we can pull into production.
+
+ArgoCD to sync the deployments into the k8s cluster by writing manifest files that are put in a separate repo and the ArgoCD u have been able to install using helm charts will be watching that repo. When there's any commit
+its going to sync by looking at the desire state and compare with the actual state the it does a deployment.
+
+Automate deployment to reduce associated times and costs, while meeting security standards.
+ AT first people are doing manual work but now we can automate deployment using ansible to configure the servers, use play books from one command because ansible uses passwordless connectivity to be able to connect to the different
+servers and with the help of a playbook you can automate the configuration of those severs from one ansible machine. Ansible is very powerfull and different from other tools because it does not need an agent unlike puppet and shef
+where you need an agent to be installed on the different target which is time consuming. secondly ansible is written in python which develops faster. With the use of playbooks you can configure and take into consideration security.
+You can use ansible vault to be able to secure playbooks ( ansible vault create "name of playbook" "name of file") , to encrypt ( ansible vault encrypt "name of playbook") , you  can use ansible vault to store keys. 
+The use of Roles (you use ansible galaxy to create a role that permits to ease the way you write your playbook. Roles will seperate he playbook such that variables will go to the var section  and Modules can permit to 
+
+Co-build the solution with the operational engineering teams, promoting a collaborative approach and integrating best security practices.
+
+Deliverabels
+
+POC Platforms
+Study reports
+Design documentation
+Code commit in GIT
+Installation/upgrade documentation
+Exploitation sheets
+Unit Test Report
+Qualification report
+GIT tickets processed
+Kubernetes manifest files, helm charts
+Platform compliance report
+Bench reports.
