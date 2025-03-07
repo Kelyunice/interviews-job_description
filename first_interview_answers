@@ -1,0 +1,146 @@
+1 Tell me about yourself.
+  1- name
+  2- Knowledge
+  3- Interpersonal skills
+
+2- K8s
+ 1- Describe the k8s architecture
+    1- It is made of Master nodes
+       - API server - exposes all the api calls; its the entry point to the cluster, it authenticate any
+         user, authorizes and then admits 
+       - kube Scheduler. It is used to schedule pods. 
+       - etcd. Its the cluster data base. It's a key value pair that is used to store all the state of
+         the cluster written in go language
+       - controller manager. It controls the cluster, looking at the desired state and the actual state
+         and is able to reconcile them.   
+    2- Worker nodes
+      - kube proxy. It is used for networking
+      - kubelet. It is used for communication
+      - container runtime. It provides the underlying infrastructure to run containers
+ 2-SECURITY IN THE K8S CLUSTER
+  1- RBAC
+  - Authentication
+  - Authorization
+  2- NETWORK POLICY to control communication btw pods and nodes to provide cluster firewall to prevent open
+    communication
+  - Container security
+    regularly scan images before they are being deployed in the cluster
+  - Management of secrete
+    secretes can be managed in Hashicorp Vault or AWS KMS since k8s does not have a service that can
+    encrypt secrets except for encoding
+  - You can equally do audit logging. You can log your cluster to get activities of what is happening in
+    your cluster. In case there's an issue you can do that.
+  - Regular update and patching of the cluster since every 2-3 months a new version is released and you
+    need to be doing regular updates as a security measure
+ 
+  3- What happens to a cluster when a master node fails
+   - For high availability of your app you should have 2 or 3 master nodes in the different availability zones, but if you have just 1 and it fails. Nothing will happen to the cluster. The app will still be running on the nodes as expected, but you will not be able to control the workload in the cluster. If you want to scale, you cannot. If you want to deploy, you cannot because the master node cannot make an API call.
+ 
+  4- What happens when a worker Node dies or stop working.
+    The control manager in the master node will look at the desired state  vs the actual state ( which are pods managed by a deployment and replicas) and recreate them on other nodes available in the cluster. 
+  5- What is livelinessProbe and ReadinessProbe
+
+  6- What is an init container
+  - Generally, you have a pod that could be running 2 containers and you have an init container running beside the main container. In such a situation, the init container is first going to check the environment to see whether it is ready before the main container starts running. It can download dependencies
+
+  7 - What is a daemonset
+  -  It is a kind of k8s object that ensures that pods are deployed on individual nodes.
+  - This is practical in a situation where u are deploying a monitoring tool like prometheus. You are using a helms chart to deploy prometheues inside your k8s cluster. You need to have the prometheuse on all the cluster so that it can help to collect the metrics and be able to ensure monitoring.
+
+  8- what are different services in k8s
+    - ClusterIP
+    - NodePort
+    - Load balancer but will need cloud provider
+    - External namespace
+        -Ingress controller
+  9 - Is it possible to schedule a pod on a node that is tainted?
+   yes, if the pod has a toleration.
+    A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Toleration Effect.
+
+2- DOCKER SWAM
+  - it is not very robust
+  - It does not have capacity to scale
+  - it does not allow addons while k8s you can do that via operators
+
+3 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
+  - It is a tool used to do automation work like configuring of servers, deploying apps, provision infra
+  -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.
+  - Ansible works with the use of modules. Modules are tasks or small programs that are executed on the host to ensure that they are executed. You could have the file module, copy module, template module, line in file module, archive module, register module, get url module(to be able to download file), and shell module. 
+  - How many Playbooks should run
+    5 playbooks should run
+  - Run a Playbook in a dry run mode
+       --check will run the playbook on a dry run mode
+  - How to skip certain task in a playbook
+       -- skip tags  ( to skip)
+           tag   ( to include)
+  - How do you test a playbook when you write it?
+       - you could use molecule or a lint to test the playbook
+       - running in on dry run
+  - How do you run your playbook in production?
+     - It should be running in a pipeline. You trigger a pipeline to run the playbook and execute where it is supposed to since the playbook should be kept in a source code repo
+
+4- WHY DO YOU NEED OBSERVABILITY
+    Observability is very important to know the performance of our system and also before any issue occurs we should be able to have visibility of what is happening.. 
+   - I have been able to monitor linux servers via node exporters
+   - I have been able to monitor services/3 party app via client libraries and exporters
+   - I have monitored containers via c- advisor
+   - I have monitored k8s cluster via kube-system metrics 
+  I was able to install prometheuse using helm charts and put in place Grafana dashboards to be able to visualize those metrics on Grafana dashboards. 
+  - I have been able to send alerts to the different parties that are involved in case thresholds were exceeded.
+  - I have sent alerts based on cpu utilization, memory usage, number of requests, and number of errors like 400 above a certain %. I've been able to set an alert for latency to know how fast my apps are responding.
+   - I have been able to put in place system of logging to be able to help me know what is actually wrong with my app by consulting logs and equally traces using open Telemetry to be able to have full visibility of the movement of the request of a client from when the request is sent and received back.
+
+ 5 - What is the git flow strategy
+    - It is a strategy of maintaining 3 branches. If there's any bug, you can create the bug fix branch.
+      if there's a new feature you create a feature branch. 
+    - A pull is a formal approval from a superior to be able to merge a branch into the master.
+    - A READme file is a file that carries information about the project.
+    - To come back to a staged branch ( git starch pop)
+    - git log permits to see the commit history.
+    
+ 6- LINUX 
+    Some commands used to check network
+    - nsloolup for dns resolution
+    - netstat 
+    - ping for
+    - dig for dns compliance 
+    - to check files in thee system 
+       /etc/passwd
+    - To check resources that the system is running
+       df -h, free -m
+    - What is swap in linux?
+       it is used to recover memory. some apps that are running but no longer active
+    - What is daemon?
+      It is background process running without human intervention
+    - How to check if a process/ service is running?
+        systemctl status "name of service"
+ 
+ 7 - AWS
+      IAM is an AWS service that can be used to control who has access to the cluster and who can do what. 
+    - What is an S3 service
+      It's an AWS service is used to store object 
+    - How do you upload objects into an S3
+        1- via console ( the max size is 160 GB)
+        2- or command line ( up to 50 TB)
+    - how many S3 buckets can you have per AWS account?
+        100 but you can apply to have up to 1000
+    - What is a bucket policy? How do you control access into an S3 bucket?
+       1-By using an Access Control List.
+         This is a kind of permission given to be able to access individual objects from the bucket.
+       2- A bucket policy.
+          A bucket is attached on the object in the bucket.
+       You can replicate items on the bucket from one AWS account to another.
+    - How do you secure data on AWS?
+      1- By using TLS, and SSL that permit you to encrypt data on transit
+      2- You can encrypt AT REST using server-side encryption or a client side encryption.
+    - AWS serverless services
+      - lamda 
+      - API gate ways
+      - fargates
+    - What is AWS LAMBDA?
+       This a compute service that you can use to run code without provisioning or creating any server. 
+       It is one of the fast way of running apps now because individuals don't want to carry the heavy lifting of managing infra. 
+    - What is A LAMDA FUNCTION? It the app code that can be written in python, nodejs, java, C-sharp, go
+      It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app so they will upload the code to a lambda function. Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration the memory needed by the app, the CPU, the dependencies which it needs to download. This env is also known as an execution env. Ones the env is ready that code will only run base on a trigger, then the a destination. An S3 bucket can trigger a lambda function. e.g pictures are dropped in an S3 bucket. Based on a PUT EVENT on an S3 bucket, it's going to trigger a lambda function but for it to happen, the resource that needs to trigger the lambda functions needs a resource base policy. There must be a policy that gives the S3 bucket permission to act on the lambda function. The function will run based on trigger, convert the picture and drop it in its destination, which could be another S3 bucket. For it to drop it in the S3 bucket, the lambda function should have an execution role ( the action which the lambda function has on the resource). 
+     - It could also be triggered by a synchro nose evocation is where, when the lambda function is evoked it will need to wait to get a response and send it back but an asynchrony nose evocation is when the lambda function is evoked it goes and deliver without waiting for a response. 
+
