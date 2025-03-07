@@ -6,32 +6,26 @@
 2- K8s
  1- Describe the k8s architecture
     1- It is made of Master nodes
-       - API server - exposes all the api calls; its the entry point to the cluster, it authenticate any
-         user, authorizes and then admits 
+       - API server - exposes all the api calls; its the entry point to the cluster, it authenticate any user, authorizes and then admits 
        - kube Scheduler. It is used to schedule pods. 
-       - etcd. Its the cluster data base. It's a key value pair that is used to store all the state of
-         the cluster written in go language
-       - controller manager. It controls the cluster, looking at the desired state and the actual state
-         and is able to reconcile them.   
+       - etcd. Its the cluster data base. It's a key value pair that is used to store all the state of the cluster written in go language
+       - controller manager. It controls the cluster, looking at the desired state and the actual state and is able to reconcile them.   
     2- Worker nodes
       - kube proxy. It is used for networking
       - kubelet. It is used for communication
       - container runtime. It provides the underlying infrastructure to run containers
  2-SECURITY IN THE K8S CLUSTER
-  1- RBAC
-  - Authentication
-  - Authorization
-  2- NETWORK POLICY to control communication btw pods and nodes to provide cluster firewall to prevent open
-    communication
-  - Container security
-    regularly scan images before they are being deployed in the cluster
-  - Management of secrete
-    secretes can be managed in Hashicorp Vault or AWS KMS since k8s does not have a service that can
-    encrypt secrets except for encoding
-  - You can equally do audit logging. You can log your cluster to get activities of what is happening in
-    your cluster. In case there's an issue you can do that.
-  - Regular update and patching of the cluster since every 2-3 months a new version is released and you
-    need to be doing regular updates as a security measure
+    1- RBAC
+     - Authentication
+     - Authorization
+    2- NETWORK POLICY to control communication btw pods and nodes to provide cluster firewall to prevent open
+      communication
+     - Container security
+       regularly scan images before they are being deployed in the cluster
+     - Management of secrete
+       secretes can be managed in Hashicorp Vault or AWS KMS since k8s does not have a service that can encrypt secrets except for encoding
+     3 - You can equally do audit logging. You can log your cluster to get activities of what is happening in your cluster. In case there's an issue you can do that.
+     4 - Regular update and patching of the cluster since every 2-3 months a new version is released and you need to be doing regular updates as a security measure
  
   3- What happens to a cluster when a master node fails
    - For high availability of your app you should have 2 or 3 master nodes in the different availability zones, but if you have just 1 and it fails. Nothing will happen to the cluster. The app will still be running on the nodes as expected, but you will not be able to control the workload in the cluster. If you want to scale, you cannot. If you want to deploy, you cannot because the master node cannot make an API call.
@@ -57,12 +51,11 @@
    yes, if the pod has a toleration.
     A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Toleration Effect.
 
-2- DOCKER SWAM
+3- DOCKER SWAM
   - it is not very robust
   - It does not have capacity to scale
   - it does not allow addons while k8s you can do that via operators
-
-3 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
+4 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
   - It is a tool used to do automation work like configuring of servers, deploying apps, provision infra
   -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.
   - Ansible works with the use of modules. Modules are tasks or small programs that are executed on the host to ensure that they are executed. You could have the file module, copy module, template module, line in file module, archive module, register module, get url module(to be able to download file), and shell module. 
@@ -79,7 +72,7 @@
   - How do you run your playbook in production?
      - It should be running in a pipeline. You trigger a pipeline to run the playbook and execute where it is supposed to since the playbook should be kept in a source code repo
 
-4- WHY DO YOU NEED OBSERVABILITY
+5- WHY DO YOU NEED OBSERVABILITY
     Observability is very important to know the performance of our system and also before any issue occurs we should be able to have visibility of what is happening.. 
    - I have been able to monitor linux servers via node exporters
    - I have been able to monitor services/3 party app via client libraries and exporters
@@ -90,7 +83,7 @@
   - I have sent alerts based on cpu utilization, memory usage, number of requests, and number of errors like 400 above a certain %. I've been able to set an alert for latency to know how fast my apps are responding.
    - I have been able to put in place system of logging to be able to help me know what is actually wrong with my app by consulting logs and equally traces using open Telemetry to be able to have full visibility of the movement of the request of a client from when the request is sent and received back.
 
- 5 - What is the git flow strategy
+ 6 - What is the git flow strategy
     - It is a strategy of maintaining 3 branches. If there's any bug, you can create the bug fix branch.
       if there's a new feature you create a feature branch. 
     - A pull is a formal approval from a superior to be able to merge a branch into the master.
@@ -98,7 +91,7 @@
     - To come back to a staged branch ( git starch pop)
     - git log permits to see the commit history.
     
- 6- LINUX 
+ 7- LINUX 
     Some commands used to check network
     - nsloolup for dns resolution
     - netstat 
@@ -115,7 +108,7 @@
     - How to check if a process/ service is running?
         systemctl status "name of service"
  
- 7 - AWS
+ 8 - AWS
       IAM is an AWS service that can be used to control who has access to the cluster and who can do what. 
     - What is an S3 service
       It's an AWS service is used to store object 
