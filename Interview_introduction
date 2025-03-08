@@ -1,0 +1,37 @@
+Interview introduction
+
+name:
+years experience: I am a devOps/cloud eng with over 5 years exp
+ 
+I have worked on diff projects and with diff teams.
+ I have worked with a team of 11 persons in an agile methodology . In order to better explain my experience I have 3 projects I will like to share with you so you see how they ties  with the role required
+
+1- The first project is a project in the banking sector
+
+This project took me 10 months to deliver and we were in a team of 5 persons
+The client had an old system of observability that was posing issues with alert fatigues. The system was creating a problem of visibility on the logs and matrices in real time. It was difficult to handle incidents when they arise because there was no actual visibility. The aim was to put in place a monitoring and observability tool which ensure matrices are tracked on time, anticipating and to be able to catch errors that could occur before the users of the application see them and solve them within reasonable time.
+
+Together with the team, we had to look at the structure of the org, look at the kind of platform that were using. They were using a k8s cluster for a micro service app. We decided to put in place Prometheus because Prometheus is good for k8s. It is dynamic and can be able to discover services and targets without having to configure and provision it all the time. I was able to install Prometheus in the cluster using helm charts, we were able to set indicators
+
+with this matrix I was to set a threshold if exceeded, alerts will be sent, and the process will move forward.
+
+Putting this in place, we were able to realise this project
+  1- We were able to reduce all those alert fatigues that were affecting the app
+  2- We had a clear visibility of our cluster with respect to the matrix which was not the case before
+  3- We were able to resolve incidents fast and make sure that we optimise cost.
+ 
+2- In another project with a client which was to take about 12 months to realize. The team was 7 persons in an agile methodology mode.  The client had a pipeline that was not automated. A lot of things were done manually. deployments were done with a manual trigger. That resulted in slowing the release of the software app. Testing was done manually. The aim was to put in place a pipeline for CI and CD that will be able to automate the process from end to end. 
+
+- I was able to automate the process by making sure that the pipeline was connected via a webhook that was suppose to be triggered automatically upon a commit or pull request the pipeline will be triggered.
+
+- within the pipeline I had to integrate testing, test for integration, unit test, User acceptance that was integrated within the pipeline using test tools like Junit and celenium. 
+
+- From there, at the level of security, we had to scan our image in the pipeline. I introduced Trivy to scan images and SonarQube for vulnerability detections. We also used Sneap for vulnerability detection. our pipeline was configured, and it was working as expected, and we were able to deploy apps and we were also able to use the pipeline to provision our servers where we able to write Terraform manifest files to create infrastructure with the use of terraform. All the infra that was used to deploy our apps, k8s cluster, ec2 instances, and all the networking were created via terraform, which made us to use and have a history of the infras and that permitted us to be able to manage them appropriately. This project was successful even though there were challenges, but we worked together, which increased the speed of deploying our app. We could have a state management of infrastructure by knowing which infra is running in our prod that gives us the possibility to know whether we can ameliorate them or not.
+
+3- The 3rd project the company had a legacy app. The app had a problem to scale for increase in workload, it was difficult to maintain the app, and additional features were not able to be released on time. Due to these there had to be a refactoring of this app into a micro service.
+ 
+- In this situation, I was in charge of designing the architecture for k8s to be able to make sure that those app that were refactored were going to run there. The company was strong in AWS cloud so we had to use an EKS cluster but the aim was to make sure that we are using a managed cluster to have control of our worker nodes. We designed the cluster,  and regular updates were made on the cluster, wrote config files for deployment via helm charts, implemented replicas for high availability of app. The k8s cluster was deployed in 2 availability zones, we were able to use the idea of ingress to be able to expose our app externally.
+ 
+- we ensured security of our app on the cloud where our clusters were running using Network Access Control List and using SG. In the cluster we were able to use RBAC  for security, we were to put in place a network policy to disrupt pod to pod communication.
+- Our containers that were running were harden containers that did not have root access to reduce any attack surface. we made use of C-grp and linux namespace to separate file processes.
+- we were able to put in place Pv, pvc for persisting of data among pod restart because  
