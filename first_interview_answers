@@ -28,18 +28,22 @@
      4 - Regular update and patching of the cluster since every 2-3 months a new version is released and you need to be doing regular updates as a security measure
  
   3- What happens to a cluster when a master node fails
-   - For high availability of your app you should have 2 or 3 master nodes in the different availability zones, but if you have just 1 and it fails. Nothing will happen to the cluster. The app will still be running on the nodes as expected, but you will not be able to control the workload in the cluster. If you want to scale, you cannot. If you want to deploy, you cannot because the master node cannot make an API call.
+   - For high availability of your app you should have 2 or 3 master nodes in the different availability zones, but if you have just 1 and it fails. Nothing will happen to the cluster.
+    The app will still be running on the nodes as expected, but you will not be able to control the workload in the cluster. If you want to scale, you cannot.
+    If you want to deploy, you cannot because the master node cannot make an API call.
  
   4- What happens when a worker Node dies or stop working.
     The control manager in the master node will look at the desired state  vs the actual state ( which are pods managed by a deployment and replicas) and recreate them on other nodes available in the cluster. 
   5- What is livelinessProbe and ReadinessProbe
 
   6- What is an init container
-  - Generally, you have a pod that could be running 2 containers and you have an init container running beside the main container. In such a situation, the init container is first going to check the environment to see whether it is ready before the main container starts running. It can download dependencies
+  - Generally, you have a pod that could be running 2 containers and you have an init container running beside the main container. In such a situation, 
+  the init container is first going to check the environment to see whether it is ready before the main container starts running. It can download dependencies
 
   7 - What is a daemonset
   -  It is a kind of k8s object that ensures that pods are deployed on individual nodes.
-  - This is practical in a situation where u are deploying a monitoring tool like prometheus. You are using a helms chart to deploy prometheues inside your k8s cluster. You need to have the prometheuse on all the cluster so that it can help to collect the metrics and be able to ensure monitoring.
+  - This is practical in a situation where u are deploying a monitoring tool like prometheus. You are using a helms chart to deploy prometheues inside your k8s cluster. 
+    You need to have the prometheuse on all the cluster so that it can help to collect the metrics and be able to ensure monitoring.
 
   8- what are different services in k8s
     - ClusterIP
@@ -55,10 +59,32 @@
   - it is not very robust
   - It does not have capacity to scale
   - it does not allow addons while k8s you can do that via operators
+
 4 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
-  - It is a tool used to do automation work like configuring of servers, deploying apps, provision infra
+  - It is a tool used to do automation work like configuring of servers, deploying apps, provisioning of infra
   -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.
-  - Ansible works with the use of modules. Modules are tasks or small programs that are executed on the host to ensure that they are executed. You could have the file module, copy module, template module, line in file module, archive module, register module, get url module(to be able to download file), and shell module. 
+  - Ansible works with the use of modules. Modules are tasks or small programs that is executed on the host . 
+     * You could have the 
+          file module,==> is used to manage file system objects like files, directories, and symbolic links on remote hosts. It helps in tasks such as creating, deleting, modifying permissions, setting ownership, and managing symlinks.
+          copy module, ==>  It is mainly used for transferring simple files, setting permissions, and ensuring file presence. Ensures idempotency (only updates the file if changes are detected).
+          template module,==> Generate config files like nginx.conf, Secrets Management: Store sensitive information as templates and populate them securely at runtime.
+          lineinfile module, ==> Modify a specific line in a file
+          service module ==> manage service
+          command module ==> run commands on remode nodes
+          cron module ==> to mande cron jobs
+          fetch module ==>  Fetch files from remote servers
+          replace module ==> replace text in a file
+          stat module ==> retriev infos about files 
+          ping module ==> Check connectivity with remote hosts
+          firewalld module ==>  Manage firewall rules in Firewalld
+          archive module, 
+          register module, 
+          get url module (to be able to download file), 
+          and shell module. ==> to run shell scrypt
+          k8s ==> Manage Kubernetes resources
+          docker_container ==> Manage Docker containers
+          docker_network ==>  Manage Docker networks
+          helm ==> Manage Helm charts
   - How many Playbooks should run
     5 playbooks should run
   - Run a Playbook in a dry run mode
@@ -97,7 +123,7 @@
     - netstat 
     - ping for
     - dig for dns compliance 
-    - to check files in thee system 
+    - to check users in thee system 
        /etc/passwd
     - To check resources that the system is running
        df -h, free -m
@@ -134,7 +160,11 @@
        This a compute service that you can use to run code without provisioning or creating any server. 
        It is one of the fast way of running apps now because individuals don't want to carry the heavy lifting of managing infra. 
     - What is A LAMDA FUNCTION? It the app code that can be written in python, nodejs, java, C-sharp, go
-      It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app so they will upload the code to a lambda function. Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration the memory needed by the app, the CPU, the dependencies which it needs to download. This env is also known as an execution env. Ones the env is ready that code will only run base on a trigger, then the a destination. An S3 bucket can trigger a lambda function. e.g pictures are dropped in an S3 bucket. Based on a PUT EVENT on an S3 bucket, it's going to trigger a lambda function but for it to happen, the resource that needs to trigger the lambda functions needs a resource base policy. There must be a policy that gives the S3 bucket permission to act on the lambda function. The function will run based on trigger, convert the picture and drop it in its destination, which could be another S3 bucket. For it to drop it in the S3 bucket, the lambda function should have an execution role ( the action which the lambda function has on the resource). 
+      It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app so they will upload the code to a lambda function.
+      Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration the memory needed by the app, the CPU, the dependencies which it needs to download. 
+      This env is also known as an execution env. Ones the env is ready that code will only run base on a trigger, then the a destination. An S3 bucket can trigger a lambda function. e.g pictures are dropped in an S3 bucket. Based on a PUT EVENT on an S3 bucket, 
+      it's going to trigger a lambda function but for it to happen, the resource that needs to trigger the lambda functions needs a resource base policy. There must be a policy that gives the S3 bucket permission to act on the lambda function. 
+      The function will run based on trigger, convert the picture and drop it in its destination, which could be another S3 bucket. For it to drop it in the S3 bucket, the lambda function should have an execution role ( the action which the lambda function has on the resource). 
      - It could also be triggered by a synchro nose evocation is where, when the lambda function is evoked it will need to wait to get a response and send it back but an asynchrony nose evocation is when the lambda function is evoked it goes and deliver without waiting for a response. 
 
 ===================================================================================================================================================================================================================
