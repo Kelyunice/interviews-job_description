@@ -19,19 +19,105 @@ Putting this in place, we were able to realise this project
   1- We were able to reduce all those alert fatigues that were affecting the app
   2- We had a clear visibility of our cluster with respect to the matrix which was not the case before
   3- We were able to resolve incidents fast and make sure that we optimise cost.
- 
-2- In another project with a client which was to take about 12 months to realize. The team was 7 persons in an agile methodology mode.  The client had a pipeline that was not automated. A lot of things were done manually. deployments were done with a manual trigger. That resulted in slowing the release of the software app. Testing was done manually. The aim was to put in place a pipeline for CI and CD that will be able to automate the process from end to end. 
 
-- I was able to automate the process by making sure that the pipeline was connected via a webhook that was suppose to be triggered automatically upon a commit or pull request the pipeline will be triggered.
+      FOLLOW UP QUESTION  
+     1- what are those key metrics - logs-traces (  flow of request from  browser and back)?
+        - cpu utilization: to be able to observe resource that are being consumes in case it exceed the threshold I should be able to provision more resources
+        - memory utilization and network bandwidth: sytem memory metrics will enable to know the performance of the system. If the memory is over utilized the appliications that are running will be slow
+        - latency : the average traffic on an application per minute could be 3000 to 4000 per sec/min depending on the app
+        - number of errors: 
+        - we also monitor logs to be able to have observability of an app that is running because tellyou is wrong but logs will go deeper to have a clear situation by collecting the logs through adetail analysis of the logs.
+           if a pod is crashlooping , if you describe the epods you can see whether it the image
+     2- How did you monitor the nodes system matrics?
+        by using node exporters deployed  in the helms chart
+     3- What is alert fatique/nuissance ?
+        - matrix used are not right matrix alerts that don't prompt any action( i was able to fine tone the matrix so that alert that are coming in are ones that could promt action)
+        - Sometimes I can be working on an error alert but the alert keep coming in
+     4- How do you manage alert incidence? How to resolve an incidence
+        - when there's an incidence I check my monitoring tool.
+        - Then I analyse  the impact on the incidence on the system.
+        - Then I document what has happen.
+        - I inform the different partiies that the incidence is affecting by making them know that this is the situation that has occured and we are in progress on solving it.
+        - I proceed to plan how the issue is supposed to be resolve with the team ( those with the right expertise to be able to solve the issue).
+        - Ones the issue is reolved I document the process that was used to resolve it so that if it happends again there will be a documentation to follow how it can be resolved in a timely manner.
+        - The ticket will then be closed.
+        - I proceed to do an indepth analysis to understand what caused the incident (post motem), How can we prevent this incidence from occuring in the future
+     e.g we has an app that was running very slow and it was impacting the users heavily, afet analysing my monitoring tool I realized  that a data base querry which was not well optimized was overloading  our database
+         therefore causing the app to be slow. we first put in plcae an emmergency catch to catch the data while moving to optimize the querry by adding and index and everything was  stabilized and the app started running
 
-- within the pipeline I had to integrate testing, test for integration, unit test, User acceptance that was integrated within the pipeline using test tools like Junit and celenium. 
+         Impact of the project
+         -  I was able to reslve incidencee on time and made the system to be more reliable and performant
+      5- What aspect permiited you to mpnitor pod/app matrix
+         I used client liabries
 
-- From there, at the level of security, we had to scan our image in the pipeline. I introduced Trivy to scan images and SonarQube for vulnerability detections. We also used Sneap for vulnerability detection. our pipeline was configured, and it was working as expected, and we were able to deploy apps and we were also able to use the pipeline to provision our servers where we able to write Terraform manifest files to create infrastructure with the use of terraform. All the infra that was used to deploy our apps, k8s cluster, ec2 instances, and all the networking were created via terraform, which made us to use and have a history of the infras and that permitted us to be able to manage them appropriately. This project was successful even though there were challenges, but we worked together, which increased the speed of deploying our app. We could have a state management of infrastructure by knowing which infra is running in our prod that gives us the possibility to know whether we can ameliorate them or not.
+2- In another project with a client which was to take about 12 months to realize. The team was 7 persons in an agile methodology mode.  The client had a pipeline that was not automated. A lot of things were done manually. 
+    Deployments were done with a manual trigger. That resulted in slowing the release of the software app. Testing was done manually.
+     The aim was to put in place a pipeline for CI and CD that will be able to automate the process from end to end. 
+
+   - I was able to automate the process by making sure that the pipeline was connected via a webhook that was suppose to be triggered automatically upon a commit or pull request the pipeline will be triggered.
+
+   - within the pipeline I had to integrate testing, test for integration, unit test, User acceptance that was integrated within the pipeline using test tools like Junit and celenium. 
+
+   - From there, at the level of security, we had to scan our image in the pipeline. I introduced Trivy to scan images and SonarQube for vulnerability detections.
+      We also used Sneap for vulnerability detection. our pipeline was configured, and it was working as expected, 
+     and we were able to deploy apps and we were also able to use the pipeline to provision our servers where we able to write Terraform manifest files to create infrastructure with the use of terraform. 
+    All the infra that was used to deploy our apps, k8s cluster, ec2 instances, and all the networking were created via terraform, which made us to use and have a history of the infras and that permitted us to be able to manage them appropriately. 
+   This project was successful even though there were challenges, but we worked together, which increased the speed of deploying our app. We could have a state management of infrastructure by knowing which infra is running in our prod that gives us the possibility to know whether we can ameliorate them or not.
+
+          FOLLOW UP QUESTION
+     1- What triggers a pipeline
+         - a commit
+         - a pull request
+     2- What is CI
+         It is  the process of pushiing small pieces of code (functionality) regular (once a day) into the repo
+     3- What was your pipeline design to do? 
+         It was design to build an artifact which is a zip/tar file whiich will need to ge  tested to see that iit is  working as espected.
+         Then it is going to be packaged and build into an image then pushed into an image registry.
+     4- What kind of test was integrated into the pipeline?
+         - unit testing e.g Junit or jacoco: tesing the function individually . logging
+         - code scanning : sonarqube
+         - Integration testing: tesing the different functionalities together ( logging and search tested together in the dev or testing env). This is done through a scripr
+         - End to end testing: also UAT how the functionality will behave from the end user pespective. Also done through a script 
+         - Prod  :
+     5-  How to secure pod of jenkins due to security issues?
+             /etc/default/jenkins  -- it is  the settings file
+     6- what is the defrault path of  the jenkins home directory
+            /var/lib/jenkins
+     7- What are the diffrent ways to install jenkins
+          - a docker container
+          -  apt get jenkins
+          - k8s container via helm charts
+          - 
+     8- what are the 2 versions of java which jenkins support
+             - java runtime 11
+             - java runtime 17
+     9- What is the fiile extension for jenkins ?
+           hpi
+     10-  How  can you optimze jobs in your pipeline  if the pipeline is running slow?
+          - by running 2 jobs in parrallel if there are steps that don't depend on each
+          - 
+     11- What is an agent in Jenkins?
+          - It is the excutor of the job
+     12- Which kind of agents have you used ?
+          - linux agent
+          - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
+     13- In your pipeline do you do continous deployment or continous delivery?
+          - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
 
 3- The 3rd project the company had a legacy app. The app had a problem to scale for increase in workload, it was difficult to maintain the app, and additional features were not able to be released on time. Due to these there had to be a refactoring of this app into a micro service.
  
-- In this situation, I was in charge of designing the architecture for k8s to be able to make sure that those app that were refactored were going to run there. The company was strong in AWS cloud so we had to use an EKS cluster but the aim was to make sure that we are using a managed cluster to have control of our worker nodes. We designed the cluster,  and regular updates were made on the cluster, wrote config files for deployment via helm charts, implemented replicas for high availability of app. The k8s cluster was deployed in 2 availability zones, we were able to use the idea of ingress to be able to expose our app externally.
+   - In this situation, I was in charge of designing the architecture for k8s to be able to make sure that those app that were refactored were going to run there. The company was strong in AWS cloud so we had to use an EKS cluster but the aim was to make sure that we are using a managed cluster to have control of our worker nodes. We designed the cluster,  and regular updates were made on the cluster, wrote config files for deployment via helm charts, implemented replicas for high availability of app. The k8s cluster was deployed in 2 availability zones, we were able to use the idea of ingress to be able to expose our app externally.
  
-- we ensured security of our app on the cloud where our clusters were running using Network Access Control List and using SG. In the cluster we were able to use RBAC  for security, we were to put in place a network policy to disrupt pod to pod communication.
-- Our containers that were running were harden containers that did not have root access to reduce any attack surface. we made use of C-grp and linux namespace to separate file processes.
-- we were able to put in place Pv, pvc for persisting of data among pod restart because  
+   - we ensured security of our app on the cloud where our clusters were running using Network Access Control List and using SG. In the cluster we were able to use RBAC  for security, we were to put in place a network policy to disrupt pod to pod communication.
+   - Our containers that were running were harden containers that did not have root access to reduce any attack surface. we made use of C-grp and linux namespace to separate file processes.
+   - we were able to put in place Pv, pvc for persisting of data among pod restart because  
+
+      FOLLOW UP QUESTIONS
+     1- Terraform files are configuration files ( manifest files are written in yaml)
+     2- WHAT BACK END DID YOU USE FOR YOUR PV?
+              -  what is the hostpath: data is persitent on the local machine
+          - you can use set
+          - you can use network file system (remote file system) because the storage does not depend on your laptop.
+          -  google persistent disk (s3 bucket, EBS volume)
+     3 - why did you use a readinessProbe ?
+         To make sure that user request were sent to pods that are ready. If you don't do health check request will be directed to pods that are not ready leading to poor user experience.
