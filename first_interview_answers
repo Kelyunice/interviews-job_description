@@ -3,6 +3,30 @@
   2- Knowledge
   3- Interpersonal skills
 
+A - How do you authenticate yourself/user in Jenkins?
+      - manage jenkins--> security--> 
+        1-  Jenkin's own useer database
+        2-  By using a delegate to servlet container
+        2-  You can use LDAP ( light director access protocol  
+        4- Unix user/group database. 
+
+          Authorization
+      - what the users can do 
+         -  anonymous users can do anything
+         - legacy mode-same with  admin role / full access
+         - logged-in users can do anything- full access except anonymous users who only have read access
+         - matrix based security :It is the best method.  here we have anonymous user and authenticated user and we can aothorize them to do varied things 
+             ( overall, credentials, agent, job, Run, view, SCM -source code management, metrics)
+         - we also have CSRF ( cross side request forgery) Protection :  
+         - Project-based matrix authorization strategy: if you want to narrow it a each project separetly e.g Joe can access project A, B and C but he can't see D
+
+      - we equally have a mark up formatter ==> used for security
+         - when running jenkins it should be in plan text and not safe HTMl so that harcker cann intercep
+         - You can equally chnage the TCP port for inbound agents which is 50,000 . This port is used to connect the jenkins controller to the agent. You can disable it to make it more secured,  or uuse the Random port 
+         - from default port 8080 to any other port in the   /etc/defaults/jenkins file
+B- How many can have access in  jenkins?
+      - 3 persons at a time
+
 2- K8s
  1- Describe the k8s architecture
     1- It is made of Master nodes
