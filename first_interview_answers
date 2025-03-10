@@ -86,7 +86,7 @@
           docker_network ==>  Manage Docker networks
           helm ==> Manage Helm charts
   - How many Playbooks should run
-    5 playbooks should run
+    1 playbook can be deployed on by default 5 machines
   - Run a Playbook in a dry run mode
        --check will run the playbook on a dry run mode
   - How to skip certain task in a playbook
@@ -97,6 +97,27 @@
        - running in on dry run
   - How do you run your playbook in production?
      - It should be running in a pipeline. You trigger a pipeline to run the playbook and execute where it is supposed to since the playbook should be kept in a source code repo
+  - How can you increase the number of playbooks to run in ANSIBLE ?
+      - you can use a fork: fork=20
+         ansible.cfg file
+     - For servers that are not ruuning: you use dynamic enventory which permits to add inventory in the host file
+     - We have static I nventory and Dynamic Inventory
+  - In which language is ansible written?
+      it is written in python
+  - What is a Playbook?
+    It is a set/list of instructions/task/ plays that have to be executed on managed nodes.
+  - By default what strategy does ansible use to excute the playbook?
+    ANsible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all server before it can proceed.
+     you can change it to parrallel strategy
+  - To reduce the time of execution of ansile 
+      you can disable to gather facts ( gather facst: false)
+  - To know the time of executio of a playbook
+    You use the TIMER
+  - What is a role in ansible?
+     It permits to seperate the playbook and run it in different env. You can create it using ansible_galaxy
+  - What is ansible Tower?
+   - It is the enterprise version of ansible which comes with a user inteface which enable you to be able to control all the agents from the user inteface and you see them. 
+     You  can know which  playbook failed, which playbook is still running, it gives full visiibiiiility and can permitt you to run your playbook across different teams
 
 5- WHY DO YOU NEED OBSERVABILITY
     Observability is very important to know the performance of our system and also before any issue occurs we should be able to have visibility of what is happening.. 
