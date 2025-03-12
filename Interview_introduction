@@ -1,5 +1,6 @@
 Interview introduction
-
+PaaC==> defining jenkinsfile in a code is pipeline as a code. A code is  anything that could be in the form of a file.
+Iac ==. defining infra  is a file
 name:
 years experience: I am a devOps/cloud eng with over 5 years exp
  
