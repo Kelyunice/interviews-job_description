@@ -87,7 +87,9 @@ Putting this in place, we were able to realise this project
           - a docker container
           -  apt get jenkins
           - k8s container via helm charts
-          - 
+          - as a standalone flie
+         ( apt an apt package manager it comes with a jenkins file already configured, it comes with a log rotation file already configured, it has a setting file already involved )
+
      8- what are the 2 versions of java which jenkins support
              - java runtime 11
              - java runtime 17
