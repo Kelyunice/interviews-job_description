@@ -20,13 +20,17 @@ A - How do you authenticate yourself/user in Jenkins?
          - we also have CSRF ( cross side request forgery) Protection :  
          - Project-based matrix authorization strategy: if you want to narrow it a each project separetly e.g Joe can access project A, B and C but he can't see D
 
-      - we equally have a mark up formatter ==> used for security
-         - when running jenkins it should be in plan text and not safe HTMl so that harcker cann intercep
+      - we equally have a mark up formatter ===> used for security
+         - when running jenkins it should be in plan text and not safe HTMl so that harcker can intercept
          - You can equally chnage the TCP port for inbound agents which is 50,000 . This port is used to connect the jenkins controller to the agent. You can disable it to make it more secured,  or uuse the Random port 
          - from default port 8080 to any other port in the   /etc/defaults/jenkins file
-B- How many can have access in  jenkins?
-      - 3 persons at a time
-
+B- How can you run doker commands in  jenkins conatainer?
+      - By pointing th docker volume
+      - docker run -d-p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
+         - jenkins_home:/var/jenkins_home ( everything you installed on jenkins is persisted on this volume on the host) name volume. You can equally check all jobs run on jenkins here
+         - If you  run your pipeline and see rror like docker command not fount  ===> it means the docker.sock file  has lost its executable command.
+         - jenkins/jenkins:lts   ===> This is jenkins image
+      - Jenkins  can be  able to run k8s command when it will be granted permission (authenticated as a service account, create roles, then we bind the roles) as a service user  
 2- K8s
  1- Describe the k8s architecture
     1- It is made of Master nodes
