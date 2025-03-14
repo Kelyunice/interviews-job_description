@@ -32,7 +32,7 @@ B- How can you run doker commands in  jenkins conatainer?
          - jenkins/jenkins:lts   ===> This is jenkins image
       - Jenkins  can be  able to run k8s command when it will be granted permission (authenticated as a service account, create roles, then we bind the roles) as a service user  
 2- K8s
- 1- Describe the k8s architecture
+  1- Describe the k8s architecture
     1- It is made of Master nodes
        - API server - exposes all the api calls; its the entry point to the cluster, it authenticate any user, authorizes and then admits 
        - kube Scheduler. It is used to schedule pods. 
@@ -42,7 +42,7 @@ B- How can you run doker commands in  jenkins conatainer?
       - kube proxy. It is used for networking
       - kubelet. It is used for communication
       - container runtime. It provides the underlying infrastructure to run containers
- 2-SECURITY IN THE K8S CLUSTER
+  2-SECURITY IN THE K8S CLUSTER
     1- RBAC
      - Authentication
      - Authorization
@@ -82,6 +82,11 @@ B- How can you run doker commands in  jenkins conatainer?
   9 - Is it possible to schedule a pod on a node that is tainted?
    yes, if the pod has a toleration.
     A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Toleration Effect.
+
+  10- How can jnkins be able to run kubectl commands inside the k8s cluster?
+       - since jenkins is a service we are going to 
+          1- Authenticate jenkins using service account
+          2- Authorize  jenkins using RBAC
 
 3- DOCKER SWAM
   - it is not very robust
