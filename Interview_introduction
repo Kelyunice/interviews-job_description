@@ -54,7 +54,7 @@ Putting this in place, we were able to realise this project
 
          Impact of the project
          -  I was able to resolve incidence on time and made the system to be more reliable and performant
-      5- What aspect permiited you to mpnitor pod/app matrix
+      5- What aspect permiited you to monitor pod/app matrix
          I used client liabries
 
 2- In another project with a client which was to take about 12 months to realize. This was with BDO. The team was 7 persons in an agile methodology mode.  The client had a pipeline that was not automated. A lot of things were done manually. 
@@ -77,9 +77,9 @@ Putting this in place, we were able to realise this project
          - a commit
          - a pull request
      2- What is CI
-         It is  the process of pushiing small pieces of code (functionality) regular (once a day) into the repo
+         It is  the process of pushing small pieces of code (functionality) regular (once a day) into the repo
      3- What was your pipeline design to do? 
-         It was design to build an artifact which is a zip/tar file whiich will need to ge  tested to see that iit is  working as espected.
+         It was design to build an artifact which is a zip/tar file which will need to ge  tested to see that it is  working as espected.
          Then it is going to be packaged and build into an image then pushed into an image registry.
      4- What kind of test was integrated into the pipeline?
          - unit testing e.g Junit or jacoco: tesing the function individually . logging
@@ -91,7 +91,7 @@ Putting this in place, we were able to realise this project
              /etc/default/jenkins  -- it is  the settings file
      6- what is the defrault path of  the jenkins home directory
             /var/lib/jenkins
-     7- What are the diffrent ways to install jenkins
+     7- What are the different ways to install jenkins
           - a docker container
           -  apt get jenkins
           - k8s container via helm charts
@@ -101,10 +101,10 @@ Putting this in place, we were able to realise this project
      8- what are the 2 versions of java which jenkins support
              - java runtime 11
              - java runtime 17
-     9- What is the fiile extension for jenkins ?
+     9- What is the file extension for jenkins ?
            hpi
      10-  How  can you optimze jobs in your pipeline  if the pipeline is running slow?
-          - by running 2 jobs in parrallel if there are steps that don't depend on each
+          - by running 2 jobs in parallel if there are steps that don't depend on each
           - 
      11- What is an agent in Jenkins?
           - It is the excutor of the job
