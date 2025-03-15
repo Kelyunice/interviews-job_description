@@ -28,9 +28,11 @@ I have worked on diff projects and with diff teams.
      3- We were able to resolve incidents fast and make sure that we optimise cost.
 
       FOLLOW UP QUESTION  
-     1- what are those key metrics - logs-traces (flow of request from  browser and back)?
+     1- what are those key metrics - logs-traces (open Telemetry) (flow of request from  browser and back)?
         - cpu utilization: to be able to observe resource that are being consumes in case it exceed the threshold I should be able to provision more resources
-        - memory utilization and network bandwidth: system memory metrics will enable to know the performance of the system. If the memory is over utilized the appliications that are running will be slow
+        - memory utilization and 
+        - network bandwidth: To be able to determine how fast the request can be proceed
+        - disk usage (system memory metrics will enable to know the performance of the system). If the memory is over utilized the appliications that are running will be slow
         - latency : the average traffic on an application per minute could be 3000 to 4000 per sec/min depending on the app
         - number of errors: 
         - I also monitor logs to be able to have observability of an app that is running because the metrix tell you is wrong, but logs will go deeper to have a clear situation by collecting the logs through a detail analysis of the logs.
