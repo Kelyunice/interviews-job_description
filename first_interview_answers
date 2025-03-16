@@ -220,6 +220,7 @@ B- How can you run doker commands in  jenkins conatainer?
     - What is AWS LAMBDA?
        This a compute service that you can use to run code without provisioning or creating any server. 
        It is one of the fast way of running apps now because individuals don't want to carry the heavy lifting of managing infra. 
+
     - What is A LAMDA FUNCTION? It the app code that can be written in python, nodejs, java, C-sharp, go
       It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app so they will upload the code to a lambda function.
       Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration the memory needed by the app, the CPU, the dependencies which it needs to download. 
