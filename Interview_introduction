@@ -32,8 +32,12 @@ I have worked on diff projects and with diff teams.
      1- what are those key metrics (something happened)
                           - logs ( What happened)
                           - traces (open Telemetry) ( where it happened) (flow of request from  browser and back)? 
-                              - This will help optimise RTO ( return time objective )
-                                                       RPO ( Return point objective )
+                              - This will help optimise RTO ( Recovery time objective :  a key metric in disaster recovery and business continuity planning.
+                                                             It represents the maximum acceptable amount of time that a system, application, or process can be 
+                                                             offline following an unplanned disruption before causing significant harm to the business )
+                                                       RPO ( Recovery point objective : is a crucial metric in disaster recovery and business continuity planning. 
+                                                           It defines the maximum acceptable amount of data loss measured in time; in other words, 
+                                                           it specifies how far back in time data can be recovered following a disruption )
         - cpu utilization: to be able to observe resource that are being consumed in case it exceed the threshold I should be able to provision more resources
         - memory utilization and 
         - network bandwidth: To be able to determine how fast the request can be proceessed
@@ -61,7 +65,7 @@ I have worked on diff projects and with diff teams.
 
          Impact of the project
          -  I was able to resolve incidence on time and made the system to be more reliable and performant
-      5- What aspect permiited you to monitor pod/app matrix
+      5- What aspect permited you to monitor pod/app matrix
          I used client liabries
 
 2- In another project which took about 12 months to realize. The team was 7 persons in an agile methodology mode. Thiss was with IBM.
@@ -145,10 +149,12 @@ I have worked on diff projects and with diff teams.
        
      The k8s cluster was deployed in 2 availability zones, I was able to use the idea of ingress to be able to expose our app externally.
  
-   - I ensured security of our app on the cloud where our clusters were running using Network Access Control List and using SG. In the cluster we were able to use RBAC  for security,
-     we were to put in place a network policy to disrupt pod to pod communication.
-   - Our containers that were running were harden containers that did not have root access to reduce any attack surface. we made use of C-grp and linux namespace to separate file processes.
-   - we were able to put in place Pv, pvc for persisting of data among pod restart because  
+   - I ensured security of our app on the cloud where our clusters were running using Network Access Control List and using SG. In the cluster I was able to use RBAC  for security,
+     I put in place a network policy to disrupt pod to pod communication.
+   - Our containers that were running were harden containers that did not have root access to reduce any attack surface. I equally  
+   - I made use of C-grp and linux namespace to separate file processes.
+   - I configurd ASG which were connected to my ec2 instance to ensure scalabilty in case of  increase workload
+   - I were able to put in place Pv, pvc for persisting of data among pod restart because  
 
       FOLLOW UP QUESTIONS
      1- Terraform files are configuration files ( manifest files are written in yaml)
