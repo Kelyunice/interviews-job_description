@@ -5,9 +5,9 @@
 
 A - How do you authenticate yourself/user in Jenkins?
       - manage jenkins--> security--> 
-        1-  Jenkin's own useer database
-        2-  By using a delegate to servlet container
-        2-  You can use LDAP ( light director access protocol  
+        1- Jenkin's own user database
+        2- By using a delegate to servlet container
+        2- You can use LDAP ( light director access protocol)  
         4- Unix user/group database. 
 
           Authorization
@@ -22,13 +22,13 @@ A - How do you authenticate yourself/user in Jenkins?
 
       - we equally have a mark up formatter ===> used for security
          - when running jenkins it should be in plan text and not safe HTMl so that harcker can intercept
-         - You can equally chnage the TCP port for inbound agents which is 50,000 . This port is used to connect the jenkins controller to the agent. You can disable it to make it more secured,  or uuse the Random port 
+         - You can equally change the TCP port for inbound agents which is 50,000 . This port is used to connect the jenkins controller to the agent. You can disable it to make it more secured,  or use the Random port 
          - from default port 8080 to any other port in the   /etc/defaults/jenkins file
 B- How can you run doker commands in  jenkins conatainer?
-      - By pointing th docker volume
+      - By mounting the docker volume
       - docker run -d-p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
          - jenkins_home:/var/jenkins_home ( everything you installed on jenkins is persisted on this volume on the host) name volume. You can equally check all jobs run on jenkins here
-         - If you  run your pipeline and see error like docker command not fount  ===> it means the docker.sock file  has lost its executable command.
+         - If you  run your pipeline and see error like docker command not found  ===> it means the docker.sock file  has lost its executable command.
          - jenkins/jenkins:lts   ===> This is jenkins image
       - Jenkins  can be  able to run k8s command when it will be granted permission (authenticated as a service account, create roles, then we bind the roles) as a service user  
 2- K8s
@@ -118,10 +118,13 @@ B- How can you run doker commands in  jenkins conatainer?
           docker_container ==> Manage Docker containers
           docker_network ==>  Manage Docker networks
           helm ==> Manage Helm charts
+  -  which module does  not respect the  principle of idempotence in ansible?
+        - user module
+        - group module
   - How many Playbooks should run
     1 playbook can be deployed on by default 5 machines
   - Run a Playbook in a dry run mode
-       --check will run the playbook on a dry run mode
+       --check       will run the playbook on a dry run mode
   - How to skip certain task in a playbook
        -- skip tags  ( to skip)
            tag   ( to include)
@@ -133,8 +136,12 @@ B- How can you run doker commands in  jenkins conatainer?
   - How can you increase the number of playbooks to run in ANSIBLE ?
       - you can use a fork: fork=20
          ansible.cfg file
-     - For servers that are not ruuning: you use dynamic enventory which permits to add inventory in the host file
-     - We have static I nventory and Dynamic Inventory
+     - For servers that are not running: you use dynamic enventory which permits to add inventory in the host file
+
+     - We have static inventory (A static inventory is a manually maintained file that lists all the managed nodes  written in YAML or JSON)  
+     and Dynamic Inventory (A dynamic inventory is generated in real-time by querying external data sources, such as cloud providers, CMDBs, or other APIs .
+         - an inventory defines the hosts and groups of hosts upon which Ansible commands, modules, and playbooks operate. 
+
   - In which language is ansible written?
       it is written in python
   - What is a Playbook?
@@ -144,13 +151,13 @@ B- How can you run doker commands in  jenkins conatainer?
      you can change it to parrallel strategy
   - To reduce the time of execution of ansile 
       you can disable to gather facts ( gather facst: false)
-  - To know the time of executio of a playbook
+  - To know the time of execution of a playbook
     You use the TIMER
   - What is a role in ansible?
      It permits to seperate the playbook and run it in different env. You can create it using ansible_galaxy
   - What is ansible Tower?
    - It is the enterprise version of ansible which comes with a user inteface which enable you to be able to control all the agents from the user inteface and you see them. 
-     You  can know which  playbook failed, which playbook is still running, it gives full visiibiiiility and can permitt you to run your playbook across different teams
+     You  can know which  playbook failed, which playbook is still running, it gives full visibility and can permitt you to run your playbook across different teams
 
 5- WHY DO YOU NEED OBSERVABILITY
     Observability is very important to know the performance of our system and also before any issue occurs we should be able to have visibility of what is happening.. 
