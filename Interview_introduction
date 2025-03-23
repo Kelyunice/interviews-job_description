@@ -134,13 +134,14 @@ I have worked on diff projects and with diff teams.
           - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
      13- In your pipeline do you do continous deployment or continous delivery?
           - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
-     14- How can you optimize your jobs in jenkins?
-           - By running 2 job in parallel if they don't have steps that depend on one another.
-           - 
-     15- What are some of the agents used to run jobs?
+   
+     14- What are some of the agents used to run jobs?
               1- containers
               2- linux agents
               3- windows
+     15- What is the difference between  continous Delivery and conttinous deployment?
+              continous deployment is when the pipeline is automated
+              continous delivery is when delivery is done manually becuase we want project owners to check what goes into production first
 3- The 3rd project the company had a legacy app. 
         - The app had a problem to scale for increase in workload.
         - it was difficult to maintain the app, 
