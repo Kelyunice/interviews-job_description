@@ -79,8 +79,8 @@ I have worked on diff projects and with diff teams.
    - I was able to automate the process by making sure that the pipeline was connected via a webhook that will trigger automatically upon a commit or pull request .
 
    - within the pipeline I had to integrate testing; static code analysis with Sonarqube, unit test (Jacoco),
-        integration testing  ( using test automation tools like selenium for webapp, Pstman for microservices, python for API)
-         and User acceptance within the pipeline using test tools like Junit and celenium. 
+        integration testing  ( using test automation tools like selenium for webapp, Postman for microservices, python for API). This done in Dev env 
+         and User acceptance within the pipeline using test tools like Junit and selenium. 
 
    - From there, at the level of security, I had to scan our image in the pipeline. I introduced Trivy to scan images and SonarQube for vulnerability detections.
       I also used Sneap for vulnerability detection. our pipeline was configured, and it was working as expected. 
@@ -134,7 +134,13 @@ I have worked on diff projects and with diff teams.
           - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
      13- In your pipeline do you do continous deployment or continous delivery?
           - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
-
+     14- How can you optimize your jobs in jenkins?
+           - By running 2 job in parallel if they don't have steps that depend on one another.
+           - 
+     15- What are some of the agents used to run jobs?
+              1- containers
+              2- linux agents
+              3- windows
 3- The 3rd project the company had a legacy app. 
         - The app had a problem to scale for increase in workload.
         - it was difficult to maintain the app, 
@@ -155,13 +161,13 @@ I have worked on diff projects and with diff teams.
      I put in place a network policy to disrupt pod to pod communication.
    - Our containers that were running were harden containers that did not have root access to reduce any attack surface. I equally  
    - I made use of C-grp and linux namespace to separate file processes.
-   - I configurd ASG which were connected to my ec2 instance to ensure scalabilty in case of  increase workload
-   - I were able to put in place Pv, pvc for persisting of data among pod restart because  
+   - I configurd ASG which were connected to my ec2 instance to ensure scalabilty in case of increase workload
+   - I was able to put in place Pv, pvc for persisting of data among pod restart because  
 
       FOLLOW UP QUESTIONS
      1- Terraform files are configuration files ( manifest files are written in yaml)
      2- WHAT BACK END DID YOU USE FOR YOUR PV?
-              -  what is the hostpath: data is persitent on the local machine
+          -  what is the hostpath: data is persitent on the local machine
           - you can use set
           - you can use network file system (remote file system) because the storage does not depend on your laptop.
           -  google persistent disk (s3 bucket, EBS volume)
