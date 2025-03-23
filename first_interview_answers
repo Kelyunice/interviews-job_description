@@ -66,12 +66,12 @@ B- How can you run doker commands in  jenkins conatainer?
 
   6- What is an init container
   - Generally, you have a pod that could be running 2 containers and you have an init container running beside the main container. In such a situation, 
-  the init container is first going to check the environment to see whether it is ready before the main container starts running. It can download dependencies
+    the init container is first going to check the environment to see whether it is ready before the main container starts running. It can download dependencies
 
   7 - What is a daemonset
   -  It is a kind of k8s object that ensures that pods are deployed on individual nodes.
   - This is practical in a situation where u are deploying a monitoring tool like prometheus. You are using a helms chart to deploy prometheues inside your k8s cluster. 
-    You need to have the prometheuse on all the cluster so that it can help to collect the metrics and be able to ensure monitoring.
+     You need to have the prometheuse on all the cluster so that it can help to collect the metrics and be able to ensure monitoring.
 
   8- what are different services in k8s
     - ClusterIP
@@ -83,7 +83,7 @@ B- How can you run doker commands in  jenkins conatainer?
    yes, if the pod has a toleration.
     A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Toleration Effect.
 
-  10- How can jnkins be able to run kubectl commands inside the k8s cluster?
+  10- How can jenkins be able to run kubectl commands inside the k8s cluster?
        - since jenkins is a service we are going to 
           1- Authenticate jenkins using service account
           2- Authorize  jenkins using RBAC
@@ -122,9 +122,9 @@ B- How can you run doker commands in  jenkins conatainer?
         - user module
         - group module
   - How many Playbooks should run
-    1 playbook can be deployed on by default 5 machines
+         1 playbook can be deployed on by default 5 machines
   - Run a Playbook in a dry run mode
-       --check       will run the playbook on a dry run mode
+          --check       will run the playbook on a dry run mode
   - How to skip certain task in a playbook
        -- skip tags  ( to skip)
            tag   ( to include)
@@ -137,26 +137,25 @@ B- How can you run doker commands in  jenkins conatainer?
       - you can use a fork: fork=20
          ansible.cfg file
      - For servers that are not running: you use dynamic enventory which permits to add inventory in the host file
-
-     - We have static inventory (A static inventory is a manually maintained file that lists all the managed nodes  written in YAML or JSON)  
-     and Dynamic Inventory (A dynamic inventory is generated in real-time by querying external data sources, such as cloud providers, CMDBs, or other APIs .
-         - an inventory defines the hosts and groups of hosts upon which Ansible commands, modules, and playbooks operate. 
+             - We have static inventory (A static inventory is a manually maintained file that lists all the managed nodes  written in YAML or JSON)  
+               and Dynamic Inventory (A dynamic inventory is generated in real-time by querying external data sources, such as cloud providers, CMDBs, or other APIs .
+             - an inventory defines the hosts and groups of hosts upon which Ansible commands, modules, and playbooks operate. 
 
   - In which language is ansible written?
       it is written in python
   - What is a Playbook?
-    It is a set/list of instructions/task/ plays that have to be executed on managed nodes.
+       It is a set/list of instructions/task/ plays that have to be executed on managed nodes.
   - By default what strategy does ansible use to excute the playbook?
-    ANsible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all server before it can proceed.
-     you can change it to parrallel strategy
+      ANsible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all server before it can proceed.
+      you can change it to parrallel strategy
   - To reduce the time of execution of ansile 
       you can disable to gather facts ( gather facst: false)
   - To know the time of execution of a playbook
-    You use the TIMER
+      You use the TIMER
   - What is a role in ansible?
      It permits to seperate the playbook and run it in different env. You can create it using ansible_galaxy
   - What is ansible Tower?
-   - It is the enterprise version of ansible which comes with a user inteface which enable you to be able to control all the agents from the user inteface and you see them. 
+   - It is the enterprise version of ansible which comes with a user inteface which enable you to be able to control all the manged notes from the user inteface and you see them. 
      You  can know which  playbook failed, which playbook is still running, it gives full visibility and can permitt you to run your playbook across different teams
 
 5- WHY DO YOU NEED OBSERVABILITY
