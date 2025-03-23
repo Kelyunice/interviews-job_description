@@ -78,16 +78,18 @@ I have worked on diff projects and with diff teams.
 
    - I was able to automate the process by making sure that the pipeline was connected via a webhook that will trigger automatically upon a commit or pull request .
 
-   - within the pipeline I had to integrate testing; integration testing (jacoco), unit test, User acceptance within the pipeline using test tools like Junit and celenium. 
+   - within the pipeline I had to integrate testing; static code analysis with Sonarqube, unit test (Jacoco),
+        integration testing  ( using test automation tools like selenium for webapp, Pstman for microservices, python for API)
+         and User acceptance within the pipeline using test tools like Junit and celenium. 
 
    - From there, at the level of security, I had to scan our image in the pipeline. I introduced Trivy to scan images and SonarQube for vulnerability detections.
       I also used Sneap for vulnerability detection. our pipeline was configured, and it was working as expected. 
           
-          - we were able to deploy apps and 
-          - we were also able to use the pipeline to provision our servers where I wrote Terraform Config files to create infrastructure . 
+          - I was able to deploy apps and 
+          - I was also able to use the pipeline to provision our servers where I wrote Terraform Config files to create infrastructure . 
 
-      All the infra that was used to deploy our apps, k8s cluster, ec2 instances, and all the networking were created via terraform, 
-      which made us to use and have a history of the infras and that permitted us to be able to manage them appropriately. 
+      All the infra that was used to deploy our apps, ec2 instances, and all the networking were created via terraform, 
+      which made us to use and have a history of the infras and this permitted us to be able to manage them appropriately. 
      This project was successful even though there were challenges, but we worked together, which increased the speed of deploying our app. 
      I could have a state management of infrastructure by knowing which infra is running in our prod that gives us the possibility to know whether we can ameliorate them or not.
 
