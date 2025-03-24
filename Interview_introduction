@@ -40,11 +40,11 @@ I have worked on diff projects and with diff teams.
                                                            It defines the maximum acceptable amount of data loss measured in time; in other words, 
                                                            it specifies how far back in time data can be recovered following a disruption )
         - cpu utilization: to be able to observe resource that are being consumed in case it exceed the threshold I should be able to provision more resources
-        - memory utilization and 
-        - network bandwidth: To be able to determine how fast the request can be proceessed
+        - memory utilization and ( if the % of used disk space > 80% fire and alert) total - used/total * 100
+        - network bandwidth: To be able to determine the quantity of data that can be proceessed
         - disk usage (system memory metrics will enable to know the performance of the system). If the memory is over utilized the applications that are running will be slow
         - latency : the average traffic on an application per minute could be 3000 to 4000 per sec/min depending on the app
-        - number of errors: 
+        - number of errors: for every 2 -3 minutes, if the total number of request request have 10% 400 errors then send an alert
         - I also monitor logs to be able to have observability of an app that is running because the matrix tell you is wrong, but logs will go deeper to 
             have a clear situation by collecting the logs through a detail analysis of the logs.
            if a pod is crashlooping , if you describe the pods you can see whether its the image
