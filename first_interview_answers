@@ -227,7 +227,26 @@ B- How can you run docker commands in  jenkins conatainer?
       it's going to trigger a lambda function but for it to happen, the resource that needs to trigger the lambda functions needs a resource base policy. There must be a policy that gives the S3 bucket permission to act on the lambda function. 
       The function will run based on trigger, convert the picture and drop it in its destination, which could be another S3 bucket. For it to drop it in the S3 bucket, the lambda function should have an execution role ( the action which the lambda function has on the resource). 
      - It could also be triggered by a synchro nose evocation is where, when the lambda function is evoked it will need to wait to get a response and send it back but an asynchrony nose evocation is when the lambda function is evoked it goes and deliver without waiting for a response. 
-
+  
+9- Terraform
+    - What is terraform show: 
+         it shows all the  information in the state file
+    - What are the elements of the hashicorp  configuration in the terraform  block?
+        we use the terraform block to be able to configure our project.
+    -  What are the differrent blocks used to configure resorces
+        1- resource block
+            - the type of resource
+            - the label : used  to uniquely identify a resource
+        2- Data Source Block
+        3- Varables block : we can customize our variables which we want to use in our CF
+           - varable name
+           - type
+           - description
+        4- output Block : it's used to exposed information to the outside world
+        5- The Local block : it permits to create a temporal variable inside a function.
+        6- Module Blocks: It's a piece of a reusable code that can be imported in our current project 
+            - they have labels
+            
 ===================================================================================================================================================================================================================
 
 
