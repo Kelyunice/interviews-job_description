@@ -5,7 +5,8 @@ name:
 years experience: I am a devOps/cloud eng with over 5 years exp
  
 I have worked on diff projects and with diff teams.
- I have worked with a team of 11 persons in an agile methodology . In order to better explain my experience I have 3 projects I will like to share with you so you see how they ties  with the role required
+ I have worked with a team of 11 persons in an agile methodology . In order to better explain my experience I have 3 projects I will like to share with you 
+    so you see how they ties  with the role required
 
 1- When I was working with BDO Unibank (The first project is a project in the banking sector)
 
@@ -44,12 +45,14 @@ I have worked on diff projects and with diff teams.
         - disk usage (system memory metrics will enable to know the performance of the system). If the memory is over utilized the applications that are running will be slow
         - latency : the average traffic on an application per minute could be 3000 to 4000 per sec/min depending on the app
         - number of errors: 
-        - I also monitor logs to be able to have observability of an app that is running because the matrix tell you is wrong, but logs will go deeper to have a clear situation by collecting the logs through a detail analysis of the logs.
+        - I also monitor logs to be able to have observability of an app that is running because the matrix tell you is wrong, but logs will go deeper to 
+            have a clear situation by collecting the logs through a detail analysis of the logs.
            if a pod is crashlooping , if you describe the pods you can see whether its the image
      2- How did you monitor the nodes system matrics?
         by using node exporters deployed  in the helms chart
      3- What is alert fatique/nuissance ?
-        - matrix used are not right matrix alerts that don't prompt any action ( i was able to fine tone the matrix so that alert that are coming in are ones that could promt action)
+        - matrix used are not right matrix alerts that don't prompt any action ( i was able to fine tone the matrix so that alert that are coming in are 
+            ones that could promt action)
         - Sometimes I can be working on an error alert but the alert keep coming in
      4- How do you manage alert incidence? How to resolve an incidence
         - when there's an incidence I check my monitoring tool.
@@ -57,11 +60,13 @@ I have worked on diff projects and with diff teams.
         - Then I document what has happen.
         - I inform the different parties that the incidence is affecting by making them know the situation that has occured and we are in progress on solving it.
         - I proceed to plan how the issue is supposed to be resolve with the team (those with the right expertise to be able to solve the issue).
-        - Ones the issue is reolved I document the process that was used to resolve it so that if it happends again there will be a documentation to follow how it can be resolved in a timely manner.
+        - Ones the issue is reolved I document the process that was used to resolve it so that if it happends again there will be a documentation to follow how 
+           it can be resolved in a timely manner.
         - The ticket will then be closed.
         - I proceed to do an indepth analysis to understand what caused the incident (post motem), How can we prevent this incidence from occuring in the future
      e.g we had an app that was running very slow and it was impacting the users heavily, afer analysing my monitoring tool I realized  that a data base querry which was not well optimized was overloading  our database
-         therefore causing the app to be slow. we first put in plcae an emmergency catch to catch the data while moving to optimize the querry by adding and index and everything was  stabilized and the app started running
+         therefore causing the app to be slow. we first put in plcae an emmergency catch to catch the data while moving to optimize the querry by adding and 
+          index and everything was  stabilized and the app started running
 
          Impact of the project
          -  I was able to resolve incidence on time and made the system to be more reliable and performant
@@ -91,7 +96,8 @@ I have worked on diff projects and with diff teams.
       All the infra that was used to deploy our apps, ec2 instances, and all the networking were created via terraform, 
       which made us to use and have a history of the infras and this permitted us to be able to manage them appropriately. 
      This project was successful even though there were challenges, but we worked together, which increased the speed of deploying our app. 
-     I could have a state management of infrastructure by knowing which infra is running in our prod that gives us the possibility to know whether we can ameliorate them or not.
+     I could have a state management of infrastructure by knowing which infra is running in our prod that gives us the possibility to know whether we can 
+       ameliorate them or not.
 
           FOLLOW UP QUESTION
      1- What triggers a pipeline
@@ -105,7 +111,7 @@ I have worked on diff projects and with diff teams.
      4- What kind of test was integrated into the pipeline?
          - unit testing e.g Junit or jacoco: tesing the function individually . logging
          - code scanning : sonarqube
-         - Integration testing: tesing the different functionalities together ( logging and search tested together in the dev or testing env). This is done through a scripr
+         - Integration testing: tesing the different functionalities together ( logging and search tested together in the dev or testing env). This is done through a script
          - End to end testing: also UAT how the functionality will behave from the end user pespective. Also done through a script 
          - Prod  :
      5-  How to secure pod of jenkins due to security issues?
@@ -117,7 +123,7 @@ I have worked on diff projects and with diff teams.
           -  apt get jenkins
           - k8s container via helm charts
           - as a standalone flie
-         ( apt an apt package manager it comes with a jenkins file already configured, it comes with a log rotation file already configured, it has a setting file already involved )
+    ( apt an apt package manager it comes with a jenkins file already configured, it comes with a log rotation file already configured, it has a setting file already involved )
 
      8- what are the 2 versions of java which jenkins support
              - java runtime 11
@@ -133,7 +139,7 @@ I have worked on diff projects and with diff teams.
           - linux agent
           - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
      13- In your pipeline do you do continous deployment or continous delivery?
-          - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
+        - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
    
      14- What are some of the agents used to run jobs?
               1- containers
@@ -175,4 +181,5 @@ I have worked on diff projects and with diff teams.
           - s3 bucket, 
           - EBS volume
      3 - why did you use a readinessProbe ?
-         To make sure that user request were sent to pods that are ready. If you don't do health check request will be directed to pods that are not ready leading to poor user experience.
+         To make sure that user request were sent to pods that are ready. If you don't do health check request will be directed to pods that are not ready 
+         leading to poor user experience.
