@@ -43,15 +43,15 @@ B- How can you run docker commands in  jenkins conatainer?
       - kubelet. It is used for communication
       - container runtime. It provides the underlying infrastructure to run containers
   2-SECURITY IN THE K8S CLUSTER
-    1- RBAC
-     - Authentication
-     - Authorization
-    2- NETWORK POLICY to control communication btw pods and nodes to provide cluster firewall to prevent open
+     1- RBAC
+      - Authentication
+      - Authorization
+     2- NETWORK POLICY to control communication btw pods and nodes to provide cluster firewall to prevent open
           communication
-     - Container security
-       regularly scan images before they are being deployed in the cluster
-     - Management of secrete
-       secretes can be managed in Hashicorp Vault or AWS KMS since k8s does not have a service that can encrypt secrets except for encoding
+       - Container security
+          regularly scan images before they are being deployed in the cluster
+       - Management of secrete
+          secretes can be managed in Hashicorp Vault or AWS KMS since k8s does not have a service that can encrypt secrets except for encoding
      3 - You can equally do audit logging. You can log your cluster to get activities of what is happening in your cluster. In case there's an issue you can do that.
      4 - Regular update and patching of the cluster since every 2-3 months a new version is released and you need to be doing regular updates as a security measure
  
