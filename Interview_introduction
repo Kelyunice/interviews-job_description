@@ -104,9 +104,9 @@ I have worked on diff projects and with diff teams.
          - a commit
          - a pull request
      2- What is CI
-         It is  the process of pushing small pieces of code (functionality) regular (once a day) into the repo
+         It is  the process of pushing small pieces of code (functionality) regular (once a day) into the code base
      3- What was your pipeline design to do? 
-         It was design to build an artifact which is a zip/tar file which will need to ge  tested to see that it is  working as espected.
+         It was design to build an artifact which is a zip/tar file which will need to be tested to see that it is working as espected.
          Then it is going to be packaged and build into an image then pushed into an image registry.
      4- What kind of test was integrated into the pipeline?
          - unit testing e.g Junit or jacoco: tesing the function individually . logging
@@ -148,7 +148,8 @@ I have worked on diff projects and with diff teams.
      15- What is the difference between  continous Delivery and conttinous deployment?
               continous deployment is when the pipeline is automated
               continous delivery is when delivery is done manually becuase we want project owners to check what goes into production first
-3- The 3rd project the company had a legacy app. 
+
+ 3- The 3rd project the company had a legacy app. 
         - The app had a problem to scale for increase in workload.
         - it was difficult to maintain the app, 
         - and additional features were not able to be released on time. 
