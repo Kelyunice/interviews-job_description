@@ -94,11 +94,12 @@ B- How can you run docker commands in  jenkins conatainer?
   - it does not allow addons while k8s you can do that via operators
 
 4 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
-  - It is a tool used to do automation work like 
-    - configuring of servers: install ansible , configure inventory file, test connectivity, write the playbook(), run the playbook (ansible-playbook -i /etc/ansible/hosts playbook.yml
-    - deploying apps (Install ansible on the controller, define my inventory file(/etc/ansible/hosts), write the pplaybook(deploy.yaml), run the playbook)
-    - provisioning of infra
-  -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.
+    - It is a tool used to do automation work like 
+      1- configuring of servers: install ansible , configure inventory file, test connectivity, write the playbook(), run the playbook 
+          (ansible-playbook -i /etc/ansible/hosts playbook.yml
+      2- deploying apps (Install ansible on the controller, define my inventory file(/etc/ansible/hosts), write the pplaybook(deploy.yaml), run the playbook)
+      3 - provisioning of infra
+   -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.
   - Ansible works with the use of modules. Modules are tasks or small programs that is executed on the host . 
      * You could have the 
           file module,==> is used to manage file system objects like files, directories, and symbolic links on remote hosts. It helps in tasks such as creating, deleting, modifying permissions, setting ownership, and managing symlinks.
@@ -122,7 +123,7 @@ B- How can you run docker commands in  jenkins conatainer?
           docker_network ==>  Manage Docker networks
           helm ==> Manage Helm charts
   5-  which module does  not respect the  principle of idempotence in ansible?
-        - user module
+        - Command Module         user module
         - group module
   6- How many Playbooks should run
          1 playbook can be deployed on by default 5 machines
@@ -158,7 +159,7 @@ B- How can you run docker commands in  jenkins conatainer?
   17- What is a role in ansible?
      It permits to seperate the playbook and run it in different env. You can create it using ansible_galaxy
   18- What is ansible Tower?
-   - It is the enterprise version of ansible which comes with a user inteface which enable you to be able to control all the manged notes from the user inteface and you see them. 
+   - It is the enterprise version of ansible which comes with a user inteface which enable you to be able to control all the managed notes from the user inteface and you see them. 
      You  can know which  playbook failed, which playbook is still running, it gives full visibility and can permitt you to run your playbook across different teams
   19- Why Use Ansible for Provisioning?
        - Agentless (uses SSH)
@@ -172,11 +173,14 @@ B- How can you run docker commands in  jenkins conatainer?
    - I have been able to monitor linux servers via node exporters
    - I have been able to monitor services/3 party app via client libraries and exporters
    - I have monitored containers via c- advisor
-   - I have monitored k8s cluster via kube-system metrics 
+   - I have monitored k8s cluster via kube-state metrics 
   I was able to install prometheuse using helm charts and put in place Grafana dashboards to be able to visualize those metrics on Grafana dashboards. 
   - I have been able to send alerts to the different parties that are involved in case thresholds were exceeded.
+       - firing
+       - insufficient data
+       - ok
   - I have sent alerts based on cpu utilization, memory usage, number of requests, and number of errors like 400 above a certain %. I've been able to set an alert for latency to know how fast my apps are responding.
-   - I have been able to put in place system of logging to be able to help me know what is actually wrong with my app by consulting logs and equally traces using open Telemetry to be able to have full visibility of the movement of the request of a client from when the request is sent and received back.
+   - I have been able to put in place system of logging to be able to help me know what is actually wrong with my app by consulting logs (fluend) and equally traces using open Telemetry to be able to have full visibility of the movement of the request of a client from when the request is sent and received back.
 
  6 - What is the git flow strategy
     - It is a strategy of maintaining 3 branches. If there's any bug, you can create the bug fix branch.
@@ -187,15 +191,15 @@ B- How can you run docker commands in  jenkins conatainer?
     - git log permits to see the commit history.
     
  7- LINUX 
-    Some commands used to check network
-    - nsloolup for dns resolution
-    - netstat 
-    - ping for
-    - dig for dns compliance 
+     - Some commands used to check network
+        - nsloolup for dns resolution
+        - netstat -tlup
+        - ping for
+        - dig for dns compliance 
     - to check users in thee system 
-       /etc/passwd
+          /etc/passwd
     - To check resources that the system is running
-       df -h, free -m
+           df -h, free -m
     - What is swap in linux?
        it is used to recover memory. some apps that are running but no longer active
     - What is daemon?
@@ -222,20 +226,27 @@ B- How can you run docker commands in  jenkins conatainer?
       1- By using TLS, and SSL that permit you to encrypt data on transit
       2- You can encrypt AT REST using server-side encryption or a client side encryption.
     - AWS serverless services
-      - lamda 
-      - API gate ways
-      - fargates
+        - lamda 
+        - API gate ways
+        - fargates
+        - s3
     - What is AWS LAMBDA?
        This a compute service that you can use to run code without provisioning or creating any server. 
        It is one of the fast way of running apps now because individuals don't want to carry the heavy lifting of managing infra. 
 
     - What is A LAMDA FUNCTION? It the app code that can be written in python, nodejs, java, C-sharp, go
-      It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app so they will upload the code to a lambda function.
-      Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration the memory needed by the app, the CPU, the dependencies which it needs to download. 
-      This env is also known as an execution env. Ones the env is ready that code will only run base on a trigger, then the a destination. An S3 bucket can trigger a lambda function. e.g pictures are dropped in an S3 bucket. Based on a PUT EVENT on an S3 bucket, 
-      it's going to trigger a lambda function but for it to happen, the resource that needs to trigger the lambda functions needs a resource base policy. There must be a policy that gives the S3 bucket permission to act on the lambda function. 
-      The function will run based on trigger, convert the picture and drop it in its destination, which could be another S3 bucket. For it to drop it in the S3 bucket, the lambda function should have an execution role ( the action which the lambda function has on the resource). 
-     - It could also be triggered by a synchro nose evocation is where, when the lambda function is evoked it will need to wait to get a response and send it back but an asynchrony nose evocation is when the lambda function is evoked it goes and deliver without waiting for a response. 
+      It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app 
+       so they will upload the code to a lambda function.
+      Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration
+        the memory needed by the app, the CPU, the dependencies which it needs to download. 
+      This env is also known as an execution env. Ones the env is ready that code will only run base on a trigger, then the a destination.
+       An S3 bucket can trigger a lambda function. e.g pictures are dropped in an S3 bucket. Based on a PUT EVENT on an S3 bucket, 
+      it's going to trigger a lambda function but for it to happen, the resource that needs to trigger the lambda functions needs a resource base policy. 
+         There must be a policy that gives the S3 bucket permission to act on the lambda function. 
+      The function will run based on trigger, convert the picture and drop it in its destination, which could be another S3 bucket. For it to drop it in the S3 bucket,
+         the lambda function should have an execution role ( the action which the lambda function has on the resource). 
+     - It could also be triggered by a synchro nose evocation is where, when the lambda function is evoked it will need to wait to get a response and send 
+         it back but an asynchrony nose evocation is when the lambda function is evoked it goes and deliver without waiting for a response. 
   
 9- Terraform
     - What is terraform show: 
