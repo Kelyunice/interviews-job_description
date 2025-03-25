@@ -176,7 +176,7 @@ I have worked on diff projects and with diff teams.
      I put in place a network policy to disrupt pod to pod communication.
    - Our containers that were running were harden containers that did not have root access to reduce any attack surface. I equally  
    - I made use of C-grp and linux namespace to separate file processes.
-   - I configurd ASG which were connected to my ec2 instance to ensure scalabilty in case of increase workload
+   - I configured ASG which were connected to my ec2 instance to ensure scalabilty in case of increase workload
    - I was able to put in place Pv, pvc for persisting of data among pod restart because  
 
       FOLLOW UP QUESTIONS
