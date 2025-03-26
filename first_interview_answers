@@ -99,7 +99,7 @@ B- How can you run docker commands in  jenkins conatainer?
           (ansible-playbook -i /etc/ansible/hosts playbook.yml
       2- deploying apps (Install ansible on the controller, define my inventory file(/etc/ansible/hosts), write the pplaybook(deploy.yaml), run the playbook)
       3 - provisioning of infra
-   -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.
+   -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.( ansible-galaxy create "role name" )
   - Ansible works with the use of modules. Modules are tasks or small programs that is executed on the host . 
      * You could have the 
           file module,==> is used to manage file system objects like files, directories, and symbolic links on remote hosts. It helps in tasks such as creating, deleting, modifying permissions, setting ownership, and managing symlinks.
@@ -124,7 +124,7 @@ B- How can you run docker commands in  jenkins conatainer?
           helm ==> Manage Helm charts
   5-  which module does  not respect the  principle of idempotence in ansible?
         - Command Module         user module
-        - group module
+        - shell module
   6- How many Playbooks should run
          1 playbook can be deployed on by default 5 machines
   7- Run a Playbook in a dry run mode
@@ -150,10 +150,11 @@ B- How can you run docker commands in  jenkins conatainer?
   13- What is a Playbook?
        It is a set/list of instructions/task/ plays that have to be executed on managed nodes.
   14- By default what strategy does ansible use to excute the playbook?
-      ANsible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all server before it can proceed.
-      you can change it to parrallel strategy
-  15- To reduce the time of execution of ansile 
-      you can disable to gather facts ( gather facst: false)
+      Ansible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all servers before it can proceed.
+      you can change it to parallel strategy
+  15- To reduce the time of execution of ansile ?
+      - you can disable to gather facts ( gather fact: false)
+      - change the default execution of the playbook from linear to parallel
   16- To know the time of execution of a playbook
       You use the TIMER
   17- What is a role in ansible?
@@ -166,7 +167,22 @@ B- How can you run docker commands in  jenkins conatainer?
        -  Supports multiple cloud providers
        - Idempotent (ensures consistent state)
        - Easily integrates with CI/CD pipelines
-
+  20- what are sojme of the playbooks you have written?
+     - I have writtena playbook to deploy a docker compose
+     - a playbook to install nexus
+     - a playbook to install jenkins
+     - a playbook to add users to a system and delete users
+     - 
+  21- which module permits us to store variables to be able to use in another?
+      - The register module:
+  22- If you have a variable on the variable files how do you pass that on the playbook?
+       --extra vars "name of variable"
+  23- How do you solve the problem of idempotency in a playbook?
+      if you want to create a file which has already been created you use ( --create ) the command will not be executed if the file exist, and  (--delete) will not delete any file if file does not exist.
+  24- how do you handle secretes in ansible?
+      by using ansible vault : it can be used encrypt the playbook ,it can be used to keep the keys,manage secrets , SSH keys, 
+  25- when you write a playbook where do you keep it?
+      Since it needs to be versioned it needs to be kept in a SRC repo and configure a pipeline to run the playbook.
 
 5- WHY DO YOU NEED OBSERVABILITY
     Observability is very important to know the performance of our system and also before any issue occurs we should be able to have visibility of what is happening.. 
@@ -266,7 +282,41 @@ B- How can you run docker commands in  jenkins conatainer?
         5- The Local block : it permits to create a temporal variable inside a function.
         6- Module Blocks: It's a piece of a reusable code that can be imported in our current project 
             - they have labels
-            
+  10- In k8s what were you scaling?
+      - you can scale the pods
+      - you can scale the cluster
+  11- What is vertical auto-scaling ? scaling up or down
+       Involves increasing or decreasing the power of a single server or instance. Adds more CPU, RAM, or storage to the existing machine when demand increases.
+       Examples: Database servers, monolithic applications. disadvantage is has  a limit to how much you can scale and may lead to down time when scaling up and down.
+  12- What is vertical auto-scaling ? scaling in or out
+       Involves adding or removing instances (servers) to distribute the load.
+       Examples: Web applications, APIs, and stateless services
+
+    Vertical scaling = Hiring a super chef to cook faster.
+    Horizontal scaling = Hiring multiple chefs to handle more orders simultaneously.
+13- what was giving you the metric server?
+     cloudwatch was watching the servers and the metric server which was installed in the cluster was collecting the metrics about the CPU usage (kubectl top), alert manager will send the alert of the cpu utilization.
+14- In which situation are you going to do a horizontal pod auto-scaling and in which situation are you going to do a horizontal cluster auto-scaling?
+     - For horizontal pods auto-scaling you are scaling pods when there's increase in workloads and the pods are consuming resources ( we have min, max and desired) if the pods have used all the resources in 
+       the cluster and cluster can no longer have resources because there's way they will consume resources then you scale the  cluster to create more worker nodes so that more pods  can be scheduled on the worker nodes
+       until the horizontal auto-scaling has reached its max and there's still increase in workloads then you can proceed to scale the cluster so that you can have more worker nodes to schedule pods to handle incarese in traffic
+       you start by scaling pods based on the replicas that have been defined. you have to scaled the pods first until the avearge resources defined in the  cluster have been exceeded then you scale the cluster.
+15- what is white box monitoring?
+    is having complete visibilty of the system internally and having and output of what is happening. you can use instrumentation to do a white box monitoring by including a prometheus code in the app 
+    code base so that promethuesss can collect details of what is happening inside the app and you are able to have it externally
+    while blank box montitoring, monitors the system superficially using tools like nagios
+16- what  do pod use to communicate which each other?
+    they communicate which each other using cluster IP.
+17- How do 2 containers inside a pod communicate with each other?
+    using a shared namespace to communicate with each other produces by a pause container?
+18- Have youu had a situation where you had 2 containers running inside a pod?
+    - init container
+    - sidecar container
+    - Ambassador container: it is a proxy container used to enhance communication wheree the maiin container does not have means to communiicate
+    - Adapter contaiiner : used to formate metrics
+19- How to you make sure that teams don't exceed their resources defined in each namespace?
+    use resources request and resouces quotas
+20- 
 ===================================================================================================================================================================================================================
 
 
