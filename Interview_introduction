@@ -175,6 +175,8 @@ I have worked on diff projects and with diff teams.
             (consumes CPU, memory, and disk I/O, which can degrade the performance of the entire Jenkins instance)
          - The controller is the brain of Jenkins. If you run jobs on it and a job causes it to crash (due to excessive resource usage or faulty scripts), the entire Jenkins environment goes down.
          - Jenkins controllers are not meant for running multiple builds. Running jobs on the controller limits parallelism, which reduces the efficiency of your CI/CD pipeline.
+            Hence it is neccessary to use EC2 instance and containes to run jobs and build them.
+
  3- The 3rd project the company had a legacy app. 
         - The app had a problem to scale for increase in workload.
         - It was difficult to maintain the app, 
