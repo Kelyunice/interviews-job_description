@@ -130,16 +130,18 @@ I have worked on diff projects and with diff teams.
              - java runtime 11
              - java runtime 17
      9- What is the file extension for jenkins plugin ?
-           hpi
-     10-  How  can you optimze jobs in your pipelin if the pipeline is running slow?
-          - by running 2 jobs in parallel if there are steps that don't depend on each other.
+              hpi
+     10-  How can you optimze jobs in your pipelin if the pipeline is running slow?
+          - by running 2 jobs in parallel if there are steps that don't depend on each other.e.g if you have a test that you want to do for an app that has to run on 2 OS linux and windows. since the are not depending
+             on each other.The same test can run on linux and windows env that will sped up the pipeline.
+          - I can make sure that I am cloning a single branch in a repo and not the entire repo because it will take time to download the dependencies.   ( --single branch -b "branch name" git repo )
      11- What is an agent in Jenkins?
-          - It is the excutor of the job
+           - It is the excutor of the job
      12- Which kind of agents have you used ?
-          - linux agent
-          - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
+            - linux agent
+            - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
      13- In your pipeline do you do continous deployment or continous delivery?
-        - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
+           - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod
    
      14- What are some of the agents used to run jobs?
               1- containers
@@ -155,12 +157,29 @@ I have worked on diff projects and with diff teams.
               - Trigger or schedule builds.
               - View build status and logs.
               - Manage Jenkins system settings.
-
+     18- what are the different ways in which someone can be authenticated in Jenkins?
+           - I can  use unix user or grp data base
+           - Jenkins own data
+           - external auth like LDAP
+           - selvet if jenkin's is  running on an app like tomcat then I can use it to be able to auth.
+         after auth i aothorize by giviing access to specific jobs or specific projects
+     19- how can you eensure security in a pipeline when running a build?
+          - check the mark up formater making sure it is in plain text and not HTMl formatto prevent hacker from intercepting
+          - change the TCP port 50,000 which enable jenkin's to connect to agents
+          - I can cgange the default port which Jenkin's listens to in the /etc/defaults/jenkins to any port
+          - cross request forgery ( CRF) this is when someone who has been authenticated is being forced to perform an un wanted action that could led to a malicious action
+          - usse folders to prevent team from seeing other teams work.
+     20- why is it not advisable to run jobs on the jenkin's controller?
+         - It is not good to do so because all jobs running run with administrative previlages. The person can get access and delete some sensitive data (credentials, secrets, or logs) that can jeopadize your workload
+         - If you have a controller and  you are running jobs on it, the jobs are stored in the jenkins home directory which normally is a disk and with time it becomes so overloaded 
+            (consumes CPU, memory, and disk I/O, which can degrade the performance of the entire Jenkins instance)
+         - The controller is the brain of Jenkins. If you run jobs on it and a job causes it to crash (due to excessive resource usage or faulty scripts), the entire Jenkins environment goes down.
+         - Jenkins controllers are not meant for running multiple builds. Running jobs on the controller limits parallelism, which reduces the efficiency of your CI/CD pipeline.
  3- The 3rd project the company had a legacy app. 
         - The app had a problem to scale for increase in workload.
-        - it was difficult to maintain the app, 
+        - It was difficult to maintain the app, 
         - and additional features were not able to be released on time. 
-
+        -  
   Due to these there had to be a refactoring of this app into a micro service.
  
    - In this situation, I was in charge of designing the architecture for k8s to be able to make sure that those app which were refactored were going to run there. 
