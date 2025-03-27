@@ -89,9 +89,19 @@ B- How can you run docker commands in  jenkins conatainer?
           2- Authorize  jenkins using RBAC
 
 3- DOCKER SWAM
-  - it is not very robust
-  - It does not have capacity to scale
-  - it does not allow addons while k8s you can do that via operators
+     - it is not very robust
+     - It does not have capacity to scale
+     - it does not allow addons while k8s you can do that via operators
+   B- what are some of the best practices you have implemented when writing a docker file?
+      - make of use of the .dockerignore to exclude files which are not very important for the context build.
+      - use multi stage build to seperate the Build from the RUN
+      - I can use multiple && to chain multiple commands  into a single RUN statement, creating fewer layers.
+      - make use of a light weight image like Alpine
+  c- why use && when writing a docker file? operators in RUN instructions
+    - Combining commands with &&,prevents image Bloat  allows you to clean up temporary files in the same layer, reduces image size by removing unnecessary files.
+    - Speeds up builds by improving caching, Docker uses layer caching to speed up builds. If you change one line, Docker invalidates the cache for that line and all subsequent layers.
+    - Ensures reliable execution by chaining dependent commands.
+    - The && operator ensures that the next command only runs if the previous one succeeds (returns exit code 0)
 
 4 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
     - It is a tool used to do automation work like 
@@ -265,6 +275,8 @@ B- How can you run docker commands in  jenkins conatainer?
          it back but an asynchrony nose evocation is when the lambda function is evoked it goes and deliver without waiting for a response. 
   
 9- Terraform
+    - How do you create infrastructure?
+        I use IaC to be  able to create infrastructure.
     - What is terraform show: 
          it shows all the  information in the state file
     - What are the elements of the hashicorp  configuration in the terraform  block?
