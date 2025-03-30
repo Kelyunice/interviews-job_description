@@ -31,7 +31,7 @@ I have worked on diff projects and with diff teams.
 
       FOLLOW UP QUESTION  
      1- what are those key metrics (something happened)
-                          - logs ( What happened)
+                          - logs ( What happened) using Flentd which aggregates, filters, and forwards logs from various sources to destinations like splunk, Kafka, S3, Grafana, cloudwatch, Datadog
                           - traces (open Telemetry) ( where it happened) (flow of request from  browser and back)? 
                               - This will help optimise RTO ( Recovery time objective :  a key metric in disaster recovery and business continuity planning.
                                                              It represents the maximum acceptable amount of time that a system, application, or process can be 
@@ -43,12 +43,17 @@ I have worked on diff projects and with diff teams.
         - memory utilization and ( if the % of used disk space > 80% fire and alert) total - used/total * 100
         - network bandwidth: To be able to determine the quantity of data that can be proceessed
         - disk usage (system memory metrics will enable to know the performance of the system). If the memory is over utilized the applications that are running will be slow
-        - latency : the average traffic on an application per minute could be 3000 to 4000 per sec/min depending on the app
+        - latency : 
+        - number of request: the average traffic on an application per minute could be 3000 to 4000 per sec/min depending on the app
         - number of errors: for every 2 -3 minutes, if the total number of request have 5% 400 errors then send an alert
         - I also monitor logs to be able to have observability of app that is running because the matrix tells something is wrong, but logs will go deeper to 
             have a clear situation by collecting the logs through a detail analysis of the logs.
            if a pod is crashlooping, if you describe the pods you can see whether its the image
-     2- How did you monitor the nodes system matrics?
+     2- How did you monitor 
+        - lnux servers: node exporters
+        - K8s : kube state metrics
+        -  service/3rd party app: exporters and clent librares
+        - containers: C-advsors 
         by using node exporters deployed in the helms chart
      3- What is alert fatique/nuissance ?
         - matrix used are not right matrix alerts that don't prompt any action ( i was able to fine tone the matrix so that alert that are coming in are 
@@ -64,8 +69,8 @@ I have worked on diff projects and with diff teams.
            it can be resolved in a timely manner.
         - The ticket will then be closed.
         - I proceed to do an indepth analysis to understand what caused the incident (post motem), How can we prevent this incidence from occuring in the future
-     e.g we had an app that was running very slow and it was impacting the users heavily, afer analysing my monitoring tool I realized that a data base querry 
-          which was not well optimized was overloading  our database therefore causing the app to be slow. we first put in plcae an emmergency catch to catch 
+     e.g we had an app that was running very slow and it was impacting the users heavily, after analysing my monitoring tool I realized that a data base querry 
+          which was not well optimized was overloading our database therefore causing the app to be slow. we first put in place an emmergency catch to catch 
           the data while moving to optimize the querry by adding and index and everything was stabilized and the app started running
 
          Impact of the project
@@ -77,7 +82,7 @@ I have worked on diff projects and with diff teams.
     The client had a pipeline that was not automated. A lot of things were done manually. 
     
           - Deployments were done with a manual trigger. 
-          - Testing was done manually. That resulted in slowing the release of the software app.
+          - Testing was done manually. That resulted in slow release of the software app.
      
     The aim was to put in place a pipeline for CI and CD that will be able to automate the process from end to end. 
 
@@ -152,23 +157,23 @@ I have worked on diff projects and with diff teams.
               continous deployment is when the pipeline is automated
               continous delivery is when delivery is done manually because we want project owners to check what goes into production first
      16-  A pipeline is defined as a series of steps or stages that define the process of building, testing, and deploying software.
-     17- Jenkinsss also have JENKINSS WEB INTERFACE used for 
+     17- Jenkins also have JENKINS WEB INTERFACE used for 
               - Configure jobs and pipelines.
               - Trigger or schedule builds.
               - View build status and logs.
               - Manage Jenkins system settings.
      18- what are the different ways in which someone can be authenticated in Jenkins?
-           - I can  use unix user or grp data base
+           - I can use unix user or grp data base
            - Jenkins own data
            - external auth like LDAP
            - selvet if jenkin's is  running on an app like tomcat then I can use it to be able to auth.
-         after auth i aothorize by giviing access to specific jobs or specific projects
-     19- how can you eensure security in a pipeline when running a build?
-          - check the mark up formater making sure it is in plain text and not HTMl formatto prevent hacker from intercepting
+         after auth i authorize by giviing access to specific jobs or specific projects
+     19- how can you ensure security in a pipeline when running a build?
+          - check the mark up formater making sure it is in plain text and not HTMl format prevent hacker from intercepting
           - change the TCP port 50,000 which enable jenkin's to connect to agents
-          - I can cgange the default port which Jenkin's listens to in the /etc/defaults/jenkins to any port
-          - cross request forgery ( CRF) this is when someone who has been authenticated is being forced to perform an un wanted action that could led to a malicious action
-          - usse folders to prevent team from seeing other teams work.
+          - I can change the default port which Jenkin's listens to in the /etc/defaults/jenkins to any port
+          - Enabling  cross-site request forgery ( CSRF) this is when someone who has been authenticated is being forced to unknowingly submit a malicious request to a web application they are authenticated with.
+          - use folders to prevent team from seeing other teams work.
      20- why is it not advisable to run jobs on the jenkin's controller?
          - It is not good to do so because all jobs running run with administrative previlages. The person can get access and delete some sensitive data (credentials, secrets, or logs) that can jeopadize your workload
          - If you have a controller and  you are running jobs on it, the jobs are stored in the jenkins home directory which normally is a disk and with time it becomes so overloaded 
