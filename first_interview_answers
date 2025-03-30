@@ -6,7 +6,7 @@
 A - How do you authenticate yourself/user in Jenkins?
       - manage jenkins--> security--> 
         1- Jenkin's own user database
-        2- By using a delegate to servlet container
+        2- By using a delegate to servlet  if jenkins is runniing on an app like tomcat 
         2- You can use LDAP ( light director access protocol)  
         4- Unix user/group database. 
 
@@ -30,7 +30,7 @@ B- How can you run docker commands in  jenkins conatainer?
          - jenkins_home:/var/jenkins_home ( everything you installed on jenkins is persisted on this volume on the host) name volume. You can equally check all jobs run on jenkins here
          - If you run your pipeline and see error like docker command not found  ===> it means the docker.sock file  has lost its executable command.
          - jenkins/jenkins:lts   ===> This is jenkins image
-      - Jenkins  can be  able to run k8s command when it will be granted permission (authenticated as a service account, create roles, then we bind the roles) as a service user  
+      - Jenkins can be able to run k8s command when it will be granted permission (authenticated as a service account, create roles, then we bind the roles) as a service user  
 2- K8s
   1- Describe the k8s architecture
     1- It is made of Master nodes
@@ -43,9 +43,8 @@ B- How can you run docker commands in  jenkins conatainer?
       - kubelet. It is used for communication
       - container runtime. It provides the underlying infrastructure to run containers
   2-SECURITY IN THE K8S CLUSTER
-     1- RBAC
-      - Authentication
-      - Authorization
+     1- Authentication
+      - Authorization via RBAC
      2- NETWORK POLICY to control communication btw pods and nodes to provide cluster firewall to prevent open
           communication
        - Container security
@@ -107,10 +106,10 @@ B- How can you run docker commands in  jenkins conatainer?
     - It is a tool used to do automation work like 
       1- configuring of servers: install ansible , configure inventory file, test connectivity, write the playbook(), run the playbook 
           (ansible-playbook -i /etc/ansible/hosts playbook.yml
-      2- deploying apps (Install ansible on the controller, define my inventory file(/etc/ansible/hosts), write the pplaybook(deploy.yaml), run the playbook)
+      2- deploying apps (Install ansible on the controller, define my inventory file(/etc/ansible/hosts), write the playbook(deploy.yaml), run the playbook)
       3 - provisioning of infra
    -  With the use of ansible playbook you can do a lot of work. You can use Roles to make sure that the playbook is reusable on different envs.( ansible-galaxy create "role name" )
-  - Ansible works with the use of modules. Modules are tasks or small programs that is executed on the host . 
+  - Ansible works with the use of modules.  a module is a reusable, standalone script that performs a specific task or operation on a target system. 
      * You could have the 
           file module,==> is used to manage file system objects like files, directories, and symbolic links on remote hosts. It helps in tasks such as creating, deleting, modifying permissions, setting ownership, and managing symlinks.
           copy module, ==>  It is mainly used for transferring simple files, setting permissions, and ensuring file presence. Ensures idempotency (only updates the file if changes are detected).
@@ -158,6 +157,7 @@ B- How can you run docker commands in  jenkins conatainer?
   12- In which language is ansible written?
       it is written in python
   13- What is a Playbook?
+       An Ansible Playbook is a YAML file that defines a series of tasks and configurations to be executed on remote or local systems.
        It is a set/list of instructions/task/ plays that have to be executed on managed nodes.
   14- By default what strategy does ansible use to excute the playbook?
       Ansible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all servers before it can proceed.
@@ -177,7 +177,7 @@ B- How can you run docker commands in  jenkins conatainer?
        -  Supports multiple cloud providers
        - Idempotent (ensures consistent state)
        - Easily integrates with CI/CD pipelines
-  20- what are sojme of the playbooks you have written?
+  20- what are some of the playbooks you have written?
      - I have writtena playbook to deploy a docker compose
      - a playbook to install nexus
      - a playbook to install jenkins
@@ -242,7 +242,9 @@ B- How can you run docker commands in  jenkins conatainer?
         2- or command line ( up to 50 TB)
     - how many S3 buckets can you have per AWS account?
         100 but you can apply to have up to 1000
-    - What is a bucket policy? How do you control access into an S3 bucket?
+    - What is a bucket policy? 
+         An S3 bucket policy is a JSON-based access control policy that defines permissions for Amazon S3 buckets and the objects they contain.
+     How do you control access into an S3 bucket?
        1-By using an Access Control List.
          This is a kind of permission given to be able to access individual objects from the bucket.
        2- A bucket policy.
@@ -300,7 +302,7 @@ B- How can you run docker commands in  jenkins conatainer?
   11- What is vertical auto-scaling ? scaling up or down
        Involves increasing or decreasing the power of a single server or instance. Adds more CPU, RAM, or storage to the existing machine when demand increases.
        Examples: Database servers, monolithic applications. disadvantage is has  a limit to how much you can scale and may lead to down time when scaling up and down.
-  12- What is vertical auto-scaling ? scaling in or out
+  12- What is horizontal auto-scaling ? scaling in or out
        Involves adding or removing instances (servers) to distribute the load.
        Examples: Web applications, APIs, and stateless services
 
