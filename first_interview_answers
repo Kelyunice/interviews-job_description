@@ -319,7 +319,8 @@ B- How can you run docker commands in  jenkins conatainer?
     i will  ensure  connectivity viia a VPGW (virtual Prvate Gateway) whiich links our unpremise database on cloud application by creatiing a secure VPN tunnel, IPsec tunnel that encrypt the network. I need to also secure the
      data that are running wiith my applications by putting in place SSL cert for encryption AT REST, In TRANSIT ... by using key management services.  Taking into consideration cost of our infratructure, nowadayss companiess are
     work with budget and you need to make sure that you are working within the budget.( if the objects they are accessing are logs then i will make use of a lifecycle policy sso that after 30 days the objects will move to another
-    part of our bucket to prevent cost. I can equally set alarm with the AS if the have to watch our resources)
+    part of our bucket to prevent cost. I can equally set alarm with the AS if the have to watch our resources). We could equally store app files in EBS volumes( if  the app has to persist data) rather than using instance store.
+    because thhe processing will  be fast since its not persisting data.
  
    6- How  do you ensure security in AWS?
     - security of my AWS account :This is done using Multi-factor authentication (email and password,  a device own my the owner of the accoumt)
@@ -334,7 +335,21 @@ B- How can you run docker commands in  jenkins conatainer?
 
   7- when we talk of relational database 
       - you need to look at the engine
-
+ 8- IP address types
+     - multicast: One-to-many communication (efficient) e.g Video streaming, IPTV
+     - Broadcast: One-to-all communication e.g ARP requests, DHCP
+     - unicast : A single IP address is advertised to one communication, and the closest server responds.e.g Web browsing, emails
+     - anycast: A single IP address is advertised from multiple locations, and the closest server responds. e.g CDN networks (Cloudflare, Akamai), DNS services.
+  9- A reversed proxy: is a server that is sitting on another server on premise (e.g HAProxy or NGINX) 
+  10- What are the different types of vvirtulization in AWS?
+       - virtual machines: They permit you to be able to run your applications on bare meters. They have their own operating systems that does not depend on the hosst operating system and therefore it becomes heavy
+       - Containers: They depend on the operating system of the host and since the contaiiner must be isolated from the host so that the file system of  thee  host doesnot have access to the filesystem of the container
+              because they are sharing the same kernel there could be a security concern
+  11- Types of migration> you need a service which is similar  to the service you are currently using. You also need a shema conversion tool which will convert the schema(kind of engine) of your tool to the schema of what you will be using) 
+       - migrating app from on premise(openshift own by RedHeart) to cloud ( AWS direct connect which is very fast, snowball which you order from AWS which will be available in 2 weeks) because the company wants to go 
+          global, reduce cost, and scale repidly 
+       - migrating and app from one platform to another platform e.g from monolilth to micro services. from an old unix platform to a linux platform
+       - move to opn migration:
 
 9- Terraform
     - How do you create infrastructure?
