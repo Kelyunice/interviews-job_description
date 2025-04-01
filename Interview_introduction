@@ -76,7 +76,16 @@ I have worked on diff projects and with diff teams.
          Impact of the project
          -  I was able to resolve incidence on time and made the system to be more reliable and performant
       5- What aspect permited you to monitor pod/app matrix
-         I used client liabries
+         I used client liabrie
+      6- what criteria did you use to configure or monitor a metrics and set alert?
+        - latency : because its a metrics that can affect the performance of an app which the users see to be very important. Together with the team we had to see what is the SLA, SLO e.g 96%. AN indicator for latency could
+                  be number of transactions processed per second=5000 within 3 min
+                  threshold if no of trans pros per second= 6000 within 3 then alert 
+                  96% meaning error budget of 4% (the down time that customers can allow for the app) this possibility to test new features and new things. iiif it falls below then there s instability in the system and no need
+                   to release  new features.
+        - I'm looking at success rate of app accessed:
+        - Number of 500 errors e.g 5% within 5 min 
+      7- observabilty is to  reduce the MTTI (mean time to investigate) and MTTR ( mean time to recover). You want to invest what has happened very fast and also recover from what has happened very fast.
 
 2- In another project which took about 12 months to realize. The team was 7 persons in an agile methodology mode. This was with IBM.
     The client had a pipeline that was not automated. A lot of things were done manually. 
@@ -139,7 +148,11 @@ I have worked on diff projects and with diff teams.
      10-  How can you optimze jobs in your pipelin if the pipeline is running slow?
           - by running 2 jobs in parallel if there are steps that don't depend on each other.e.g if you have a test that you want to do for an app that has to run on 2 OS linux and windows. since the are not depending
              on each other.The same test can run on linux and windows env(agents) that will speed up the pipeline.
-          - I can make sure that I am cloning a single branch in a repo and not the entire repo because it will take time to download the dependencies.   ( --single branch -b "branch name" git repo )
+          - I can make sure that I am cloning a single branch in a repo and not the entire repo because it will take time to download the dependencies since cloning the entire repo will take alot of bandwidth
+             ( --single branch -b "branch name" git repo )  or download the repo and store in the local so that when you are running your pipeline it will available in a kind of local catch and it will not take alot of bandwidth
+              again
+          - To be able to see the time it takes to clone a repo put "TIME" infront of "git clone"
+          - I clean old builds
      11- What is an agent in Jenkins?
            - It is the excutor of the job
      12- Which kind of agents have you used ?
@@ -147,7 +160,7 @@ I have worked on diff projects and with diff teams.
             - k8s containers/docker container : they are the best because they will be created when the job is scheduled and when the job is terminated they will also be terminated.
      13- In your pipeline do you do continous deployment or continous delivery?
            - Continous deployment is when the deployment phase is automated from CI to CD while continous delivery is when it is not automated because we want to check what goes to prod.
-           - Continous Deployment can be used in the TESTING ENV because you are just doing test but when it comes to PROD you use continous Deliivery. 
+           - Continous Deployment can be used in the TESTING ENV because you are just doing test but when it comes to PROD you use continous Delivery. 
    
      14- What are some of the agents used to run jobs?
               1- containers
@@ -215,6 +228,10 @@ I have worked on diff projects and with diff teams.
         - a shared library permiit collaboration among teams because it removes repetition.
         - It helps us to be reuse our pipeline because modification can be done on one place and then the same pipeline can be used in a different env ( DEV, STAGE, AND PROD)
           we can import the shared library into our jenkins file using @library "name of shred library" _
+     31- Example situation where I have used a groovy script to decongest the pipeline?
+        - stages where I have  alot of shell commands that are  passed in the Jenkins file whiich makes my pipeline so complex e.g at the level of the pipeline with docker we were building and image , we had
+          with docker  build, docker tag, docker push. All these aspects in the same stage made the pipeline to be so congested. I was able to remove them and put in a groovy script and incase there is any modification I
+          do it in the script. This permits not to be  mdifying our  Jenkinsfile  
 
  3- The 3rd project the company had a legacy app. 
         - The app had a problem to scale for increase in workload.
