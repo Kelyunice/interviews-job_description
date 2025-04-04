@@ -77,15 +77,30 @@ B- How can you run docker commands in  jenkins conatainer?
     - NodePort
     - Load balancer but will need cloud provider
     - External namespace
-        -Ingress controller
+        - Ingress controller 
+           (which type of INGRSS have you used =NGINX INGRESS, HAProxy,Traefik,  AWS ALB Ingress Controller, Kong Ingress 
+        - Layer 7 is an app layer support which provides routing based on host and path 
+
   9 - Is it possible to schedule a pod on a node that is tainted?
-   yes, if the pod has a toleration.
+          yes, if the pod has a toleration.
     A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Toleration Effect.
 
-  10- How can jenkins be able to run kubectl commands inside the k8s cluster?
+  10- How can jenkins be able to run kubectl commands inside the k8s cluster? 
        - since jenkins is a service we are going to 
           1- Authenticate jenkins using service account
           2- Authorize  jenkins using RBAC
+   11- What is pod policy?
+        Pod policy is used to control what policy can run inside the pod e.g containers should not run with root privileges?
+   12- Which deployment trategies have you been able to use?
+       - BLUE GREEN: this is wen you replicate the same env, and route traffc to both blue (active) and gree (thhe new) en and if everything is working as expected 
+                  I switch the label and the selector and users now see only the Green
+       - Cannary releases : 25 / 75 progressively thhis is so that if there's an issue everybody should not be affected
+       - Rolliing update whhhichh is the default startegy in k8s.
+   13- what is the difference between "kubectl create" and "kubectl apply"?
+        - Kubectl create : this used to create a resource that will not need to be modified (e.g
+        - kubectl apply : for resources that can be modified
+   14- A namespace is used to segregate a cluster between team to better manage resources.( Pods, Deployments, ReplicaSets, StatefulSets,DaemonSets, servces, ingress,
+                 configMaps, secrets, jobs, CronJobs, PVCs, Network Policies, ResourceQuotas, LimitRange, Role and RoleBinding) usng Kubectl get all -n "name-space"
 
 3- DOCKER SWAM
      - it is not very robust
