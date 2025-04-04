@@ -101,6 +101,37 @@ B- How can you run docker commands in  jenkins conatainer?
         - kubectl apply : for resources that can be modified
    14- A namespace is used to segregate a cluster between team to better manage resources.( Pods, Deployments, ReplicaSets, StatefulSets,DaemonSets, servces, ingress,
                  configMaps, secrets, jobs, CronJobs, PVCs, Network Policies, ResourceQuotas, LimitRange, Role and RoleBinding) usng Kubectl get all -n "name-space"
+   
+   15- What is the difference between a role and a cluster role?
+        - A role is limited to a namespace
+        - A cluster role is for the entire cluster. Admins have cluster role.
+   16- How do you upgrade your cluster?
+       - i use a Rolling update strategy meaning one-node at a time.
+       - I start by draining  the nodes makiing them unschedulable " kubectl drian "name of node" --ignore deamonset so that only core DNS pods and networking pods should be running like calico
+       - evict the nodes
+       - upgrade to the required version.( the kubect and kubelet version should not be more than 1 minor version from the k8s control plane because Kubernetes follows a version skew policy
+         to maintain stability, compatibility, and reliable operation across its components. 
+             - API compatibility: If they're too far apart, the older client may not understand the new APIs, or new clients might call APIs that don’t exist yet.
+             - stable communication: kubelet talks directly with the control plane (API server) so  if  they are far apart it might Misinterpret configs (e.g., scheduling or resource limits).
+               e.g control plane 1.29
+                   kubectl = 1.28, or 1.29, or 1.30
+                   kubelet = 1.28, or 1.29 but  not 1.30
+       - ones done, I unconrdone the node making schedulable again but pods which were not manage by a deployment or replica will not be scheduled again ones they are evicted.
+   17-  how can you make sure an app or deployment to run on a specific node?
+         - direct pin ( under spec, nodeName="")
+         - node affinity
+         - taint + toleration to the pod (kubectl taint nodes my-node key=value:NoSchedule) (pass the toleration in a yaml file with "key value"  and "tainte effect")
+   18- How do you ensure that each pod to be scheduled on each node. you don't want 2 of those podes to be scheduled on the same node?
+       - pod anti-affinity
+  19- how do you expose your app,explain the process?
+       -  Ingress provdes a layer 7 loadbalancing to be able to expose app externally, SSL termination. It is deployed insiide the cluster using helm and I put an ingress resource that wiiill be defining how to route that
+            traffic to the different backend services.
+       - Layer support routes traffic to multiple backends eiither based on the host or based on the path  (ALB , ingress)
+   20- what is the dfference between ALB and NLB?
+       - An ALB route traffic based on http and https protocols
+       - while A NLB routes traffic based on tcp, udp and tls ( TLS transport layer security) TLS encrypts the communication and runs over TCP
+   21- Https, http,tcp (transmission control protocol),udp,ftp,
+
 
 3- DOCKER SWAM
      - it is not very robust
