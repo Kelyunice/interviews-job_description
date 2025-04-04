@@ -33,6 +33,7 @@ I have worked on diff projects and with diff teams.
      1- what are those key metrics (something happened)
                           - logs ( What happened) using Flentd which aggregates, filters, and forwards logs from various sources to destinations like splunk, Kafka, S3, Grafana, cloudwatch, Datadog
                           - traces (open Telemetry) ( where it happened) (flow of request from  browser and back)? 
+                          - Events: they are time stampt and shows details of what has happened
                               - This will help optimise RTO ( Recovery time objective :  a key metric in disaster recovery and business continuity planning.
                                                              It represents the maximum acceptable amount of time that a system, application, or process can be 
                                                              offline following an unplanned disruption before causing significant harm to the business )
@@ -52,7 +53,7 @@ I have worked on diff projects and with diff teams.
      2- How did you monitor 
         - lnux servers: node exporters
         - K8s : kube state metrics
-        -  service/3rd party app: exporters and clent librares
+        -  service/3rd party app: exporters and clent librares e.g python client library for python app
         - containers: C-advsors 
         by using node exporters deployed in the helms chart
      3- What is alert fatique/nuissance ?
@@ -60,8 +61,8 @@ I have worked on diff projects and with diff teams.
             ones that could promt action)
         - Sometimes I can be working on an error alert but the alert keep coming in
      4- How do you manage alert incidence? How to resolve an incidence
-        - when there's an incidence I check my monitoring tool.
-        - Then I analyse  the impact of the incidence on the system.
+        - when there's an incidence I check my monitoring tool. 
+        - Then I analyse  the impact of the incidence on the system, I check the logs, I run some queries.
         - Then I document what has happen.
         - I inform the different parties that the incidence is affecting by making them know the situation that has occured and we are in progress on solving it.
         - I proceed to plan how the issue is supposed to be resolve with the team (those with the right expertise to be able to solve the issue).
@@ -86,6 +87,20 @@ I have worked on diff projects and with diff teams.
         - I'm looking at success rate of app accessed:
         - Number of 500 errors e.g 5% within 5 min 
       7- observabilty is to  reduce the MTTI (mean time to investigate) and MTTR ( mean time to recover). You want to investigate what has happened very fast and also recover from what has happened very fast.
+                  - SLO =
+                  - SLI = service level Indicator
+                  - SLA =
+      8- How does prometheuse collect metrics from the target?
+               - by adding the targets to the prometheuse config file ( add job name and target endpoint). After adding you need to refresh it by (Killall -HUB)
+               - For dynamic targets like on the cloud where we have containers and pods that keep on changing use service discovery feature in prometheuse to discover any service and add thhem to the
+               - role config and global config.
+     9- How do you reconcile data when you have alot of data and the time series data base has reached it limit?
+         I export it to a remote storage on the cloud like S3 , via the plugin which prometheus has which supports external API to be able to attach it
+     10- how do you monitor linux machines that are not running as k8s clusters?
+           - Install prometheuse on its own server  
+     11- How can you specify nodes where a playbook should be executed?
+          - by using the "when" directive
+               
 
 2- In another project which took about 12 months to realize. The team was 7 persons in an agile methodology mode. This was with IBM.
     The client had a pipeline that was not automated. A lot of things were done manually. 
