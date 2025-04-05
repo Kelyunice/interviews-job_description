@@ -24,6 +24,7 @@ A - How do you authenticate yourself/user in Jenkins?
          - when running jenkins it should be in plan text and not safe HTMl so that harcker can intercept
          - You can equally change the TCP port for inbound agents which is 50,000 . This port is used to connect the jenkins controller to the agent. You can disable it to make it more secured,  or use the Random port 
          - from default port 8080 to any other port in the   /etc/defaults/jenkins file
+
 B- How can you run docker commands in  jenkins conatainer?
       - By mounting the docker volume
       - docker run -d-p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
@@ -31,6 +32,11 @@ B- How can you run docker commands in  jenkins conatainer?
          - If you run your pipeline and see error like docker command not found  ===> it means the docker.sock file  has lost its executable command.
          - jenkins/jenkins:lts   ===> This is jenkins image
       - Jenkins can be able to run k8s command when it will be granted permission (authenticated as a service account, create roles, then we bind the roles) as a service user  
+   - Different types of credentials in Jenkinsfiles
+       - username and Password
+       - certificate
+       - secret text and secret files
+
 2- K8s
   1- Describe the k8s architecture
     1- It is made of Master nodes
