@@ -38,7 +38,9 @@ B- How can you run docker commands in  jenkins conatainer?
        - secret text and secret files
 
 2- K8s
-  1- Describe the k8s architecture
+    - scaling of pods is based on watching metrics server and is mostly horizontal AS
+    -  If it gets to a point were the nodes cannot more accept the scaling of the pod then we use cluster auto-scaling. Here we can use K8s event driven auto-scaler (keder) which is scaling based on events and not based on CPU utilization.
+  1- Describe the k8s architecture       
     1- It is made of Master nodes
        - API server - exposes all the api calls; its the entry point to the cluster, it authenticate any user, authorizes and then admits 
        - kube Scheduler. It is used to schedule pods. 
@@ -82,14 +84,14 @@ B- How can you run docker commands in  jenkins conatainer?
     - ClusterIP
     - NodePort
     - Load balancer but will need cloud provider
-    - External namespace
+    - External name
         - Ingress controller 
            (which type of INGRSS have you used =NGINX INGRESS, HAProxy,Traefik,  AWS ALB Ingress Controller, Kong Ingress 
         - Layer 7 is an app layer support which provides routing based on host and path 
 
   9 - Is it possible to schedule a pod on a node that is tainted?
           yes, if the pod has a toleration.
-    A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Toleration Effect.
+    A toleration specifies that a pod can ignore a certain tainte so that the pod can still be scheduled on the node. A tainte has a key value and the Tainte Effect.
 
   10- How can jenkins be able to run kubectl commands inside the k8s cluster? 
        - since jenkins is a service we are going to 
@@ -100,21 +102,21 @@ B- How can you run docker commands in  jenkins conatainer?
    12- Which deployment trategies have you been able to use?
        - BLUE GREEN: this is wen you replicate the same env, and route traffc to both blue (active) and gree (thhe new) en and if everything is working as expected 
                   I switch the label and the selector and users now see only the Green
-       - Cannary releases : 25 / 75 progressively thhis is so that if there's an issue everybody should not be affected
+       - Cannary releases : 25 / 75 progressively this is so that if there's an issue everybody should not be affected
        - Rolliing update whhhichh is the default startegy in k8s.
    13- what is the difference between "kubectl create" and "kubectl apply"?
         - Kubectl create : this used to create a resource that will not need to be modified (e.g
         - kubectl apply : for resources that can be modified
    14- A namespace is used to segregate a cluster between team to better manage resources.( Pods, Deployments, ReplicaSets, StatefulSets,DaemonSets, servces, ingress,
-                 configMaps, secrets, jobs, CronJobs, PVCs, Network Policies, ResourceQuotas, LimitRange, Role and RoleBinding) usng Kubectl get all -n "name-space"
+                 configMaps, secrets, jobs, CronJobs, PVCs, Network Policies, ResourceQuotas, LimitRange, Role and RoleBinding) using Kubectl get all -n "name-space"
    
    15- What is the difference between a role and a cluster role?
         - A role is limited to a namespace
         - A cluster role is for the entire cluster. Admins have cluster role.
    16- How do you upgrade your cluster?
        - i use a Rolling update strategy meaning one-node at a time.
-       - I start by draining  the nodes makiing them unschedulable " kubectl drian "name of node" --ignore deamonset so that only core DNS pods and networking pods should be running like calico
-       - evict the nodes
+       - I start by draining  the nodes making them unschedulable " kubectl drian "name of node" --ignore deamonset so that only core DNS pods and networking pods should be running like calico
+       - evict the pods
        - upgrade to the required version.( the kubect and kubelet version should not be more than 1 minor version from the k8s control plane because Kubernetes follows a version skew policy
          to maintain stability, compatibility, and reliable operation across its components. 
              - API compatibility: If they're too far apart, the older client may not understand the new APIs, or new clients might call APIs that don’t exist yet.
@@ -122,7 +124,7 @@ B- How can you run docker commands in  jenkins conatainer?
                e.g control plane 1.29
                    kubectl = 1.28, or 1.29, or 1.30
                    kubelet = 1.28, or 1.29 but  not 1.30
-       - ones done, I unconrdone the node making schedulable again but pods which were not manage by a deployment or replica will not be scheduled again ones they are evicted.
+       - ones done, I unconrdone the node making it schedulable again but pods which were not manage by a deployment or replica will not be scheduled again ones they are evicted.
    17-  how can you make sure an app or deployment to run on a specific node?
          - direct pin ( under spec, nodeName="")
          - node affinity
@@ -130,12 +132,12 @@ B- How can you run docker commands in  jenkins conatainer?
    18- How do you ensure that each pod to be scheduled on each node. you don't want 2 of those podes to be scheduled on the same node?
        - pod anti-affinity
   19- how do you expose your app,explain the process?
-       -  Ingress provdes a layer 7 loadbalancing to be able to expose app externally, SSL termination. It is deployed insiide the cluster using helm and I put an ingress resource that wiiill be defining how to route that
+       -  Ingress provides a layer 7 loadbalancing to be able to expose app externally, SSL termination. It is deployed inside the cluster using helm and I put an ingress resource that will be defining how to route that
             traffic to the different backend services.
-       - Layer support routes traffic to multiple backends eiither based on the host or based on the path  (ALB , ingress)
+       - Layer support routes traffic to multiple backends either based on the host or based on the path  (ALB , ingress)
    20- what is the dfference between ALB and NLB?
        - An ALB route traffic based on http and https protocols
-       - while A NLB routes traffic based on tcp, udp and tls ( TLS transport layer security) TLS encrypts the communication and runs over TCP
+       - while a NLB routes traffic based on tcp, udp and tls ( TLS transport layer security) TLS encrypts the communication and runs over TCP
    21- Https, http,tcp (transmission control protocol),udp,ftp,
 
 
@@ -146,13 +148,16 @@ B- How can you run docker commands in  jenkins conatainer?
    B- what are some of the best practices you have implemented when writing a docker file?
       - make of use of the .dockerignore to exclude files which are not very important for the context build.
       - use multi stage build to seperate the Build from the RUN
-      - I can use multiple && to chain multiple commands  into a single RUN statement, creating fewer layers.
+      - I use multiple && to chain multiple commands  into a single RUN statement, creating fewer layers.
       - make use of a light weight image like Alpine
   c- why use && when writing a docker file? operators in RUN instructions
-    - Combining commands with &&,prevents image Bloat  allows you to clean up temporary files in the same layer, reduces image size by removing unnecessary files.
+    - Combining commands with &&,prevents image Bloat allows you to clean up temporary files in the same layer, reduces image size by removing unnecessary files.
     - Speeds up builds by improving caching, Docker uses layer caching to speed up builds. If you change one line, Docker invalidates the cache for that line and all subsequent layers.
     - Ensures reliable execution by chaining dependent commands.
     - The && operator ensures that the next command only runs if the previous one succeeds (returns exit code 0)
+   D- we migrate from Node.js app to docker containers so as to handle scalability, container have pods meaning we would have multiple versions of the Node.js app that will be running as pods in the k8s cluster because of this we can scale.
+     - To do it we will use a Dockerfile to convert the Node.js app to an image and then it is going to run as a container. when we deploy the containerized app in k8s, k8s will be managing them as pods not as containers again. Docker creates containers,
+       k8s is abstract the containers from pods and we have multiple pods that will be running enabling scaling. if anythiing happends since pods are ephemeral I can destroy and new ones will be created since pods are handled by a replica and is abstracted by a deployment.
 
 4 - WHAT HAVE YOU BEEN ABLE TO DO WITH ANSIBLE
     - It is a tool used to do automation work like 
@@ -201,7 +206,7 @@ B- How can you run docker commands in  jenkins conatainer?
   11- How can you increase the number of playbooks to run in ANSIBLE ?
       - you can use a fork: fork=20
          ansible.cfg file
-     - For servers that are not running: you use dynamic enventory which permits to add inventory in the host file
+     - For servers that are not running: you use dynamic inventory which permits to add inventory in the host file
              - We have static inventory (A static inventory is a manually maintained file that lists all the managed nodes  written in YAML or JSON)  
                and Dynamic Inventory (A dynamic inventory is generated in real-time by querying external data sources, such as cloud providers, CMDBs, or other APIs .
              - an inventory defines the hosts and groups of hosts upon which Ansible commands, modules, and playbooks operate. 
@@ -274,7 +279,7 @@ B- How can you run docker commands in  jenkins conatainer?
         - netstat -tlup
         - ping for
         - dig for dns compliance 
-    - to check users in thee system 
+    - to check users in the system 
           /etc/passwd
     - To check resources that the system is running
            df -h, free -m
@@ -287,26 +292,36 @@ B- How can you run docker commands in  jenkins conatainer?
  
  8 - AWS
       IAM is an AWS service that can be used to control who has access to the cluster and who can do what. 
+        - we have programatic access
+        - console access
+      - for one resource to be able to talk to another resource it needs an IAM role where the bucket policy will permit the resource to talk to the bucket e.g EC2 instance
     - What is an S3 service
-      It's an AWS service is used to store object 
+      It's an AWS service is used to store objec.
+    - lifecycle policy of a bucket will manage the dfferent object within the bucketfrom one storage class to another ( standard, infrequent access, Glacier, and Deep Archive )
+    -  We can also have lifecycle policy for : services like Amazon S3, ECR (Elastic Container Registry), and EBS Snapshots.  
     - How do you upload objects into an S3
         1- via console ( the max size is 160 GB)
-        2- or command line ( up to 50 TB)
+        2- or command line ( up to 5TB)
     - how many S3 buckets can you have per AWS account?
         100 but you can apply to have up to 1000
+    - AWS cloudWatch can only store logs for 90 days after which it should be removed whereas S3 as long term backup (Glacier) and you can backup your logs for troubleshooting the system.
     - What is a bucket policy? 
          An S3 bucket policy is a JSON-based access control policy that defines permissions for Amazon S3 buckets and the objects they contain.
-     How do you control access into an S3 bucket?
+     - How do you control access into an S3 bucket?
        1-By using an Access Control List.
          This is a kind of permission given to be able to access individual objects from the bucket.
        2- A bucket policy.
-          A bucket is attached on the object in the bucket.
+          A policy is attached on the object in the bucket.
        You can replicate items on the bucket from one AWS account to another.
     - How do you secure data on AWS?
-      1- By using TLS, and SSL that permit you to encrypt data on transit
-      2- You can encrypt AT REST using server-side encryption or a client side encryption.
+      1- Use AWS secret manager:  to automatically rotate secrete e.g RDS password = Secure storage for secrets & configs
+      2-  Encryption at Rest: KMS, You can encrypt AT REST using server-side encryption or a client side encryption  = data protection
+      3- Encryption in Transit : Tls, SSL. = Secure communication
+      4- Access Control : IAM, bucket policy, = Limit who can access what
+      5- monitoriing : cloudtrial, config, GuardDuty = Track access and detect threats
+
     - AWS serverless services
-        - lamda 
+        - lamda functions
         - API gate ways
         - fargates
         - s3
@@ -314,7 +329,7 @@ B- How can you run docker commands in  jenkins conatainer?
        This a compute service that you can use to run code without provisioning or creating any server. 
        It is one of the fast way of running apps now because individuals don't want to carry the heavy lifting of managing infra. 
 
-    - What is A LAMDA FUNCTION? It the app code that can be written in python, nodejs, java, C-sharp, go
+    - What is A LAMDA FUNCTION? It the app code that can be written in python, Node.js, java, C-sharp, go
       It is a code that have been written to permit the job to be done. A dev can write a code but they don't want to provision any server/resources to deploy the app 
        so they will upload the code to a lambda function.
       Ones the lambda functions takes the code, you need to define the memory that your app will use to run on and AWS will create an env taking into consideration
@@ -393,13 +408,13 @@ B- How can you run docker commands in  jenkins conatainer?
      - unicast : A single IP address is advertised to one communication, and the closest server responds.e.g Web browsing, emails
      - anycast: A single IP address is advertised from multiple locations, and the closest server responds. e.g CDN networks (Cloudflare, Akamai), DNS services.
   9- A reversed proxy: is a server that is sitting on another server on premise (e.g HAProxy or NGINX) 
-  10- What are the different types of vvirtulization in AWS?
+  10- What are the different types of virtulization in AWS?
        - virtual machines: They permit you to be able to run your applications on bare meters. They have their own operating systems that does not depend on the hosst operating system and therefore it becomes heavy
        - Containers: They depend on the operating system of the host and since the contaiiner must be isolated from the host so that the file system of  thee  host doesnot have access to the filesystem of the container
               because they are sharing the same kernel there could be a security concern
   11- Types of migration> you need a service which is similar  to the service you are currently using. You also need a shema conversion tool which will convert the schema(kind of engine) of your tool to the schema of what you will be using) 
        - migrating app from on premise(openshift own by RedHeart) to cloud ( AWS direct connect which is very fast, snowball which you order from AWS which will be available in 2 weeks) because the company wants to go 
-          global, reduce cost, and scale repidly 
+          global, reduce cost, and scale rapidly 
        - migrating and app from one platform to another platform e.g from monolilth to micro services. from an old unix platform to a linux platform
        - move to opn migration:
 
