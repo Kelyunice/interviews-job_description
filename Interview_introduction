@@ -1,4 +1,4 @@
-Interview introduction
+  Interview introduction
 PaaC==> defining jenkinsfile in a code is pipeline as a code. A code is  anything that could be in the form of a file.
 Iac ==. defining infra  is a file
 name:
@@ -141,7 +141,7 @@ I have worked on diff projects and with diff teams.
          It was design to build an artifact which is a zip/tar file which will need to be tested to see that it is working as espected.
          Then it is going to be packaged and build into an image then pushed into an image registry.
      4- What kind of test was integrated into the pipeline?
-         - unit testing e.g Junit or jacoco: tesing the function individually . logging
+         - unit testing e.g Junit or jacoco: testing the function individually . logging
          - code scanning : sonarqube
          - Integration testing: tesing the different functionalities together ( logging and search tested together in the dev or testing env). This is done through a script
          - End to end testing: also UAT how the functionality will behave from the end user pespective. Also done through a script 
@@ -212,7 +212,7 @@ I have worked on diff projects and with diff teams.
             (consumes CPU, memory, and disk I/O, which can degrade the performance of the entire Jenkins instance)
          - The controller is the brain of Jenkins. If you run jobs on it and a job causes it to crash (due to excessive resource usage or faulty scripts), the entire Jenkins environment goes down.
          - Jenkins controllers are not meant for running multiple builds. Running jobs on the controller limits parallelism, which reduces the efficiency of your CI/CD pipeline.
-            Hence it is neccessary to use EC2 instance and containes to run jobs and build them.
+            Hence it is neccessary to use EC2 instance and containers to run jobs and build them.
      21- How were you interacting with Jenkins?
           - via the jenkins console (user interface)
           -  using the command line interface
