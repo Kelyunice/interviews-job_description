@@ -87,12 +87,14 @@ I have worked on diff projects and with diff teams.
         - I'm looking at success rate of app accessed:
         - Number of 500 errors e.g 5% within 5 min 
       7- observabilty is to  reduce the MTTI (mean time to investigate) and MTTR ( mean time to recover). You want to investigate what has happened very fast and also recover from what has happened very fast.
-                  - SLO =
+                  - SLO = 
+                         - 99.9% of login requests succeed in < 300ms
+                         - < 0.1% error rate for API requests
                   - SLI = service level Indicator
                   - SLA =
       8- How does prometheuse collect metrics from the target?
                - by adding the targets to the prometheuse config file ( add job name and target endpoint). After adding you need to refresh it by (Killall -HUB)
-               - For dynamic targets like on the cloud where we have containers and pods that keep on changing use service discovery feature in prometheuse to discover any service and add thhem to the
+               - For dynamic targets like on the cloud where we have containers and pods that keep on changing use service discovery feature in prometheuse to discover any service and add them to the
                - role config and global config.
      9- How do you reconcile data when you have alot of data and the time series data base has reached it limit?
          I export it to a remote storage on the cloud like S3 , via the plugin which prometheus has which supports external API to be able to attach it
