@@ -51,7 +51,7 @@ I have worked on diff projects and with diff teams.
             have a clear situation by collecting the logs through a detail analysis of the logs.
            if a pod is crashlooping, if you describe the pods you can see whether its the image
      2- How did you monitor 
-        - lnux servers: node exporters
+        - linux servers: node exporters
         - K8s : kube state metrics
         -  service/3rd party app: exporters and clent librares e.g python client library for python app
         - containers: C-advsors 
@@ -82,7 +82,7 @@ I have worked on diff projects and with diff teams.
         - latency : because its a metrics that can affect the performance of an app which the users see to be very important. Together with the team we had to see what is the SLA, SLO e.g 96%. AN indicator for latency could
                   be number of transactions processed per second=5000 within 3 min
                   threshold if no of trans pros per second= 6000 within 3 then alert 
-                  96% meaning error budget of 4% (the down time that customers can allow for the app) this possibility to test new features and new things. iiif it falls below then there s instability in the system and no need
+                  96% meaning error budget of 4% (the down time that customers can allow for the app) this possibility to test new features and new things. if it falls below then there s instability in the system and no need
                    to release  new features.
         - I'm looking at success rate of app accessed:
         - Number of 500 errors e.g 5% within 5 min 
