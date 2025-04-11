@@ -140,7 +140,6 @@ B- How can you run docker commands in  jenkins conatainer?
        - while a NLB routes traffic based on tcp, udp and tls ( TLS transport layer security) TLS encrypts the communication and runs over TCP
    21- Https, http,tcp (transmission control protocol),udp,ftp,
 
-
 3- DOCKER SWAM
      - it is not very robust
      - It does not have capacity to scale
@@ -188,7 +187,7 @@ B- How can you run docker commands in  jenkins conatainer?
           docker_container ==> Manage Docker containers
           docker_network ==>  Manage Docker networks
           helm ==> Manage Helm charts
-  5-  which module does  not respect the  principle of idempotence in ansible?
+  5-  which module does not respect the principle of idempotence in ansible?
         - Command Module         user module
         - shell module
   6- How many Playbooks should run
@@ -219,7 +218,7 @@ B- How can you run docker commands in  jenkins conatainer?
   14- By default what strategy does ansible use to excute the playbook?
       Ansible uses the linear strategy: for example if the playbook has to run on 10 servers it will execute stage1 on all servers before it can proceed.
       you can change it to parallel strategy
-  15- To reduce the time of execution of ansile ?
+  15- To reduce the time of execution of ansible ?
       - you can disable to gather facts ( gather fact: false)
       - change the default execution of the playbook from linear to parallel
   16- To know the time of execution of a playbook
