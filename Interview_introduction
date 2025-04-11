@@ -227,8 +227,8 @@ I have worked on diff projects and with diff teams.
           - superior or tech lead
           - Manager
      25- How did you ensure you 2 controllers were sync ?
-         - I ensure that the home directory which is actually where all the jobs are stored _/jenkins_home) should be synced using an storage like a network attached storage which makes sure that they are syncronized in case 
-           one of the controller is down, the active becomes the passive and the passive becomes active.
+         - I ensure that the home directory which is actually where all the jobs are stored _/jenkins_home) should be synced using an storage like a network attached storage (e.g Synology DiskStation DS920)
+            which makes sure that they are syncronized in case one of the controller is down, the active becomes the passive and the passive becomes active.
      26- How were you able to load balance job in the 2 controllers since they were in an active passive mode?
          - used a reversed proxy which sits on the 2 controllers to be able to route traffic if the controllers were runnng on premise machines but if they are running on the cloud the I use a loadbalancer.
      27- How was connection intated between the controller and the agents?
