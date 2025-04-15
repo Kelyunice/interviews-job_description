@@ -231,22 +231,22 @@ I have worked on diff projects and with diff teams.
             which makes sure that they are syncronized in case one of the controller is down, the active becomes the passive and the passive becomes active.
      26- How were you able to load balance job in the 2 controllers since they were in an active passive mode?
          - used a reversed proxy which sits on the 2 controllers to be able to route traffic if the controllers were runnng on premise machines but if they are running on the cloud the I use a loadbalancer.
-     27- How was connection intated between the controller and the agents?
+     27- How was connection initiated between the controller and the agents?
          - for linux agent jenkins initates the connection via SSH
          - for windows agent , the agent initiates the connection
-     28- While using docker as build agents were you using images that were already avaiilable or you had your own image that you were to buld to run the job and in which situation will you use them ?
+     28- While using docker as build agents were you using images that were already available or you had your own image that you were to buld to run the job and in which situation will you use them ?
          - we images that are already available that have all the dependences e.g if want to run a maven project I can use a maven Eclipse Temurin image that has all what is needed to buld. I can use it, it will run
            build a container and at the end terminate the container
          - In a situation where i have a project or app that have dependencies that are not available the I should be able to write my own Dockerfile having all the dependencies in it. Use it to be able to build my image
            upon the running of the pipeline, that image will be used to build the container where that app will be used
      29- Can you run a freestyle job as a pipeline job?
          YES, I can chain them using upstream and downstream project where one job runs and triggers another to run e.g build A if the other is successful.
-     30- what is a shred library and when is it feasible to use iit?
-        - a shared library permiit collaboration among teams because it removes repetition.
+     30- what is a shared library and when is it feasible to use it?
+        - a shared library permit collaboration among teams because it removes repetition.
         - It helps us to be reuse our pipeline because modification can be done on one place and then the same pipeline can be used in a different env ( DEV, STAGE, AND PROD)
-          we can import the shared library into our jenkins file using @library "name of shred library" _
+          we can import the shared library into our jenkins file using @library "name of shared library" _
      31- Example situation where I have used a groovy script to decongest the pipeline?
-        - stages where I have  alot of shell commands that are  passed in the Jenkins file whiich makes my pipeline so complex e.g at the level of the pipeline with docker we were building and image , we had
+        - stages where I have alot of shell commands that are  passed in the Jenkins file which makes my pipeline so complex e.g at the level of the pipeline with docker we were building and image , we had
           with docker  build, docker tag, docker push. All these aspects in the same stage made the pipeline to be so congested. I was able to remove them and put in a groovy script and incase there is any modification I
           do it in the script. This permits not to be  mdifying our  Jenkinsfile  
 
