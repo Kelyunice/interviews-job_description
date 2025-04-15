@@ -86,7 +86,7 @@ I have worked on diff projects and with diff teams.
                    to release  new features.
         - I'm looking at success rate of app accessed:
         - Number of 500 errors e.g 5% within 5 min 
-      7- observabilty is to  reduce the MTTI (mean time to investigate) and MTTR ( mean time to recover). You want to investigate what has happened very fast and also recover from what has happened very fast.
+      7- observabilty is treduce the MTTI (mean time to investigate) and MTTR ( mean time to recover). You want to investigate what has happened very fast and also recover from what has happened very fast.
                   - SLO = 
                          - 99.9% of login requests succeed in < 300ms
                          - < 0.1% error rate for API requests
