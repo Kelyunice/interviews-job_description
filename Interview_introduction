@@ -115,7 +115,7 @@ I have worked on diff projects and with diff teams.
    - I was able to automate the process by making sure that the pipeline was connected via a webhook that will trigger automatically upon a commit or pull request .
 
    - within the pipeline I had to integrate testing; static code analysis with Sonarqube, unit test (Jacoco) when code is written in java,
-        integration testing  ( using test automation tools like selenium for webapp, Postman for microservices, python for API). This done in Dev env 
+        integration testing (using test automation tools like selenium for webapp, Postman for microservices, python for API). This done in Dev env 
          and User acceptance within the pipeline using test tools like Junit and selenium. 
 
    - From there, at the level of security, I had to scan our image in the pipeline. I introduced Trivy to scan images and SonarQube for vulnerability detections.
@@ -222,7 +222,7 @@ I have worked on diff projects and with diff teams.
      23- How are you able to move your pipeline from the Dev env to the UAT, PROD?
           - via a pull request: the pull request is done because you have different branches (Dev branch, UAT branch, PROD branch)Normally the first branch is merged into the master, when it runs in the DEV env I check and see
              that everything is okay. Then I have to do a PULL REQUEST to merge the UAT branch into the MASTER BRANCH. Ones the pipeline run we are going to veriify the app in the UAT branch to check for integration testing,
-             there we do END TO END TESTING to see that everything is okay thhen its approved. We merge the next branch into the master that goes into production.
+             there we do END TO END TESTING to see that everything is okay then its approved. We merge the next branch into the master that goes into production.
      24- How many reviewer do you have to be able to viiew and confirm everything s okay.
           - superior or tech lead
           - Manager
