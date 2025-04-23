@@ -1,2 +1,106 @@
 key point
 
+ RELIABIILITY, AVAILABIILITY AND PERFORMANCE OF the application/system ( appp and the platform should be performant)
+This is to avoid downtime that can affect performance of the system especially when there's a new release
+- e.g misconfigurations because devops want to push things very fast
+- In such a situation where we are having instability, new release needs to be stopped because no need to release new feature which can break because the sytem is not working
+   we need to handle the stability of the sytem making sure that we are within the error budget before we move foward
+
+Key Task of SRe
+- determine indicators in the form of SLI, SLO,SLA
+- you need to measure reliability in form of SLI, SLO, SLA
+
+key tool SLIs
+
+what are SLI
+They are specific quantitative metrics that defines the performance and reliability of a service e.g if from customer point of view we see that availabilty is what is
+is very important, or the speed of response to a request that have been made , this becomes and indicator.
+
+From here I need to ask myself what metrics can be used to measure this indicator e.g latency. How can I monitor the speed of rquest made. we can set a threshold with respect to this indicator
+- if for 5 min, 30% of request made exceed 20 miliseconds then something is wrong, hence we should set and alert
+- SLI are expressed iin ratios because it represents the aspect of issues that are more critical to a user
+SLI are selected by ( devops team, SREs , and DEV, Product owner) because SLi should be aligned with users expectation and business goals.
+
+for a web service SLI could include
+- latency which is the time it takes for a request to be processed
+- availabilty which is the % of time when the service of operational
+- error rates which is the proportion of request that result in an error
+
+The aim of SRe is also to reduce MTTI and MTTR and also to minimise RTO and RPO
+
+     Error budget
+Becuase service are not 100% available there is a possibility of an incidence and we could have an error budget
+SLO= are specific targets that define the acceptable level of reliability for a service ( expressed in %)
+error is closely tide to the SLO and representd the allowed amount of error or downtime within a specified timeframe.
+
+- I use a dashboard on a excel sheet to document all incidence on a weekly bases ( and intergret it in a power point for presentation)
+  I gather these incidence from the various teams 
+  e.g on x day Y happened it was resolved 
+      on w day h happened , and its still in progress because there's an issue that is blocking 
+      on r day we need to do update of the sytem ( all the plan update for the week is there) 
+
+   - the updates which were done , what was the feedback e.g it caused alot of instability in the system an app and things didn't go well 
+- There are services which we have already identified their SLI that we are monitoring.
+- Y service could not perform well because its month end so its expected
+
+Example
+  we has an app which was aim at converting digital wallet. It was expected that the threshold was 85% within mid day, if 85% of the digital wallet have been converted
+  it is good but anything below 85 then there's an issue. I communicate with team looking for those with expertise to handle the issue for those that I cannot handle.
+      
+- AS an SRE I consistantly ensure monitoring of app by adding targets to the prometheus configuration file
+- I have been putting in place alerts to be able to fire alerts when threshold is exceeded via the alert manager.
+- I do queries to get inside infor on metrices that are critical to us like 500 errors, response time
+- I have written scripts that is able to identify branches in our source code which have not been utilized for the past 30 days so as to be able to a kind of audit.
+- I have reduced the time for pipelines to run Jenkins by making sure that DEV should be able to identify which branch they have to use
+     ( TIMER git clone --single branch "" ""url) or limiting it to a specific commit ( --depth 1)
+- I have been able to write Dockerfiles for migration of VM based deployments to containerized architecture. 
+   here i had core meetings with the dev team to collect requirements such as the app env( e.g ajva app what kind of env does it require), 
+   calls with the dev team to get information about configuration, I gt env variableees about the information, what commands will be needed to build and start the app
+   what kind of ports will that app use to listen, commands to do the test of the API, ones all of this infos is provided I need time to be able to understand the app
+   writing the Dockerfile to deploy the Dockerise app on a Docker Host manually in case ther's a failure II make a call with the dev team and most at times its always 
+   configuration issue or port issues that will cause that to fail. Ones the app is working well I creatre a helms chart to write the multiple manifest files the deploy them 
+   to a k8s cluster an test the app with couple of major test cases. In the k8s we will create a pipeline to deploy the app. I deploy to PREPROD env or test env partially
+   I use few replicas and few port, I observe for some days and i will still have some instance of that app still running on the VM. I am checking for important metrics like 500 errors
+   success rates, latency, restarts. If everything is working as expected we now do complete roll-out to the k8s cluster, from there we have a set up with the dev team
+   to educate them on how the things are going and also support them in  deployment issues, configuration issues where changes may be done and so on. 
+
+
+    - Another thing I have been involved in is creating Docker agent for my pipeline because I am deploying using agents as slave 
+   - I have been able to write Dockerfiles to create custom images for my pipeline agent
+   - I have been able to add users to k8s namespaces and give them specific roles
+  - Troubleshoot issues of OMKILL, deployment issues, image pull backoff (maybe image used is not available and cannot be found, or the tag is not correct or syntax issue),
+    crashlooping (memory issues, probes issues), init errors, config issues and permission issues.  
+
+ - I have been use scripts in a Jenkins to convert manual processes into automation.
+ - II have been able to migrate pipelines from freestyle job to pipeline job.(looking at the stages of a freestyle job and writing a new Jenkinfile)
+ - Addiiing multiple stages to my existng pipeline (e.g adding a test phase in my pipeline, sonarqube phase, scanning imgae)
+ - upgrading of Jenkins to a stable version because every 3 months a new version of Jenkins is released. 
+   Jenkins has 2 versions long term support(stability) and weekly releases ( to handle bug fixes). I need to be upgrading the Jenkins controllre to a stable version
+ - Installation and configuration of plugins such Blueocean that enable quick troubleshooting, Job history plugin that will enable me to audit who
+     made changes in a jenkins job, Job DSl plugin which is used to update jobs with their default configurations.
+ - Backup of the Jenkins home directory . Trying tio make Jenkins highly available by having 2 Jenkins controllers which are sync using a NAS or a SAN
+ - I have abdopted best practices of implementing jenkins like cleaning old builds logs so that it should not overload storage, time out for every job if a job exceeds a 
+   particular time the job should be stopped so that it releases the agent or slave for other jobs.
+ - I have been able to monitor the Jenkins controller by installing a prometheuse plugin in Jenkins which helps to know the number of jobs that are running, to know the jobs that succeeded
+   and those that failed.
+
+- Handling incidence and ensure proper documentation on confluence for incidence that have been resolved for futue reference.
+- On call rotation raising tickets when they arise and following up the resaolution of those tickets.
+
+    N1 - minor issues
+    N2  = if N1 cannot resolve it escalates it ( e.g a linux problem. some companies have support for their app
+    N3  = 
+
+   e.g we had an issue with one app , which was related to linux. we were doing a migration from an old system to a new system . After thing was documented and we 
+     had planned that the migrationwas supposed to take place on a weekend because activities are low. The issue is the miigration does not succed who is on a standby 
+    incase the migration does not succed. Who are the people that this app is affecting. To what extend will they be affected, what is the rollback plan, 
+    document it and everyone sign it.
+
+   e.g There was script which was supposed to help automate a particular task. The user who was supposed to execute that script couldn't do it because I could not give hime executable permission.
+     The people who were incharge of the app, we contacted them, we troubleshooted, shared screen and explained what the issue was intirely. They asked me to test and I tested in PREPROD but it was 
+     still failing. It was starting but after running for few seconds it stops. It was not sustainable. Maybe its a crone job that has to run for specific time, identifying all branches,
+    that have made than 30 days or all files ( we has a NFS where they files were about 5000 TB). We had to reduce these because it was already getting too large.
+    We had to find out those files which had a larger % and start reducng them from there. What are those files that have not been used for long.
+ - You can have a script that is going to run in a particular directory to find out any file that used for a certain period of time should be removed. You automate 
+   the process via a crontab ( execute the script on linux crontab -e) for you to program e.g everyday at midnight 
+ - 
