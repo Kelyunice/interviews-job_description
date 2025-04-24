@@ -39,7 +39,8 @@ B- How can you run docker commands in  jenkins conatainer?
 
 2- K8s
     - scaling of pods is based on watching metrics server and is mostly horizontal AS
-    -  If it gets to a point were the nodes cannot more accept the scaling of the pod then we use cluster auto-scaling. Here we can use K8s event driven auto-scaler (keder) which is scaling based on events and not based on CPU utilization.
+    -  If it gets to a point were the nodes cannot more accept the scaling of the pod then we use cluster auto-scaling. Here we can use K8s event driven auto-scaler (keder) which is scaling based on events 
+        and not based on CPU utilization.
   1- Describe the k8s architecture       
     1- It is made of Master nodes
        - API server - exposes all the api calls; its the entry point to the cluster, it authenticate any user, authorizes and then admits 
