@@ -367,27 +367,33 @@ B- How can you run docker commands in  jenkins conatainer?
       we can use EC2 compute services. The EC2 compute services can run the app on the virtual machines.Those app are they containerized app? If they are containerized app which means they will be converted to image, 
       AWS has container services that are both serverless and not serverless. AWS has ECS which is vendor login (no external addon) and EKS which is not. The EKS has different options. The question now will be does your
      Dev team have expertise to be able to manage thee cluster in terms of upgrade, patching (managed EKS, semi Managed EKS, fully managed where the worker nodes will be in the form of fargates which are serverless services)
-      The next thing to consider is how will the app be made highly available. If I am using virtual machines I need to make sure that my app is deployed in a region with more than 1 availability Zone because in case one has
+      
+    The next thing to consider is how will the app be made highly available. If I am using virtual machines I need to make sure that my app is deployed in a region with more than 1 availability Zone because in case one has
       a problem the other will still keep serving my traffic. I need to see how I can secure my cluster. Securing from the cloud pespective is making sure that I have curved out a virtual private cloud where my resources will be 
       running separate from other companies. I'm going to curve out the VPC, decide on the cidr block that my app is going to use in terms of provisioning the IP address that the servers are going to be using. I'm going 
       to have IGW that acts as entery point of internet into my cluster. I will make sure I put  in place a firewall around my subnets (NACL which are stateless) hence I will have to configure inbound role and ourbound role,
       SG aroud my EC2 instance which are statefull (configure inbound role and no outbound role). Ones this is done I will put in place a system of one way flow into my cluster which is a NAT gateway becaue from time to time
-      I need to update my k8s cluster with the stable version to fetch the package from the internet for update of my cluster. I need to think if my app needs a database i need to ask myself if its  a Relational database or non-relational
-      database. The issue here how to I make users to be able to access my app running inside the cluster in AWS. I need to be able to use a loadbalancer because I am having 2 clusters running in 2 availability zones so users
-      cannot access the clusters directly. The cluster needs to have 1 entry point which is a loadbalancer. A loadbalancer will sit ontop of the cluster to be able to loadbalance request on the different clusters. I'm
-      going to configure a loadbalancer to be able to loadbalnce to the backend or IP addresses and that will be an ALB because its a kind of layer 7 support that does host based routing. Apart from that my app should have a domain name
-     I should have a DNS which is route 53. The route 53 is going to be resolving the domain name into IP addresses. Once that is provisioned I'm going to create A records into my route 53 that is going to be resolving domaiin name into IP
-      addresses. In the route 53 i need to configure the TTL making sure that for high availability, request made from one client should be routed to the same server over a period of time to increase the spped and response 
+      I need to update my k8s cluster with the stable version to fetch the package from the internet for update of my cluster. 
+       
+     I need to think if my app needs a database i need to ask myself if its a Relational database or non-relational database. The issue here how do I make users to be able to access my app running inside the cluster in AWS. 
+    I need to be able to use a loadbalancer because I am having 2 clusters running in 2 availability zones so users cannot access the clusters directly. The cluster needs to have 1 entry point which is a loadbalancer.
+     A loadbalancer will sit ontop of the cluster to be able to loadbalance request on the different clusters. I'm going to configure a loadbalancer to be able to loadbalnce to the backend or IP addresses and that 
+     will be an ALB because its a kind of layer 7 support that does host based routing. Apart from that my app should have a domain name
+     I should have a DNS which is route 53. The route 53 is going to be resolving the domain name into IP addresses. Once that is provisioned I'm going to create A records into my route 53 that is going to be resolving domain name into IP
+      addresses. In the route 53 i need to configure the TTL making sure that for high availability, request made from one client should be routed to the same server over a period of time to increase the speed and response 
      time of our app. To equally increase the response time I can put in place a CDN ie cloudfront which is going to be catching our request based on our users location e.g request will be catched at edge location to reduce 
-     the time it takes to make a request and get a response. If my app will have to store some data or objects like photos, files, logs i could be able to usse S3 bucket which my app should be able to connect to the S3 bucket.
-     I need to be able to put in place IAM role to permit the EC2 instances where my apps are running to be able to talk to the S3 bucket, I need to configure bucket policy and access roles on the bucket to permit tha app to
-    be able to talk to another app.For those who have access to my AWS account I need to put in place IAM to be able to control who have access  to each resouurce by attaching roles to users and giving them permission. I would
-    equally put in place an ASG to be able to scale my resources when workloads increase (set threshold in confirmaty with cost reduction). if my applications are running in the cloud and want to talk to an unpremise application
-    i will  ensure  connectivity viia a VPGW (virtual Prvate Gateway) whiich links our unpremise database on cloud application by creatiing a secure VPN tunnel, IPsec tunnel that encrypt the network. I need to also secure the
-     data that are running wiith my applications by putting in place SSL cert for encryption AT REST, In TRANSIT ... by using key management services.  Taking into consideration cost of our infratructure, nowadayss companiess are
-    work with budget and you need to make sure that you are working within the budget.( if the objects they are accessing are logs then i will make use of a lifecycle policy sso that after 30 days the objects will move to another
-    part of our bucket to prevent cost. I can equally set alarm with the AS if the have to watch our resources). We could equally store app files in EBS volumes( if  the app has to persist data) rather than using instance store.
-    because thhe processing will  be fast since its not persisting data.
+     the time it takes to make a request and get a response. 
+     
+     If my app will have to store some data or objects like photos, files, logs I could be able to use S3 bucket which my app should be able to connect to the S3 bucket.
+     I need to be able to put in place IAM role to permit the EC2 instances where my apps are running to be able to talk to the S3 bucket, I need to configure bucket policy and access roles on the bucket to permit the app to
+    be able to talk to another app.For those who have access to my AWS account I need to put in place IAM to be able to control who have access to each resource by attaching roles to users and giving them permission. I would
+    equally put in place an ASG to be able to scale my resources when workloads increase (set threshold in confirmaty with cost reduction).
+
+    If my applications are running in the cloud and want to talk to an unpremise application I will ensure connectivity via a VPGW (virtual Private Gateway) which links our unpremise database and cloud application by
+    creating a secure VPN tunnel, IPsec tunnel that encrypt the network. I need to also secure the data that are running with my applications by putting in place SSL cert for encryption In TRANSIT, AT REST by using key
+   management services.  Taking into consideration cost of our infrastructure, nowadays companies are workiiing with budget and you need to make sure that you are working within the budget.
+  ( if the objects they are accessing are logs then I will make use of a lifecycle policy so that after 30 days the objects will move to another part of our bucket to prevent cost. I can equally set alarm with 
+  the AS if the have to watch our resources). We could equally store app files in EBS volumes(if  the app has to persist data) rather than using instance store because the processing will be fast since its not persisting data.
  
    6- How  do you ensure security in AWS?
     - security of my AWS account :This is done using Multi-factor authentication (email and password,  a device own my the owner of the accoumt)
