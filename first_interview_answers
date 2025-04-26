@@ -72,7 +72,7 @@ B- How can you run docker commands in  jenkins conatainer?
     The control manager in the master node will look at the desired state  vs the actual state ( which are pods managed by a deployment and replicas) and recreate them on other nodes available in the cluster. 
   5- What is livelinessProbe and ReadinessProbe
 
-  6- What is an init container
+  6- What is an init container , sidecar, ambassador  and adapter container
   - Generally, you have a pod that could be running 2 containers and you have an init container running beside the main container. In such a situation, 
     the init container is first going to check the environment to see whether it is ready before the main container starts running. It can download dependencies
 
@@ -100,7 +100,7 @@ B- How can you run docker commands in  jenkins conatainer?
           2- Authorize  jenkins using RBAC
    11- What is pod policy?
         Pod policy is used to control what policy can run inside the pod e.g containers should not run with root privileges?
-   12- Which deployment trategies have you been able to use?
+   12- Which deployment s trategies have you been able to use?
        - BLUE GREEN: this is when you replicate the same env, and route traffic to both blue (active) and green (the new) env and if everything is working as expected 
                   I switch the label and the selector and users now see only the Green
        - Cannary releases : 25 / 75 progressively this is so that if there's an issue everybody should not be affected
