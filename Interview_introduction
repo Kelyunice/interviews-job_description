@@ -203,7 +203,6 @@ I have worked on diff projects and with diff teams.
              after auth i authorize by giviing access to specific jobs or specific projects
      19- How can you ensure security in a pipeline when running a build?
           - check the mark up formater making sure it is in plain text and not HTMl format prevent hacker from intercepting
-          - change the TCP port 50,000 which enable jenkin's to connect to agents
           - I can change the default port which Jenkin's listens to in the /etc/defaults/jenkins to any port
           - Enabling cross-site request forgery ( CSRF) this is when someone who has been authenticated is being forced to unknowingly submit a malicious request to a web application they are authenticated with.
           - use folders to prevent team from seeing other teams work.
@@ -225,7 +224,7 @@ I have worked on diff projects and with diff teams.
           - via a pull request: the pull request is done because you have different branches (Dev branch, UAT branch, PROD branch)Normally the first branch is merged into the master, when it runs in the DEV env I check and see
              that everything is okay. Then I have to do a PULL REQUEST to merge the UAT branch into the MASTER BRANCH. Ones the pipeline run we are going to veriify the app in the UAT branch to check for integration testing,
              there we do END TO END TESTING to see that everything is okay then its approved. We merge the next branch into the master that goes into production.
-     24- How many reviewer do you have to be able to viiew and confirm everything s okay.
+     24- How many reviewer do you have to be able to view and confirm everything s okay.
           - superior or tech lead
           - Manager
      25- How did you ensure you 2 controllers were sync ?
@@ -237,9 +236,9 @@ I have worked on diff projects and with diff teams.
          - for linux agent jenkins initates the connection via SSH
          - for windows agent , the agent initiates the connection
      28- While using docker as build agents were you using images that were already available or you had your own image that you were to buld to run the job and in which situation will you use them ?
-         - we images that are already available that have all the dependences e.g if want to run a maven project I can use a maven Eclipse Temurin image that has all what is needed to buld. I can use it, it will run
+         - we use images that are already available that have all the dependences e.g if I want to run a maven project I can use a maven Eclipse Temurin image that has all what is needed to buld. I can use it, it will run
            build a container and at the end terminate the container
-         - In a situation where i have a project or app that have dependencies that are not available the I should be able to write my own Dockerfile having all the dependencies in it. Use it to be able to build my image
+         - In a situation where I have a project or app that have dependencies that are not available the I should be able to write my own Dockerfile having all the dependencies in it. Use it to be able to build my image
            upon the running of the pipeline, that image will be used to build the container where that app will be used
      29- Can you run a freestyle job as a pipeline job?
          YES, I can chain them using upstream and downstream project where one job runs and triggers another to run e.g build A if the other is successful.
