@@ -14,6 +14,7 @@ I have worked on diff projects and with diff teams.
 
       This project took me 10 months to deliver and we were in a team of 5 persons
            They had an old system of observability that was posing issues with alert fatigues. 
+           Identifying key metrics which could promt action
            The system was creating a problem of visibility on the logs and matrices in real time. 
            It was difficult to handle incidents when they arise because there was no actual visibility. 
 
@@ -107,7 +108,7 @@ I have worked on diff projects and with diff teams.
                
 
 2- In another project which took about 12 months to realize. The team was 7 persons in an agile methodology mode. This was with IBM.
-    The client had a pipeline that was not automated. A lot of things were done manually. 
+    The client had a pipeline where some of the processes  were not automated. A lot of things were done manually. 
     
           - Deployments were done with a manual trigger. 
           - Testing was done manually. That resulted in slow release of the software app.
