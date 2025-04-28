@@ -127,10 +127,10 @@ Example
     crashlooping (memory issues, probes issues), init errors, config issues and permission issues.  
 
  - I have been use scripts in a Jenkins to convert manual processes into automation.
- - II have been able to migrate pipelines from freestyle job to pipeline job.(looking at the stages of a freestyle job and writing a new Jenkinfile)
- - Addiiing multiple stages to my existng pipeline (e.g adding a test phase in my pipeline, sonarqube phase, scanning imgae)
+ - I have been able to migrate pipelines from freestyle job to pipeline job.(looking at the stages of a freestyle job and writing a new Jenkinfile)
+ - Adding multiple stages to my existng pipeline (e.g adding a test phase in my pipeline, sonarqube phase, scanning imgae)
  - upgrading of Jenkins to a stable version because every 3 months a new version of Jenkins is released. 
-   Jenkins has 2 versions long term support(stability) and weekly releases ( to handle bug fixes). I need to be upgrading the Jenkins controllre to a stable version
+   Jenkins has 2 versions long term support(stability) and weekly releases ( to handle bug fixes). I need to be upgrading the Jenkins controler to a stable version
  - Installation and configuration of plugins such Blueocean that enable quick troubleshooting, Job history plugin that will enable me to audit who
      made changes in a jenkins job, Job DSl plugin which is used to update jobs with their default configurations.
  - Backup of the Jenkins home directory . Trying tio make Jenkins highly available by having 2 Jenkins controllers which are sync using a NAS or a SAN
@@ -159,3 +159,11 @@ Example
  - You can have a script that is going to run in a particular directory to find out any file that used for a certain period of time should be removed. You automate 
    the process via a crontab ( execute the script on linux crontab -e) for you to program e.g everyday at midnight 
  - 
+   DIFFERENT TYPES OF NAMESPACES IN LINUX
+  - PID :Process IDs                        : Processes have their own numbering
+  - CGROUP : Control groups                 : Manage and limit resources (CPU, memory, etc.)
+  - NET : Network interfaces, IP addresses  : Containers have their own IP
+  - MNT : Mount points (file systems)       : Different views of mounted filesystems
+  - UTS : Hostname and domain name          : Containers can have custom hostnames
+  - IPC : Inter-Process Communication       : Separate message queues, semaphores
+  - User group :User and group IDs          : Processes can have different users inside a namespace
