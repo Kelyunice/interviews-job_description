@@ -37,7 +37,32 @@ Key Task of SRE
     - Helm version 3
   WHen you do Helms craet it creates the helm client
      To Deploy a helms cgart ( helms install "release name" "chart name"), it its not working as expected I can do rollback or upgrade of the helms chart.
-5) How do you swthc between DEV, staging ANd ProD environment and how do you include it in your pipeline? 
+5) How do you swthc between DEV, staging And ProD environment and how do you include it in your pipeline? 
+  create a pull request to the DEV env, and its deployed there and we do testing if everything is okay
+6) How do you include it in your pipeline?
+   AT the level of stages, I use the "when directory"
+7) Can you list some automation task you have been able to realis when working?
+  - I have written scripts to delete log files that are not more used again
+  - I have written scripts to identify branches that in the github are not active.
+  - I have written scrips to automate the creation of users , attributing permission.
+  - Ansible playbooks to configure servers
+8) If users reachout to you that the app is not available what will you do?
+  - check my tool
+
+9) can you share a sitauation you faced and how you were able to resolve it?
+   - I has a situation where we were doing a migration, we were using a script which was aimed at doing some conversion of  a file into a different file extension. The script kept failing after few seconds. It was a concern
+     because the script needed to run before the migration could take place. Time was an issue and it was a blockage on the prroject. We had to troubleshoot to see what the issue was, verified and after identifying 
+     that it was  permission issue that was causing the script not to run as expected and this could not be adjusted because I was not an admin. I had to contact the admin. They chexcked the problem and worked on it but once
+     it was run it didnot succeed again. They fixed it again we run again in preprod it worked and we moved it to Prod.
+
+  - we had this banking app which was aim at valorising digital wallet of clients. The app was a critical app to us. One of the key indicator was the "time it will take to convert the digital wallet". If 85% of the digital wallet is 
+   converted before mid-day then we consideer that is working very well otherwise its not working as expected. One day the app was down, nothing was working. It caused a panic in the whole sytem because many different department
+   were concern so we needed to resolve the issue as fast as possible so as to reduce the impact it will have on the system( the MTTI and MTTR). we had to get on contact with the team that was involved in developing that app.
+   I was with them, we had to checking . It took us about 5 hours. The problem was that " the configuration, the properties file for that app was showing down. Onee of the configuration was showing down that is why it 
+   was not working. we had to re-adjust the properties file to be showing up so that it can connect. Once the connection was done. we tested in preprod and we tested and everything was working.
+    - another challenge here was that there was no formal documentation in place to see what had happened to be able to resolve the problem. After the incidence I was able to document the issue and the process.
+
+  - The monitoring tool that was in place was creating alert fatigue, I had to fine tune them so that alerts would promt action.
 
 
 key tool SLIs
