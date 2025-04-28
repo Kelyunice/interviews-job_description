@@ -1,14 +1,44 @@
 key point
 
  RELIABIILITY, AVAILABIILITY AND PERFORMANCE OF the application/system ( appp and the platform should be performant)
-This is to avoid downtime that can affect performance of the system especially when there's a new release
+  This is to avoid downtime that can affect performance of the system especially when there's a new release
 - e.g misconfigurations because devops want to push things very fast
 - In such a situation where we are having instability, new release needs to be stopped because no need to release new feature which can break because the sytem is not working
    we need to handle the stability of the sytem making sure that we are within the error budget before we move foward
 
-Key Task of SRe
+Key Task of SRE 
 - determine indicators in the form of SLI, SLO,SLA
 - you need to measure reliability in form of SLI, SLO, SLA
+
+ QUESTIONS
+1) How would you monitor a new app?
+  - It will depend on the type of app wether its a legacy app or a microservice app. for Micro app it would certainly be running in a k8s cluster. Here I would use prometheuse since its good for micr serv app, and grafana
+  - I'm going to use service discovery (or add the target into the prom configure file) to be able to discover the app and be able to scrab the metrics. Normally for such app I will be able to monitor key metrics that important to the use to be able to use as indicators 
+    to trigger alerts if something happends.( no of errors, no of request to help me know the volume of my transaction, latency, ) Its a modern way which prom uses to dicover files by making sure of consistency so that we avoid
+    some disruption each time we have to reload. 
+       I can use hashicorp consul (I put the endpoint of the target)
+       I can use a custom file (target.yaml)
+  - If i want to monitor the k8s cluster itself I use the kube state metric, I can monitor the call that are made on the API server, kubelet,deployments.
+  - For the worker nodes which k8s is using, I deploy a node exporter
+
+2) what do you understand by SLI,SLO and SLA
+  SLI are indicator that measure the performance of an app. e.g if we have an app that is running and we want to determind the indicators which are important for the performance we need to find out from the users of that app
+  which aspect of that is very important to them.e.g users value the response time of the app. We look at which indicator can evaluate the response time of the app e.g latancy. The time it takes to make a request and get a
+  response. we now set a threshold if exceeded an alert should be fired. The alert is fired to the person responsible to take action. The aim is to catch issues before its being identified by the user.
+  
+  - After identifying the indicator I need to set the SLO. The objective could be that 96% of our request should not go above this threshold. Our error budget here is 4% 
+  - The SLA is a formal aggrement that we have with the clients that using the app. We are telling them that 94% of the time the app will be available. This is so that in case the Aggrement is not met, we still have 2% to be
+    able to adjust.
+3) How would you write manifest files if you want to deploy an app?
+  - I use helms charts to write manifest file. Helms is going to produce the chart, I edit the files and customize the deployments in the values.yaml file ( Version, enviroment, image,   )
+    It makes the file more reuseable because I can share it accross multiple teams. Some companies have private Helms repo. I fetch my chart from, templtae it and adjust. I deploy the app from the pipeline using Helm.
+4) Have you ever used Helm chart. Which vrsion?
+    - Helms version 2 (this was available 2 years ago. It had a security concerncalled the TILLER, a request that goes to the API to makee request for app to be deployed. The TILLER was deployed which admin previledges)
+    - Helm version 3
+  WHen you do Helms craet it creates the helm client
+     To Deploy a helms cgart ( helms install "release name" "chart name"), it its not working as expected I can do rollback or upgrade of the helms chart.
+5) How do you swthc between DEV, staging ANd ProD environment and how do you include it in your pipeline? 
+
 
 key tool SLIs
 
@@ -26,11 +56,11 @@ for a web service SLI could include
 - availabilty which is the % of time when the service of operational
 - error rates which is the proportion of request that result in an error
 
-The aim of SRe is also to reduce MTTI and MTTR and also to minimise RTO and RPO
+The aim of SRE is also to reduce MTTI and MTTR and also to minimise RTO and RPO
 
      Error budget
 Becuase service are not 100% available there is a possibility of an incidence and we could have an error budget
-SLO= are specific targets that define the acceptable level of reliability for a service ( expressed in %)
+SLO = are specific targets that define the acceptable level of reliability for a service ( expressed in %)
 error is closely tide to the SLO and representd the allowed amount of error or downtime within a specified timeframe.
 
 - I use a dashboard on a excel sheet to document all incidence on a weekly bases ( and intergret it in a power point for presentation)
