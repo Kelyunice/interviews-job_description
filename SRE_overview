@@ -13,9 +13,9 @@ Key Task of SRE
  QUESTIONS
 1) How would you monitor a new app?
   - It will depend on the type of app wether its a legacy app or a microservice app. for Micro app it would certainly be running in a k8s cluster. Here I would use prometheuse since its good for micr serv app, and grafana
-  - I'm going to use service discovery (or add the target into the prom configure file) to be able to discover the app and be able to scrab the metrics. Normally for such app I will be able to monitor key metrics that important to the use to be able to use as indicators 
-    to trigger alerts if something happends.( no of errors, no of request to help me know the volume of my transaction, latency, ) Its a modern way which prom uses to dicover files by making sure of consistency so that we avoid
-    some disruption each time we have to reload. 
+  - I'm going to use service discovery (or add the target into the prom configure file) to be able to discover the app and be able to scrab the metrics. Normally for such app I will be able to monitor key metrics
+    that important to the use to be able to use as indicators to trigger alerts if something happends.( no of errors, no of request to help me know the volume of my transaction, latency, ) Its a modern way which prom 
+    uses to dicover files by making sure of consistency so that we avoid some disruption each time we have to reload. 
        I can use hashicorp consul (I put the endpoint of the target)
        I can use a custom file (target.yaml)
   - If i want to monitor the k8s cluster itself I use the kube state metric, I can monitor the call that are made on the API server, kubelet,deployments.
