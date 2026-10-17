@@ -1,0 +1,1197 @@
+CONTAINER DEPLOYMENT PRACTICE PROJECT 
+
+KEY STEPS
+
+Project setup — Node.js application, Dockerfile and project structure.
+
+
+
+Git and GitHub — repository creation, initialization, commits and pushing.
+
+
+
+Docker image creation — building and running the container.
+
+
+
+Docker Hub publishing — authentication, repository setup, tagging and pushing.
+
+
+
+GitHub Actions CI/CD — workflow configuration, repository secrets and troubleshooting the initial login failure.
+
+
+
+Commit-SHA tagging — updating ci.yml, committing, pushing and verifying the new image tag.
+
+
+
+Rollback preparation — preserving original-1.0.
+
+
+
+Rollback execution — pulling the backup image, running a separate container and testing it with curl.
+
+
+
+Troubleshooting notes — errors, how we investigated them, and how we resolved them.
+
+
+
+# Container Deployment Practice
+## End-to-End DevOps Project Documentation
+
+**Project owner:** Kely-Unice  
+**GitHub repository:** https://github.com/Kelyunice/container-deployment-practice  
+**Docker Hub repository:** https://hub.docker.com/repository/docker/kelyunice1419/container-deployment-practice  
+**Environment:** Windows 11, WSL Ubuntu, Docker, Git, GitHub Actions  
+**Status:** CI/CD pipeline successful; commit-SHA image tagging verified; original image preserved; rollback container tested successfully.
+
+---
+
+# 1. Project objective
+
+The goal was to build a simple Node.js application, package it into a Docker image, publish the image to Docker Hub automatically using GitHub Actions, identify builds with unique Git commit SHA tags, and practise retrieving an older image for rollback.
+
+This project demonstrates several important DevOps skills:
+
+- Linux terminal navigation and file management
+- Node.js application basics
+- Docker image creation and container management
+- Git version control
+- GitHub repository management
+- Docker Hub authentication and image publishing
+- GitHub Actions CI/CD automation
+- Repository secrets management
+- Container troubleshooting
+- Image versioning and rollback preparation
+
+## Final architecture
+
+Developer changes code → Git commit → Push to GitHub → GitHub Actions runs → Docker image builds → Image is pushed to Docker Hub → Image can be pulled and run as a container.
+
+---
+
+# 2. Project environment
+
+The project was developed in WSL Ubuntu on Windows.
+
+The working directory was:
+
+```bash
+~/linux_practice/container-deployment-practice
+```
+
+The full Linux path was:
+
+```text
+/home/user/linux_practice/container-deployment-practice
+```
+
+To navigate to the project:
+
+```bash
+cd ~/linux_practice/container-deployment-practice
+```
+
+To verify the current directory:
+
+```bash
+pwd
+```
+
+Expected path:
+
+```text
+/home/user/linux_practice/container-deployment-practice
+```
+
+## Docker context troubleshooting
+
+We used the Docker `default` context because the `desktop-linux` context had previously failed in this environment.
+
+For consistency, our Docker commands used:
+
+```bash
+docker --context default
+```
+
+For example:
+
+```bash
+docker --context default images
+```
+
+This lists the images available through the working Docker context.
+
+---
+
+# 3. Application creation
+
+The project contained four main files:
+
+```text
+container-deployment-practice/
+├── Dockerfile
+├── index.js
+├── package.json
+└── .github/
+    └── workflows/
+        └── ci.yml
+```
+
+## 3.1 Create the project directory
+
+The directory was created under `linux_practice`.
+
+The general commands for creating and entering a directory are:
+
+```bash
+mkdir container-deployment-practice
+cd container-deployment-practice
+```
+
+If the directory already exists, do not run `mkdir` again. Navigate into it instead.
+
+## 3.2 Create `index.js`
+
+The application code was:
+
+```javascript
+const http = require('http');
+
+const PORT = process.env.PORT || 3000;
+const APP_MESSAGE = process.env.APP_MESSAGE || 'Hello from Container Deployment Practice!';
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end(APP_MESSAGE + '\n');
+});
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+### What this code does
+
+- Imports Node.js's built-in HTTP module.
+- Uses port `3000` by default.
+- Allows the application message to be configured with the `APP_MESSAGE` environment variable.
+- Responds to HTTP requests with plain text.
+- Listens on `0.0.0.0`, allowing the application to accept connections through the container's network interface.
+
+The default response is:
+
+```text
+Hello from Container Deployment Practice!
+```
+
+## 3.3 Create `package.json`
+
+```json
+{
+  "name": "container-deployment-practice",
+  "version": "1.0.0",
+  "description": "A simple container deployment and troubleshooting project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+```
+
+The `start` script lets us start the application with:
+
+```bash
+npm start
+```
+
+The project uses Node.js's built-in HTTP module, so no additional application dependency was required.
+
+## 3.4 Create the Dockerfile
+
+```dockerfile
+FROM node:24-alpine
+
+WORKDIR /app
+
+COPY package.json ./
+COPY index.js ./
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+### Explanation
+
+- `FROM node:24-alpine` selects the Node.js base image.
+- `WORKDIR /app` sets the working directory inside the container.
+- `COPY` transfers the application files into the image.
+- `EXPOSE 3000` documents the application's listening port.
+- `CMD` starts the Node.js application when the container runs.
+
+---
+
+# 4. Git and GitHub setup
+
+## 4.1 Create a separate Git repository
+
+This project needed its own GitHub repository, separate from the earlier Bash deployment automation project.
+
+The repository created was:
+
+```text
+Kelyunice/container-deployment-practice
+```
+
+GitHub URL:
+
+https://github.com/Kelyunice/container-deployment-practice
+
+Inside the project directory, Git was initialized:
+
+```bash
+git init
+```
+
+The branch was set to `main`:
+
+```bash
+git branch -M main
+```
+
+## 4.2 Stage the project files
+
+The following command staged the application files and workflow:
+
+```bash
+git add .github/ Dockerfile index.js package.json
+```
+
+To check the staged files:
+
+```bash
+git status
+```
+
+## 4.3 Create the initial commit
+
+```bash
+git commit -m "Add container deployment practice"
+```
+
+The initial project commit was:
+
+```text
+7968652
+```
+
+## 4.4 Connect the remote repository
+
+```bash
+git remote add origin https://github.com/Kelyunice/container-deployment-practice.git
+```
+
+Verify the remote:
+
+```bash
+git remote -v
+```
+
+Expected remote URL:
+
+```text
+https://github.com/Kelyunice/container-deployment-practice.git
+```
+
+## 4.5 Push the project
+
+```bash
+git push -u origin main
+```
+
+The push succeeded, and the local `main` branch began tracking `origin/main`.
+
+### Important repository lesson
+
+The project was originally inside the parent `linux_practice` directory, which already belonged to another Git repository. Initializing Git inside `container-deployment-practice` created a separate repository for this project.
+
+Always verify the current directory and remote before committing or pushing:
+
+```bash
+pwd
+git remote -v
+git status
+```
+
+This reduces the risk of accidentally publishing changes to the wrong project.
+
+---
+
+# 5. Build and run the Docker image
+
+The project image was built locally using the Dockerfile.
+
+The build command for the initial local image is:
+
+```bash
+docker --context default build -t container-deployment-practice:1.0 .
+```
+
+The final `.` means Docker should use the current directory as the build context.
+
+The image tag was:
+
+```text
+container-deployment-practice:1.0
+```
+
+To list local images:
+
+```bash
+docker --context default images
+```
+
+The local image ID observed was:
+
+```text
+bbee2f8dc939
+```
+
+## Run the application container
+
+The original application container was started with:
+
+```bash
+docker --context default run -d \
+  --name container-deployment-practice \
+  -p 3001:3000 \
+  container-deployment-practice:1.0
+```
+
+This runs the container in the background and maps host port `3001` to container port `3000`.
+
+Test the application:
+
+```bash
+curl http://localhost:3001
+```
+
+Expected response:
+
+```text
+Hello from Container Deployment Practice!
+```
+
+### Port mapping
+
+The format is:
+
+```text
+HOST_PORT:CONTAINER_PORT
+```
+
+In our command:
+
+```text
+3001:3000
+```
+
+Port `3001` is used on the computer, while the application listens on port `3000` inside the container.
+
+---
+
+# 6. Publish the image to Docker Hub
+
+The Docker Hub repository was:
+
+```text
+kelyunice1419/container-deployment-practice
+```
+
+## 6.1 Log in to Docker Hub
+
+The Docker CLI was authenticated using:
+
+```bash
+docker --context default login --username kelyunice1419
+```
+
+The Docker Hub access token was entered interactively. The token must remain private and should never be committed to Git.
+
+Successful authentication displays:
+
+```text
+Login Succeeded
+```
+
+Docker warned that credentials could be stored unencrypted in:
+
+```text
+/home/user/.docker/config.json
+```
+
+This is an important security consideration. Use an appropriate credential helper where possible, especially on shared or production machines.
+
+## 6.2 Tag the local image with its Docker Hub name
+
+```bash
+docker --context default tag \
+  container-deployment-practice:1.0 \
+  kelyunice1419/container-deployment-practice:1.0
+```
+
+A Docker image can have multiple tags that refer to the same underlying image.
+
+## 6.3 Push the image
+
+```bash
+docker --context default push \
+  kelyunice1419/container-deployment-practice:1.0
+```
+
+The image was published successfully and became visible on Docker Hub.
+
+Repository:
+
+https://hub.docker.com/repository/docker/kelyunice1419/container-deployment-practice
+
+### Push versus pull
+
+- `docker push` uploads a tagged image to a registry.
+- `docker pull` downloads a tagged image from a registry.
+- `docker tag` gives an image another name; it does not rebuild the image.
+
+---
+
+# 7. Automate publishing with GitHub Actions
+
+The project uses this workflow file:
+
+```text
+.github/workflows/ci.yml
+```
+
+Its purpose is to build and publish the Docker image automatically whenever code is pushed to `main`, or when the workflow is manually started.
+
+## 7.1 Final workflow configuration
+
+The workflow now contains two image tags:
+
+```yaml
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            kelyunice1419/container-deployment-practice:1.0
+            kelyunice1419/container-deployment-practice:${{ github.sha }}
+```
+
+## 7.2 Understand the workflow
+
+### Trigger
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+```
+
+This means the workflow can run after a push to `main` or through a manual workflow dispatch.
+
+### Runner
+
+```yaml
+runs-on: ubuntu-latest
+```
+
+GitHub provides a hosted Ubuntu runner to execute the workflow.
+
+### Checkout
+
+```yaml
+uses: actions/checkout@v4
+```
+
+Downloads the repository contents into the runner's workspace.
+
+### Docker Buildx
+
+```yaml
+uses: docker/setup-buildx-action@v3
+```
+
+Prepares Docker Buildx for building the image.
+
+### Authentication
+
+```yaml
+username: ${{ secrets.DOCKERHUB_USERNAME }}
+password: ${{ secrets.DOCKERHUB_TOKEN }}
+```
+
+Reads the Docker Hub credentials from GitHub repository secrets.
+
+### Build and push
+
+```yaml
+context: .
+push: true
+```
+
+Uses the repository root as the build context and pushes the built image to Docker Hub.
+
+The `tags` block gives the built image two tags.
+
+---
+
+# 8. Troubleshooting GitHub Actions authentication
+
+Our first workflow run failed at the Docker Hub login step.
+
+The observed error was:
+
+```text
+Error: Username and password required
+```
+
+This told us that the login action did not receive the required credentials.
+
+## 8.1 Inspect the failed workflow
+
+In GitHub:
+
+1. Open the project repository.
+2. Select the **Actions** tab.
+3. Open the failed workflow run.
+4. Select the failed **Log in to Docker Hub** step.
+5. Read the error message.
+
+This is the first troubleshooting habit: inspect the exact failing step before changing configuration.
+
+## 8.2 Create the repository secrets
+
+We opened:
+
+**GitHub repository → Settings → Secrets and variables → Actions**
+
+We created the following repository secrets:
+
+| Secret name | Value |
+|---|---|
+| `DOCKERHUB_USERNAME` | `kelyunice1419` |
+| `DOCKERHUB_TOKEN` | A Docker Hub personal access token with Read & Write permission |
+
+The token was created in Docker Hub and entered into GitHub's secret-value field. It was not placed in the workflow file.
+
+Secret names must match the names referenced by the workflow exactly.
+
+## 8.3 Rerun the workflow
+
+After creating the secrets, we reran the failed workflow.
+
+The workflow completed successfully, and the Docker Hub image tag became visible.
+
+### Troubleshooting lessons
+
+If authentication fails again:
+
+- Confirm that the repository secrets exist.
+- Check for spelling or capitalization mistakes in secret names.
+- Confirm that the token is valid and has the required permission.
+- Confirm that the workflow references the same secret names.
+- Never print or share the token while troubleshooting.
+
+The original authentication failure was resolved by creating the required repository secrets.
+
+---
+
+# 9. Preserve the original image before changing the moving tag
+
+Before introducing commit-SHA tagging, we created a backup of the original image.
+
+The original Docker Hub tag was:
+
+```text
+kelyunice1419/container-deployment-practice:1.0
+```
+
+The image ID was:
+
+```text
+bbee2f8dc939
+```
+
+We wanted to preserve this version even after future workflow runs updated the `1.0` tag.
+
+## 9.1 Create a backup tag
+
+The command used was:
+
+```bash
+docker --context default tag \
+  kelyunice1419/container-deployment-practice:1.0 \
+  kelyunice1419/container-deployment-practice:original-1.0
+```
+
+This created another local tag pointing to the same image.
+
+## 9.2 Verify the tags locally
+
+```bash
+docker --context default images
+```
+
+The output showed:
+
+```text
+kelyunice1419/container-deployment-practice:1.0
+bbee2f8dc939
+
+kelyunice1419/container-deployment-practice:original-1.0
+bbee2f8dc939
+```
+
+The identical image IDs confirmed that both tags referred to the same local image.
+
+## 9.3 Push the backup tag
+
+```bash
+docker --context default push \
+  kelyunice1419/container-deployment-practice:original-1.0
+```
+
+The backup appeared on Docker Hub.
+
+Its observed registry digest was:
+
+```text
+sha256:bbee2f8dc939f55c57e3288e7d4c4bd68f22a10620f5d38fd7c26ae31415adac
+```
+
+Backup tag:
+
+https://hub.docker.com/repository/docker/kelyunice1419/container-deployment-practice/tags/original-1.0
+
+**Important:** `original-1.0` is our backup alias. It protects the original version from the normal workflow updating the `1.0` tag, provided nobody overwrites or deletes the backup tag.
+
+---
+
+# 10. Introduce commit-SHA image tagging
+
+Initially, the workflow published only:
+
+```yaml
+tags: kelyunice1419/container-deployment-practice:1.0
+```
+
+This tag can be updated by later builds. Consequently, it does not permanently identify a particular build.
+
+We changed the workflow to publish both:
+
+```yaml
+tags: |
+  kelyunice1419/container-deployment-practice:1.0
+  kelyunice1419/container-deployment-practice:${{ github.sha }}
+```
+
+## What is `github.sha`?
+
+`github.sha` is a GitHub Actions context value containing the full commit SHA for the commit associated with the workflow run.
+
+A commit SHA provides a way to identify the source revision associated with that image build.
+
+For example, the published image tag we observed was:
+
+```text
+1774f0616839382e12bdf611f521e8da23317c56
+```
+
+This was the full SHA associated with the workflow update commit.
+
+Docker Hub link:
+
+https://hub.docker.com/repository/docker/kelyunice1419/container-deployment-practice/tags/1774f0616839382e12bdf611f521e8da23317c56
+
+## 10.1 Verify the workflow file
+
+```bash
+cat .github/workflows/ci.yml
+```
+
+We checked the complete file and corrected the indentation of the two tags.
+
+The final tags section was:
+
+```yaml
+          tags: |
+            kelyunice1419/container-deployment-practice:1.0
+            kelyunice1419/container-deployment-practice:${{ github.sha }}
+```
+
+## 10.2 Inspect the changes
+
+```bash
+git diff .github/workflows/ci.yml
+```
+
+This showed the difference between the old single-tag configuration and the new two-tag configuration.
+
+## 10.3 Stage and inspect the change
+
+We used:
+
+```bash
+git add .github/workflows/ci.yml
+```
+
+Then:
+
+```bash
+git status
+```
+
+The file had already been included in a local commit by the time we investigated the clean working tree.
+
+## 10.4 Inspect the latest commit
+
+```bash
+git log -1 --oneline
+```
+
+The commit was:
+
+```text
+1774f06 (HEAD -> main) Add backup image
+```
+
+We then inspected the committed workflow:
+
+```bash
+git show HEAD:.github/workflows/ci.yml
+```
+
+The committed file contained both image tags.
+
+To review the files changed in the commit:
+
+```bash
+git show --stat --oneline HEAD
+```
+
+The output confirmed that `.github/workflows/ci.yml` was the file changed in that commit.
+
+## 10.5 Push the update
+
+```bash
+git push
+```
+
+The push succeeded, and GitHub Actions ran successfully.
+
+## 10.6 Verify the new tag on Docker Hub
+
+The new full commit-SHA tag appeared on Docker Hub alongside:
+
+- `original-1.0`
+- `1.0`
+- `1774f0616839382e12bdf611f521e8da23317c56`
+
+All three tags were confirmed visible.
+
+### Important distinction
+
+The commit SHA is a source revision identifier, not a cryptographic guarantee that a tag can never be changed. Docker registry digests identify image content more precisely.
+
+For production workflows, consider retaining the build digest and enforcing tag immutability where supported.
+
+---
+
+# 11. Rollback preparation
+
+A rollback requires access to a known-good image.
+
+Our backup tag was:
+
+```text
+kelyunice1419/container-deployment-practice:original-1.0
+```
+
+We pulled it from Docker Hub:
+
+```bash
+docker --context default pull \
+  kelyunice1419/container-deployment-practice:original-1.0
+```
+
+The output confirmed:
+
+```text
+Status: Image is up to date for kelyunice1419/container-deployment-practice:original-1.0
+```
+
+The digest matched the original image we preserved.
+
+This confirmed that the original image was available remotely and locally.
+
+---
+
+# 12. Run the rollback container safely
+
+We already had two application containers running. We deliberately avoided stopping or deleting them.
+
+The existing containers were:
+
+| Container name | Host port | Image |
+|---|---:|---|
+| `kely-practice-container` | 3000 | `kely-practice:1.1.0` |
+| `container-deployment-practice` | 3001 | `container-deployment-practice:1.0` |
+
+We started the backup image as a separate container on host port `3002`.
+
+## 12.1 Start the rollback container
+
+```bash
+docker --context default run -d \
+  --name container-deployment-rollback \
+  -p 3002:3000 \
+  kelyunice1419/container-deployment-practice:original-1.0
+```
+
+This command:
+
+- Runs the container in the background.
+- Names it `container-deployment-rollback`.
+- Maps host port `3002` to container port `3000`.
+- Uses the preserved `original-1.0` image.
+
+## 12.2 Verify the running containers
+
+```bash
+docker ps
+```
+
+The output confirmed all three containers were running:
+
+| Container name | Host port | Status |
+|---|---:|---|
+| `kely-practice-container` | 3000 | Up |
+| `container-deployment-practice` | 3001 | Up |
+| `container-deployment-rollback` | 3002 | Up |
+
+This demonstrated how to test a previous image without disturbing the existing containers.
+
+## 12.3 Test the rollback application
+
+```bash
+curl http://localhost:3002
+```
+
+The output was:
+
+```text
+Hello from Container Deployment Practice!
+```
+
+This confirmed that the preserved image started successfully and served the expected response.
+
+## What we proved
+
+We successfully:
+
+1. Preserved the original image under `original-1.0`.
+2. Published that backup to Docker Hub.
+3. Retrieved the image using `docker pull`.
+4. Started a separate container from the backup.
+5. Verified that the application responded correctly.
+6. Left the other running containers untouched.
+
+This is a successful rollback-image retrieval and validation exercise.
+
+**A note on the scope of the test:** The original and current application versions had not yet been deliberately changed to produce different messages. Therefore, we validated the ability to retrieve and run the preserved image, but had not yet demonstrated recovery from an application regression between two visibly different releases.
+
+---
+
+# 13. Troubleshooting command reference
+
+## Check the current directory
+
+```bash
+pwd
+```
+
+## Inspect files
+
+```bash
+ls -la
+```
+
+## Inspect the workflow
+
+```bash
+cat .github/workflows/ci.yml
+```
+
+## Check Git status
+
+```bash
+git status
+```
+
+## Review unstaged changes
+
+```bash
+git diff
+```
+
+## Review the latest commit
+
+```bash
+git log -1 --oneline
+```
+
+## Inspect a committed workflow file
+
+```bash
+git show HEAD:.github/workflows/ci.yml
+```
+
+## Inspect the latest commit summary
+
+```bash
+git show --stat --oneline HEAD
+```
+
+## Confirm the Git remote
+
+```bash
+git remote -v
+```
+
+## List local Docker images
+
+```bash
+docker --context default images
+```
+
+## List running containers
+
+```bash
+docker --context default ps
+```
+
+## See all containers, including stopped ones
+
+```bash
+docker --context default ps -a
+```
+
+## Inspect the rollback container logs
+
+```bash
+docker --context default logs container-deployment-rollback
+```
+
+## Inspect the rollback container configuration
+
+```bash
+docker --context default inspect container-deployment-rollback
+```
+
+## Test the application
+
+```bash
+curl http://localhost:3002
+```
+
+## Pull a specific image tag
+
+```bash
+docker --context default pull \
+  kelyunice1419/container-deployment-practice:original-1.0
+```
+
+## Check a container's state
+
+```bash
+docker --context default ps
+```
+
+If an application does not respond, check the container status, logs, port mapping, and image tag before making changes.
+
+---
+
+# 14. Common errors and how to approach them
+
+## Problem: GitHub Actions says username and password are required
+
+**Observed error:**
+
+```text
+Error: Username and password required
+```
+
+**Cause in our project:** The required GitHub repository secrets had not been created.
+
+**Resolution:** Added `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` under repository Actions secrets, then reran the workflow successfully.
+
+## Problem: Docker command uses an unavailable context
+
+**Resolution used in our environment:** Explicitly select the working context:
+
+```bash
+docker --context default images
+```
+
+Use the same context consistently for related Docker commands.
+
+## Problem: Git reports a clean working tree unexpectedly
+
+A clean working tree means Git sees no uncommitted changes in the current repository. It does not mean there are no local commits waiting to be pushed.
+
+Check:
+
+```bash
+git status
+git log -1 --oneline
+git show HEAD:.github/workflows/ci.yml
+git show --stat --oneline HEAD
+```
+
+These commands help distinguish uncommitted changes from changes already recorded in a local commit.
+
+## Problem: A Docker tag is missing from the registry
+
+Check the tag spelling and repository name. Confirm that the push completed, and then refresh the Docker Hub tags page.
+
+For a locally available tag:
+
+```bash
+docker --context default images
+```
+
+For a remote tag, inspect the Docker Hub repository's Tags page.
+
+## Problem: The application does not respond
+
+Start by checking:
+
+```bash
+docker --context default ps
+docker --context default logs container-deployment-rollback
+curl http://localhost:3002
+```
+
+Confirm that the container is running and that the host port maps to the application's container port.
+
+---
+
+# 15. Lessons learned
+
+This project taught and reinforced several core DevOps concepts.
+
+### Version control
+
+Git tracks changes, while commits provide identifiable snapshots of the repository. `git add`, `git commit`, and `git push` serve different purposes.
+
+### Containerization
+
+A Dockerfile defines how an image is built. A container is a running instance created from an image.
+
+### Image tags
+
+A tag is a human-readable reference to an image. The `1.0` tag is used as a moving reference in this workflow, while the commit-SHA tag identifies the source revision associated with a build.
+
+### Registry publishing
+
+Docker Hub stores images so they can be retrieved on another machine or after a local image has been removed.
+
+### CI/CD
+
+GitHub Actions automates the image build and publishing process after a push to the configured branch.
+
+### Secrets management
+
+Authentication credentials belong in secret storage, not in source code or public repositories.
+
+### Rollback
+
+A rollback depends on having a known-good image available and knowing how to retrieve and run it. Testing the old image on a separate port allowed us to validate it without interrupting the existing applications.
+
+---
+
+# 16. Project status and next steps
+
+## Completed
+
+- [x] Created the Node.js application.
+- [x] Created the Dockerfile.
+- [x] Created a dedicated GitHub repository.
+- [x] Built and ran the Docker image locally.
+- [x] Published the image to Docker Hub.
+- [x] Configured GitHub Actions to build and push images.
+- [x] Troubleshot the missing Docker Hub credentials.
+- [x] Created the required GitHub repository secrets.
+- [x] Preserved the original image with `original-1.0`.
+- [x] Added commit-SHA tagging to the workflow.
+- [x] Confirmed the workflow succeeded.
+- [x] Verified all three tags on Docker Hub.
+- [x] Pulled the original image.
+- [x] Started the rollback container on port `3002`.
+- [x] Verified the rollback application with `curl`.
+
+## Recommended next steps
+
+1. Change the application response to create a visibly different release.
+2. Commit and push the change.
+3. Verify that GitHub Actions publishes the new image under both `1.0` and its new commit-SHA tag.
+4. Test the new release separately.
+5. Compare it with the preserved `original-1.0` version.
+6. Practise selecting the correct image tag for recovery.
+7. Add a README explaining the architecture, workflow, image tags, and rollback procedure.
+
+---
+
+# 17. Portfolio summary
+
+**Project: Container Deployment Practice — Docker and GitHub Actions CI/CD**
+
+Built a Node.js application and containerized it using Docker. Created a GitHub Actions workflow to build and publish Docker images to Docker Hub. Configured repository secrets for registry authentication, resolved an initial workflow login failure, and implemented commit-SHA image tagging alongside a moving version tag. Preserved the original image as a separate backup tag, pulled it from Docker Hub, and successfully started and tested a rollback container without disturbing existing containers.
+
+**Skills demonstrated:** Linux, Git, GitHub, Docker, Docker Hub, GitHub Actions, CI/CD, secrets management, image versioning, container networking, troubleshooting, and rollback preparation.
+
+**Repository:** https://github.com/Kelyunice/container-deployment-practice
+
+**Docker Hub:** https://hub.docker.com/repository/docker/kelyunice1419/container-deployment-practice
+
