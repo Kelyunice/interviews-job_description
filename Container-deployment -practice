@@ -1195,3 +1195,12 @@ Built a Node.js application and containerized it using Docker. Created a GitHub 
 
 **Docker Hub:** https://hub.docker.com/repository/docker/kelyunice1419/container-deployment-practice
 
+
+Our updated application is running successfully from the image published by GitHub Actions!
+You've now completed a real CI/CD cycle:
+1. Changed index.js.
+2. Committed and pushed the change.
+3. GitHub Actions built and published the Docker image.
+4. Pulled the exact image using its commit-SHA tag.
+5. Ran the new container on port 3003.
+6. Verified the new response with curl.
