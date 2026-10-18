@@ -5,3 +5,436 @@ Our learning roadmap
 4. Start multiple services and verify their connection.
 5. Inspect logs, troubleshoot failures, and restart services.
 6. Learn persistent database storage and safe cleanup.
+
+
+Docker Compose: Node.js + Redis
+Project: docker-compose-practice
+App working
+Redis connected
+Port mapping fixed
+
+
+1. Our project goal
+We built a small web application using:
+- Node.js — runs the web server.
+- Redis — stores a visit counter.
+- Docker — runs each component in a container.
+- Docker Compose — manages the application and Redis together.
+Our project directory is:
+~/devops-practice/docker-compose-practice
+
+Our final application responds at:
+http://localhost:3002
+
+2. The project structure
+Our project contains these main files:
+docker-compose-practice/
+├── compose.yaml
+├── package.json
+└── app.js
+
+- compose.yaml defines our services, ports, volumes, and dependencies.
+- package.json defines the Node.js project and its dependencies.
+- app.js contains the web server and Redis visit-counter logic.
+3. Creating and preparing the project
+The following commands are the recommended setup sequence for reproducing our project. Some initial file-creation commands weren't captured in the conversation, so these are reconstructed instructions rather than a claim that we ran every command exactly this way.
+Step 1: Create the project directory
+mkdir -p ~/devops-practice/docker-compose-practice
+cd ~/devops-practice/docker-compose-practice
+
+
+mkdir -p creates the directory if needed. cd moves us into it.
+
+Step 2: Create the files
+touch compose.yaml package.json app.js
+
+
+Remember our lesson:
+- mkdir creates directories.
+- touch creates empty files if they don't exist.
+We edited the files using Nano:
+nano compose.yaml
+nano package.json
+nano app.js
+
+
+In Nano, we saved with Ctrl + O, pressed Enter, and exited with Ctrl + X.
+4. Our compose.yaml file
+This is our final configuration, including the corrected host port 3002.
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  app:
+    image: node:24-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && node app.js"
+    ports:
+      - "3002:3000"
+    depends_on:
+      - redis
+
+
+What each section means
+Configuration	Purpose
+redis	Defines our Redis service
+image: redis:7-alpine	Uses the Redis image
+app	Defines our Node.js service
+image: node:24-alpine	Uses Node.js on Alpine Linux
+working_dir: /app	Sets the working directory inside the container
+volumes: - .:/app	Mounts the project directory into /app
+command	Installs dependencies and starts the app
+depends_on	Starts Redis before the app service
+Notice that depends_on controls startup order; it doesn't by itself guarantee Redis is ready to accept connections. Our app also calls redisClient.connect() before starting its web server.
+Understanding the port mapping
+Our final mapping is:
+ports:
+  - "3002:3000"
+
+Your browser / Ubuntu host
+Port 3002
+Node.js container
+Port 3000
+
+The first number is the host port; the second is the container port. This is why we open http://localhost:3002, even though Node.js listens on port 3000 inside the container.
+5. Our package.json file
+{
+  "name": "docker-compose-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "redis": "^6.3.0"
+  }
+}
+
+
+We installed the Redis package using:
+npm install redis
+
+We verified the installed package with:
+npm list redis
+
+The output confirmed:
+redis@6.3.0
+
+This package lets our Node.js application communicate with Redis.
+
+6. Our app.js file
+This is the application code we verified inside the running container.
+const http = require('http');
+const redis = require('redis');
+
+async function startApp() {
+    const redisClient = redis.createClient({
+        url: 'redis://redis:6379'
+    });
+
+    redisClient.on('error', (err) => {
+        console.error('Redis error:', err);
+    });
+
+    await redisClient.connect();
+
+    const app = http.createServer(async (req, res) => {
+        try {
+            const visits = await redisClient.incr('visits');
+
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(`<h1>Hello from KELY!</h1><p>Visits: ${visits}</p>`);
+        } catch (err) {
+            console.error('Request error:', err);
+            res.writeHead(500);
+            res.end('Something went wrong');
+        }
+    });
+
+    app.listen(3000, '0.0.0.0', () => {
+        console.log('App running on port 3000');
+    });
+}
+
+startApp().catch((err) => {
+    console.error('App failed to start:', err);
+    process.exit(1);
+});
+
+
+What we learned from this code
+- http creates the web server.
+- redis.createClient() creates the Redis connection.
+- redis://redis:6379 uses the Compose service name redis to reach Redis over the Compose network.
+- redisClient.incr('visits') increments the visit counter.
+- app.listen(3000, '0.0.0.0') makes the server listen on all interfaces inside its container.
+- The error handlers help us diagnose connection or request failures.
+
+7. Starting the application with Docker Compose
+We started both services using:
+docker compose up -d
+
+Docker downloaded the required images, created the project network, and started the two containers.
+We then checked their state with:
+docker compose ps -a
+
+At that stage, both services were running:
+- docker-compose-practice-app-1
+- docker-compose-practice-redis-1
+We also used:
+docker ps
+
+Important distinction:
+- docker compose ps shows containers belonging to the current Compose project.
+- docker ps shows all running containers in the currently selected Docker engine.
+We checked application logs using:
+docker compose logs app
+
+The logs included:
+App running on port 3000
+
+That confirmed the Node.js server had started.
+
+8. Troubleshooting: The old web page kept appearing
+This was the main problem we solved together.
+We expected the new page:
+<h1>Hello from KELY!</h1>
+<p>Visits: 1</p>
+
+Instead, requests from Ubuntu returned the old page:
+<title>KELY's Practice</title>
+<h1>Hello from KELY's Practice</h1>
+
+The old page had a light-blue background. We did not want to delete our previous project just to make this one work.
+Problem 1: The host returned the old page
+We ran:
+curl http://localhost:3000
+
+It returned the old HTML.
+We also tested:
+curl http://127.0.0.1:3000
+
+That returned the same old HTML.
+What we learned: changing from localhost to 127.0.0.1 did not solve the issue. Both addresses reached the same old response.
+Problem 2: We checked the running app's logs
+docker compose logs app
+
+The logs showed that the app had started successfully.
+We then inspected the file inside the running container:
+docker compose exec app cat /app/app.js
+
+This confirmed that the container had the new app.js code.
+Problem 3: We tested from inside the app container
+We opened a shell inside the container:
+docker compose exec app sh
+
+
+Our prompt changed to:
+/app #
+
+Inside that shell, we ran:
+cat app.js
+
+Again, the new code was present.
+We initially tried:
+curl http://localhost:3000
+
+But the container responded:
+sh: curl: not found
+
+
+Why? The node:24-alpine image is minimal and doesn't include curl by default.
+Rather than installing another utility unnecessarily, we used Node.js's built-in fetch:
+node -e "fetch('http://localhost:3000').then(r => r.text()).then(console.log).catch(console.error)"
+
+
+The result was:
+<h1>Hello from KELY!</h1><p>Visits: 1</p>
+
+This was an important discovery: the new application was working inside its container, and Redis was responding to the visit-counter request.
+We exited the container shell with:
+exit
+
+That returned us to the Ubuntu host terminal.
+Problem 4: We checked the Docker context
+We ran:
+docker context show
+
+Output:
+default
+
+Then:
+docker context ls
+
+We found two available contexts:
+NAME            DESCRIPTION                               DOCKER ENDPOINT
+default *       Current DOCKER_HOST based configuration   unix:///var/run/docker.sock
+desktop-linux   Docker Desktop                            npipe:////./pipe/dockerDesktopLinuxEngine
+
+We attempted to inspect running containers in the second context:
+docker --context desktop-linux ps
+
+It failed:
+Failed to initialize: protocol not available
+
+We did not change contexts. We continued troubleshooting with the working default context.
+Problem 5: We inspected the port mapping
+We ran:
+docker inspect docker-compose-practice-app-1 --format '{{json .NetworkSettings.Ports}}'
+
+Output:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+This confirmed that the running app container still had host port 3000 mapped to container port 3000.
+We also checked the container's IP address:
+docker inspect docker-compose-practice-app-1 --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+
+Output:
+172.18.0.3
+
+We tried connecting to it directly:
+curl http://172.18.0.3:3000
+
+The request appeared to hang, so we used a timeout and verbose output:
+curl -v --max-time 5 http://172.18.0.3:3000
+
+The output showed:
+* Trying 172.18.0.3:3000...
+* Connection timed out after 5002 milliseconds
+
+This told us that direct access to the container IP from the Ubuntu host was timing out. It did not mean the application itself was broken, since the internal Node.js fetch had already succeeded.
+Problem 6: We checked the port listener
+We ran:
+sudo ss -ltnp '( sport = :3000 )'
+
+The output showed:
+LISTEN ... 0.0.0.0:3000 ... users:(("docker-proxy",pid=959,fd=7))
+LISTEN ... [::]:3000    ... users:(("docker-proxy",pid=965,fd=7))
+
+This confirmed that Docker's proxy was listening on port 3000 in Ubuntu.
+At this point, we had evidence that the new app worked inside the container, but the host request still returned old content.
+
+9. The fix: Change the host port and recreate the app
+Instead of stopping or deleting older containers, we decided to use a different host port.
+
+Step 1: Edit compose.yaml
+We opened the file:
+nano compose.yaml
+
+We changed the app port mapping from:
+ports:
+  - "3000:3000"
+
+to:
+ports:
+  - "3002:3000"
+
+We left the Redis mapping unchanged:
+ports:
+  - "6379:6379"
+
+We saved the file and exited Nano.
+Step 2: Test the new port
+We first ran:
+curl http://localhost:3002
+
+It failed:
+curl: (7) Failed to connect to localhost port 3002
+
+Why? Because the saved file had changed, but the running container still had the old port mapping.
+We verified the saved file:
+cat compose.yaml
+
+It correctly showed:
+ports:
+  - "3002:3000"
+
+However, docker compose ps -a still showed the old 3000:3000 mapping.
+
+This was the key distinction: the saved configuration and the running container configuration did not match.
+Step 3: Recreate only the app service
+We ran:
+docker compose up -d --force-recreate app
+
+Docker reported:
+✔ Container docker-compose-practice-redis-1 Running
+✔ Container docker-compose-practice-app-1 Started
+
+
+Redis remained running. Docker recreated the app container with the updated configuration.
+Step 4: Verify the new port mapping
+We ran:
+docker compose ps -a
+
+The output now showed:
+docker-compose-practice-app-1   ...   Up   0.0.0.0:3002->3000/tcp
+docker-compose-practice-redis-1 ...   Up   0.0.0.0:6379->6379/tcp
+
+
+Step 5: Test the application again
+We ran:
+
+curl http://localhost:3002
+
+10. Why recreating the container was the right choice
+You suggested that we might need to restart something. Your instinct to refresh the service was good!
+The important distinction is:
+Command	What it does
+docker compose restart app	Restarts the existing app container
+docker compose up -d app	Brings the app service toward the configuration in the Compose file
+docker compose up -d --force-recreate app	Forces the app container to be recreated
+A regular restart doesn't recreate the container with a new port mapping. Our saved file specified 3002:3000, while the running container still had 3000:3000. Recreating the app applied the new mapping.
+We targeted only the app service, so we avoided unnecessary disruption to Redis.
+
+11. Commands worth remembering Start the project docker compose up -d
+
+Starts services in the background.
+
+Check service status and ports
+docker compose ps -a
+
+Shows the Compose containers, status, and published ports.
+
+Inspect application logs
+docker compose logs app
+
+Helps investigate startup failures and application errors.
+
+Run a command inside a service
+docker compose exec app cat /app/app.js
+
+Runs cat inside the running app container.
+
+Recreate one service
+docker compose up -d --force-recreate app
+
+Forces the app container to be recreated with the configured settings.
+
+Test the published web endpoint
+curl http://localhost:3002
+
+Requests the app through its host port.
+
+12. Final project checklist Progress record
+
+[ ] Created the Docker Compose project files
+[ ] Installed the Node.js Redis dependency
+[ ] Configured the Node.js app to connect to Redis
+[ ] Started the app and Redis services
+[ ] Checked container status and application logs
+[ ] Inspected the app code inside its container
+[ ] Investigated the old HTML response
+[ ] Checked Docker contexts, IP address, and port listener
+[ ] Changed the app host port to 3002
+[ ] Recreated only the app service
+[ ] Verified the new response using curl
+[ ] Confirmed the page works in the browser
