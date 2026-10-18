@@ -4,39 +4,20 @@ KEY STEPS
 
 Project setup — Node.js application, Dockerfile and project structure.
 
-
-
 Git and GitHub — repository creation, initialization, commits and pushing.
-
-
 
 Docker image creation — building and running the container.
 
-
-
 Docker Hub publishing — authentication, repository setup, tagging and pushing.
-
-
-
 GitHub Actions CI/CD — workflow configuration, repository secrets and troubleshooting the initial login failure.
-
-
 
 Commit-SHA tagging — updating ci.yml, committing, pushing and verifying the new image tag.
 
-
-
 Rollback preparation — preserving original-1.0.
-
-
 
 Rollback execution — pulling the backup image, running a separate container and testing it with curl.
 
-
-
 Troubleshooting notes — errors, how we investigated them, and how we resolved them.
-
-
 
 # Container Deployment Practice
 ## End-to-End DevOps Project Documentation
