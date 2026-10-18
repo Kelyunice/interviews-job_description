@@ -1,0 +1,7 @@
+Our learning roadmap
+1. Prepare the project directory without touching your existing projects.
+2. Understand the application and service structure.
+3. Create a Compose configuration file.
+4. Start multiple services and verify their connection.
+5. Inspect logs, troubleshoot failures, and restart services.
+6. Learn persistent database storage and safe cleanup.
