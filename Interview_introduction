@@ -287,3 +287,38 @@ I have worked on diff projects and with diff teams.
      3 - why did you use a readinessProbe ?
          To make sure that user request were sent to pods that are ready. If you don't do health check request will be directed to pods that are not ready 
          leading to poor user experience.
+
+Interview questions and sample answers
+
+Q1. What is an environment variable?
+An environment variable is a key-value setting provided to a running process. It allows an application to access configuration without hardcoding every setting in its 
+source code.
+
+Q2. Why are environment variables important in DevOps?
+They help configure applications across development, staging, and production, and allow deployment pipelines to pass configuration to applications and containers.
+
+Q3. How do you set an environment variable in Linux?
+I can use export APP_ENV=production and verify it with echo $APP_ENV.
+
+Q4. How do you pass environment variables to a Docker container?
+I can use the environment section in Docker Compose or the -e option with docker run.
+
+For example:
+docker run -e APP_ENV=production my-app
+
+
+Q5. Are environment variables a secure way to store passwords?
+Not by themselves. They can keep credentials out of source code, but they may still be exposed through process inspection, logs, container configuration, or excessive 
+permissions. For production, I would use a secrets manager or protected CI/CD secrets and restrict access.
+
+Q6. What is the difference between an environment variable and a hardcoded value?
+A hardcoded value is written directly into the code. An environment variable supplies the value from outside the code, making configuration easier to change across 
+environments.
+
+6. Let's connect this to our project
+Friend, we're learning this for a reason. In our Docker Compose project, we can configure the Node.js application through compose.yaml, then verify that the variable 
+reaches the container and that Node.js can read it.
+
+One key sentence to remember:
+Environment variables separate application configuration from application code, making applications easier to configure, deploy, and maintain across different 
+environments.
