@@ -122,6 +122,88 @@ Validate the staffing plan
                   DRY RUN --- checked the file without applying its changes to the live cluster.
 Compare the plan with the running Deployment
         kubectl diff -f office-web-deployment.yaml
-             
+           kubectl apply -f office-web-deployment.yaml   
+           kubectl get deployments
+           kubectl get pods
+
+Inspect the updated Deployment
+            kubectl describe deployment office-web
+
+                               You've now used both approaches to create and manage Kubernetes resources:
+                                  - Imperative: kubectl create deployment ... and kubectl scale ...
+                                  - Declarative: defining the desired configuration in office-web-deployment.yaml and applying it with kubectl apply -f ...
+
+Save the Service as YAML too ------or a reproducible DevOps project, we want both the Deployment and the Service defined in files so they can be 
+                                         tracked in Git and applied together.
+
+First inspect the Service configuration 
+            kubectl get service office-web -o yaml
+
+Create our reusable Service YAML
+            nano office-web-service.yaml
+            kubectl apply --dry-run=client -f office-web-service.yaml
+Apply both files        
+             kubectl apply -f office-web-deployment.yaml -f office-web-service.yaml  
+             kubectl get deployments,services
+
+
+verify the connection
+  A healthy Deployment and an existing Service are good signs, but we should also verify that the Service actually has our two Pods as endpoints.
+           kubectl get endpointslices -l kubernetes.io/service-name=office-web
+
+Git version control
+           git status
+           ls -ls
+           git init
+           git status
+Create a .gitignore file
+          echo "minikube-linux-amd64" > .gitignore
+          git status
+          git add .gitignore office-web-deployment.yaml office-web-service.yaml
+          git commit -m "Add Kubernetes deployment and service manifests"
+          gh repo create k8s-practice --public --source=. --remote=origin --push (or create your repo on github as usual and link it)
+
+test the rolling update deployment strategy which is k8s default strategy.
+         
+          kubectl set image deployment/office-web nginx=nginx:1.28
+          kubectl rollout status deployment/office-web
+           OR
+          vi office-web-deployment.yaml and change  ( nginx : latest to nginx:1.28)
+          grep 'image:' office-web-deployment.yaml  ---Verify the change in the file.
+          kubectl diff -f office-web-deployment.yaml   --- To preview
+          kubectl apply -f office-web-deployment.yaml
+          kubectl rollout status deployment/office-web
+
+Kubernetes rollback --  First, let's inspect your Deployment's history without changing anything
+         kubectl rollout history deployment/office-web
+
+Inspect revision 2 before doing anything
+          kubectl rollout history deployment/office-web --revision=2
+          kubectl rollout history deployment/office-web --revision=3
+
+If we roll Kubernetes back to revision 2, Kubernetes will use nginx:latest for the Deployment. But your GitHub YAML will still specify nginx:1.28.
+That means a later kubectl apply -f office-web-deployment.yaml could reapply nginx:1.28. In a GitOps workflow, we'd also reconcile the YAML and Git
+history when rolling back.
+
+         kubectl rollout undo deployment/office-web --to-revision=2  -- This tells Kubernetes to restore the Pod template from revision 2 
+         kubectl rollout status deployment/office-web
+
+         open office-web-deployment.yaml and edit the image back to nginx: latest
+         grep 'image:' office-web-deployment.yaml
+         kubectl diff -f office-web-deployment.yaml
+
+
+How an application receives configuration  
+ step 1: Create our first ConfigMap 
+          kubectl create configmap office-config --  from-literal=APP_ENV=learning   -- imperative formate
+          kubectl describe configmap office-config  ----  inspect it
+
+      OR
+         vi office-config.yaml    -- paste AI manifest file
+         kubectl apply -f office-config.yaml
+         kubectl get configmap office-config
+         kubectl describe configmap office-config
+
+
 
 
