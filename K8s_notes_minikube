@@ -1,0 +1,127 @@
+Prepare Minikube
+/home/user/devops-practice/k8s
+
+Check whether Minikube is already installed
+minikube version
+
+What does this command do?
+- If Minikube is installed, it displays the version.
+- If it isn't installed, you'll see command not found. That's okay; we'll install it next.
+
+Download Minikube
+              curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+
+What does it do?
+- curl downloads a file from the internet.
+- -L follows redirects.
+- -O saves the file using its original filename.
+- minikube-linux-amd64 is the Minikube executable for 64-bit Intel/AMD Linux systems.
+
+ls -lh minikube-linux-amd64   ----This checks that the downloaded file exists and displays its size
+
+Install Minikube
+              sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+
+Verify the installation
+           minikube version
+
+You now have two important Kubernetes tools ready:
+- kubectl — your tool for communicating with Kubernetes.
+- minikube — your tool for creating and managing your local Kubernetes cluster.
+
+— Start Kubernetes using Docker
+            minikube start --driver=docker
+
+What does this command mean?
+Part	Purpose
+minikube	Runs the Minikube tool
+start	Creates and starts your local Kubernetes cluster
+--driver=docker	Uses your existing Docker engine to run the cluster
+
+Verify your Kubernetes cluster
+kubectl cluster-info
+
+Check your nodes
+           kubectl get nodes
+
+Check the system pods
+           kubectl get pods -A
+
+A Pod is the smallest deployable unit in Kubernetes. It runs one or more containers.
+Some pods may take a little time to become ready, so don't worry if you initially see ContainerCreating.
+
+          kubectl get nodes
+          kubectl get pods -A
+
+Next lesson: Hire our first worker
+We'll deploy a small web application using Nginx.
+In our office analogy:
+- Nginx container: the worker serving web pages.
+- Pod: the worker's workspace.
+- Deployment: management's instruction to keep the required number of workers available.
+- Service: the reception desk that gives us a way to reach the application.
+
+
+           kubectl get namespaces
+           kubectl get deployments -A
+
+Deploy our first application
+
+Create a Deployment
+       kubectl create deployment office-web --image=nginx:latest
+
+Check the Deployment
+       kubectl get deployments
+       kubectl get pods
+
+create a Service and access the Nginx welcome page from your laptop.
+kubectl expose deployment office-web --type=NodePort --port=80
+
+        Check the Service
+         kubectl get services
+
+minikube service office-web --url   ----- This asks Minikube for a URL through which you can reach the Service. Depending on your WSL setup, 
+the URL may require a running tunnel or a different access method, so don't assume that simply displaying the URL proves the web page is reachable.
+
+             curl http://127.0.0.1:34731
+
+What happens if the worker disappears? k8s self healing. what happends if a node dies
+kubectl delete pod YOUR-POD-NAME
+kubectl get pods
+
+           Verify that reception still works
+           kubectl get services
+
+Next lesson: Scale our office to three workers
+            kubectl scale deployment office-web --replicas=3
+            kubectl get deployments
+            kubectl get pods
+
+Next lesson: Watch reception direct traffic
+            kubectl get service office-web
+            kubectl describe service office-web
+
+Let's inspect the selector and worker labels
+the Service provides a stable way to reach the application, but it does not guarantee perfectly equal traffic distribution between every replica.
+          kubectl get pods --show-labels
+          kubectl get endpointslices office-web   ----This gives us another view of the addresses registered for the Service.
+
+
+Our next office experiment: Remove one worker from the staffing plan  --- (deleting a service)
+          kubectl scale deployment office-web --replicas=2
+          kubectl get deployments
+          kubectl get pods
+          kubectl get endpointslices
+
+Save our application configuration in YAML  -- Create our first Kubernetes YAML file        
+         nano office-web-deployment.yaml -  paste the yaml manifset file provided by AI
+
+Validate the staffing plan
+        kubectl apply --dry-run=client -f office-web-deployment.yaml
+                  DRY RUN --- checked the file without applying its changes to the live cluster.
+Compare the plan with the running Deployment
+        kubectl diff -f office-web-deployment.yaml
+             
+
+
