@@ -1,7 +1,7 @@
 Prepare Minikube
 /home/user/devops-practice/k8s
 
-Check whether Minikube is already installed
+Check whether Minikube is already installed    ------>>>>>> kubectl api-resources ==== to see shortcuts of commands
 minikube version
 
 What does this command do?
@@ -34,13 +34,67 @@ You now have two important Kubernetes tools ready:
             minikube start --driver=docker
 
 What does this command mean?
-Part	Purpose
+
 minikube	Runs the Minikube tool
 start	Creates and starts your local Kubernetes cluster
 --driver=docker	Uses your existing Docker engine to run the cluster
 
 Verify your Kubernetes cluster
 kubectl cluster-info
+
+
+1. The essential kubectl commands
+      get — View resources
+      apply — Reconcile resources with YAML
+      create — Create a resource
+      describe — Inspect a resource
+      diff — Preview a configuration change
+               kubectl diff -f office-web-deployment.yaml
+      delete — Remove a resource
+      replace - to replace and existing file/resouce after update
+                kubectl replace --force -f filename
+
+2. Commands for troubleshooting and monitoring
+     logs --	Read application output 
+              kubectl logs POD_NAME
+     exec	--  Run a command inside a container
+              kubectl exec -it POD_NAME -- sh
+     port-forward --  Forward a local port to a resource
+              kubectl port-forward deployment/office-web 8080:80  
+     events  --  Inspect recent cluster events 
+              kubectl get events
+     top	--  View CPU and memory usage, if metrics are available
+              kubectl top pods
+     rollout --	Inspect or manage Deployment rollouts
+              kubectl rollout status deployment/office-web
+
+3. Commands that change a Deployment
+      kubectl --  scale	Changes the number of replicas directly
+      kubectl --  set image	Changes a workload's container image directly
+      kubectl --  rollout status	Checks rollout progress
+      kubectl --  rollout history	Lists previous Deployment revisions
+      kubectl --  rollout undo	Rolls back to a previous revision
+      kubectl --  rollout restart	Triggers a rolling restart
+
+4. Commands for working with YAML
+     kubectl apply -f file.yaml	  --  Apply configuration from a file
+     kubectl diff -f file.yaml	  --  Preview differences
+     kubectl create -f file.yaml	 -  Create resources from a file; fails if they already exist
+     kubectl delete -f file.yaml	  -- Delete resources identified by the file
+     kubectl get deployment office-web -o yaml	  --  Display a resource in YAML
+     kubectl apply --dry-run=client -f file.yaml	--  Client-side dry-run validation
+     kubectl explain deployment.spec	 --   Learn what a resource field means 
+
+5. What about -n, -o, and -f?
+    
+    -f	     Use a file	                               kubectl apply -f office-config.yaml
+    -n	     Specify a namespace	                     kubectl get pods -n kube-system
+    -o	     Choose output format	                     kubectl get pods -o wide
+    -A	     Show resources across all namespaces	     kubectl get pods -A
+    -w	     Watch for changes	                       kubectl get pods -w
+
+
+
 
 Check your nodes
            kubectl get nodes
@@ -102,8 +156,40 @@ Next lesson: Watch reception direct traffic
             kubectl get service office-web
             kubectl describe service office-web
 
-Let's inspect the selector and worker labels
-the Service provides a stable way to reach the application, but it does not guarantee perfectly equal traffic distribution between every replica.
+
+
+                                  Types of services in kubernetes
+  1 -- Cluster IP
+           It allows us expose our app inside the cluster only. Use for internal communication
+           may need to do-->. minikube ssh first  ( to go back to user terminal --->. type exit/then enter)
+           curl + cluster IP    to test communication internally
+  2 -- NodePort  
+           It is used for external communication. It is a type of service used to open communication a static pod e.g worker node
+           when you deploy it, it first creates a cluster IP.
+           It ranges from 30000 -32767
+           To test communication -->> minikube ip , then copy the ip and curl with it together with the target NodePort number
+           From the browser use thesame ip+
+           Or you can do a Port-farwarding to be able to access the app Kubectl port-fotward (service name) 8080:80, on browser you do localhost:8080:80
+
+  3 -- LoadBalancer
+           used to Balance load. when you this it first creates a NodePort, which will create a cluster Ip.
+           The challenge of using this is that it is PAID FOR because it has to send a ASYNCHRONUS REQUEST to a cloud provide to provide a loadBalance else it keeps 
+           using a NodePort
+  4 -- Ingress
+  5 -- External name
+
+
+
+                                 Types of communication
+   1 container to container ---->> through cluster IP
+   2 Pod-to-Pod -->> through IP
+   3 Container to pod
+   4 service to pod
+   5 External-service to service
+
+
+A Service provides a stable way to reach the application, but it does not guarantee perfectly equal traffic distribution between every replica.
+          Let's inspect the selector and worker labels
           kubectl get pods --show-labels
           kubectl get endpointslices office-web   ----This gives us another view of the addresses registered for the Service.
 
