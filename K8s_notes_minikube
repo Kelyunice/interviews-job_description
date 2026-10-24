@@ -173,18 +173,22 @@ Next lesson: Watch reception direct traffic
 
   3 -- LoadBalancer
            used to Balance load. when you this it first creates a NodePort, which will create a cluster Ip.
-           The challenge of using this is that it is PAID FOR because it has to send a ASYNCHRONUS REQUEST to a cloud provide to provide a loadBalance else it keeps 
+           The challenge of using this is, it is PAID FOR because it has to send a ASYNCHRONUS REQUEST to a cloud provide to provide a loadBalance else it keeps 
            using a NodePort
   4 -- Ingress
+           Ingress is most recommented than NodePort because it aggregates services and exposes the app to low port while NodePort exposes the app to high Ports.
+           Here the services must be deployed in the cluster. You need to deploy using Helm Chart an Ingress controller inside the cluster which helps handle all the 
+           services  within the cluster. It routes traffic to the different backend services. It uses a Role called An INGRESS RESOURCE which is A DEFINITION manifest 
+           file to b. it provides SSL termination for security, retries and failures
   5 -- External name
-
+          Here you route traffic without service. It uses and outside DNS resource instaed of an inside resource 
 
 
                                  Types of communication
-   1 container to container ---->> through cluster IP
-   2 Pod-to-Pod -->> through IP
-   3 Container to pod
-   4 service to pod
+   1 container to container ---->> through cluster IP provided by the puse container also known as localhost since they share thesmae network namespace
+   2 Pod-to-Pod -->> through cluster network i.e Kubernetes Service and DNS name (coreDNS reolves the names to address and rout to other pod)
+   3 Container to pod --->> Kubernetes Service and DNS name
+   4 service to pod -through cluster Ip since they within the same k8s cluster. 
    5 External-service to service
 
 
@@ -192,6 +196,18 @@ A Service provides a stable way to reach the application, but it does not guaran
           Let's inspect the selector and worker labels
           kubectl get pods --show-labels
           kubectl get endpointslices office-web   ----This gives us another view of the addresses registered for the Service.
+
+
+          HOW TO CHEACK THE HEALTH OF A CONTAINER
+
+1 - LIVENESS PROBE -  maybe due to inside of memory pressure the app can go down
+            EXEC COMMAND: if the command is executed successfully on the definition mainfest file then the app is healthy ( using commands)
+            HTTP  request: it ping the endpoint of an app by sending a request. If you receive a respond code (200-399 as valid )
+            TCPSOCKET: used to ping a port and if it response then the app is healthy
+            gRPC:
+2 - READINESS PROBE: here while an app is initializing you want to make sure that it meets specific conditions before request are sent to it.
+3 - STARTUP PROBE
+           it sepcific to legacy app because it takes time to fully initialize. it delays the liveness and readiness probe while the app initailises. 
 
 
 Our next office experiment: Remove one worker from the staffing plan  --- (deleting a service)
