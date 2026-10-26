@@ -94,8 +94,6 @@ kubectl cluster-info
     -w	     Watch for changes	                       kubectl get pods -w
 
 
-
-
 Check your nodes
            kubectl get nodes
 
@@ -190,6 +188,8 @@ Next lesson: Watch reception direct traffic
    3 Container to pod --->> Kubernetes Service and DNS name
    4 service to pod -through cluster Ip since they within the same k8s cluster. 
    5 External-service to service
+
+   6 App to App : for an app to talk to another app we give it an IAM Role
 
 
 A Service provides a stable way to reach the application, but it does not guarantee perfectly equal traffic distribution between every replica.
@@ -307,5 +307,64 @@ How an application receives configuration
          kubectl describe configmap office-config
 
 
+                DATA IN A POD
 
+  Containers running in apod can either be producing or consuming data, or doing both.
+configMaps and secrete are k8s volumes managed by k8s while PV,PVC are managed externally
+
+1 - Ephermaral Volume:
+      We have diff types based on size, access mode,content that the volume will take.
+              - emtyDir: created when a pod is scheduled on a node, the node will create that volume. When the pod is terminated the content of the emtyDir is
+                         deleted for ever
+              - A hostPath: if the pod is deleted the volume still persist because the volume is craeted on the node where the pod is running
+              For remote storage
+                      - GcePersistentDist
+                      - AWS ElasticBlockStore
+              -       - azureDisk
+                      - networkfile system
+
+2 - PV 
+       This is a volume which provides an APi for users and admin and manage and consume storage
+       It can be created by the k8s admin dynamically (using a storage class that provion the volume, mostly used when we have so many pods running) or 
+       statistically (manual creation)
+3 - PVC
+      here pods that are running in cluster look for a volume that has been created either via a storage class or by a cluster admin that match their criteria , 
+      when it finds one the user amakes a request and when its granted, its claims it via a pvc
+
+  Pv volumes have diff access mode: (on the node we have a physical file system, while on the pod we have a virtual file system)
+      - ReadWrite Once (read-write by a single node)
+      - ReadOnlyMany (read-only by many nodes)
+      - ReadWriteMany (read-write by many nodes)
+      - ReadWriteOncePod (read-write by a single pod)
+
+         Pv and PVC are not managed by K8s
+
+4 - ConfigMaps
+      - if you want to deploy an app that will be used by 5 diff clients, and each clients want that as they use the app they should see the name of the user on
+        their user interface. instaed of using 5 images, u use one image and customize it from a configMap. It allows to decouple the configuration details from
+        a container image. You pass configuation data as key-value pairs(name=kely, date of birth, etc)
+
+                  Key	                               Example value	                                       Purpose
+                APP_ENV	                              production	                           Identifies the environment
+               APP_NAME	                              account-service	                       Names the application
+              LOG_LEVEL	                               INFO                                  Controls the amount of information logged
+              SERVER_PORT	                            "8080"	                               Sets the application listening port
+             REQUEST_TIMEOUT	                        "30s"                                  Configures a request timeout
+             PAYMENT_CURRENCY	                         PHP	                                 Sets the default currency
+            MAX_RETRY_ATTEMPTS	                       "3"	                                 Configures the retry limit
+            FEATURE_STATEMENT_DOWNLOAD	             "true"	                                 Enables a statement-download feature
+           CORE_BANKING_API_URL	                  https://core-banking.example.internal	     Identifies an internal API endpoint
+           MAINTENANCE_MODE	                       "false"	                                 Controls a maintenance-mode setting
+
+     - How do Pods consume ConfigMaps. there 3 ways
+           - environment variables
+           - set of commands and aguements
+           - volumes
+
+       How to create configMaps
+      - lietral values e.g kubectl create configMap ( ) --from-literal=key1=value1 --from-literal=key2=value2
+      - from configuration files
+      - from one or more files or directories
+
+5 - Sectrets
 
