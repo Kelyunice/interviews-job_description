@@ -372,3 +372,128 @@ configMaps and secrete are k8s volumes managed by k8s while PV,PVC are managed e
        They are 2 types (data, and stringData)
               data:first do (echo 'password name" | base64
               stringdata: 
+6 DaemonSet
+    - It is used to ensure that each pod is running on a node. Application where every single node need to be hosting an instance of that application the daemonSet 
+      is the best
+    - Collect monitoring data from all Nodes
+    - Logging
+    - networking
+    - proxies
+I- authentication
+    - normal users  - external to the cluster
+    - service accounts e.g jenkins, or any application. internal to the cluster
+          - different ways through which you can authenticate
+              1 - X509 Client Certificate
+              2 - service Account Tokens
+              3 - OpenID Connect
+              4 - Passworr and Username
+ II - Authorization RBAC: it defines what a user can do in a cluster
+            1 - NODE
+            2 - WEBHOOK (external auth)
+            3 - RBAC =Role: granted within a namespace), when u create a user you give them a role, then you also need to bind the role
+                      ClusterRole and 
+                      ClusterRoleBinding
+            4 - ABAC
+ III - admission control
+           kubectl auth can-i (option e.g get pod)
+
+          - RoleBinding: attaching the role to the user/service account
+
+                 a root user
+          1 - create user= useradd -s /bin/bash (name of user)
+          2 -ls /home -->> to confirm
+          3 - passwd (name of user)
+          4 - under k8s documentation , look for certificate, check kubectl config view
+
+       for somebody to be authenticated into the cluster his credentials must be available in the .kube/config file
+         5 - create a yaml deff file where you put a certificate signing in request - available on k8s doc
+
+IV - Security Contexts
+         Defines previledge and access control settings for pods and containers . inside a container we have ( processes running, linux capabilities, filesystems)
+           
+V -  Pod Security Policies:
+       It allows to configure what a container can do and how processes run within the container.
+            there 3 policies to limite how pods run
+              1- Privileged: No restrictions
+              2- Baseline: Minimal restrictions. Does not allow known privilege escalations
+              3- Restricted: Most restricted policy: Follows current pod hardening best practices
+
+VI - Network Policies
+        They are set of rules which defines how Pods are allowed to talk to one another ans resources inside and outside the cluster.It allows us to isolate a pod from
+        other pods within the environment. It helps to limite the exposure of your pods only to the neccessary endpoints.
+              egress=  traffic from the pod
+              ingress= into the pod
+
+         inside the container we have network plugins e.g Flannel - doesnot accept network policy, calico, project cilium, weave net
+
+                        How Enforcement Actually Works
+       Kubernetes defines the NetworkPolicy API, but it does not enforce it. The API lets you create NetworkPolicy objects, validate them, and store them.
+       The actual enforcement is done by the CNI plugin running on each node. This is a critical distinction. If you create a NetworkPolicy in a cluster that
+       is running a CNI plugin without policy support, the policy will be accepted and stored but will have no effect on actual traffic.
+
+       The NetworkPolicy object is handed off to the CNI plugin, which programs the firewalls on the nodes where the affected pods are running. The plugin reads
+       the policy rules and translates them into the underlying network rules, whether that is iptables, eBPF, or another mechanism that actually control packet flow.
+       Calico, Canal, Cilium, and Weave all support NetworkPolicy enforcement. Flannel alone does not.
+
+                        How Network Policies Work in Practice
+       A NetworkPolicy selects pods using label selectors and defines ingress and egress rules for those pods. When a pod has at least one NetworkPolicy selecting it,
+       Kubernetes switches it from the default allow-all posture to a default deny posture for the directions covered by the policy. Any traffic not explicitly 
+       permitted by a matching rule is dropped.
+
+       The podSelector in a NetworkPolicy uses label matching to select which pods the policy applies to. An empty podSelector matches all pods in the namespace,
+       which is how you create a namespace-wide default deny. A namespaceSelector allows you to write rules that permit traffic from an entire namespace rather than 
+       from specific pods, which is how the frontend to backend policy above is written.
+
+VII - Resource Quotas
+        It is used to restrict consumption of resources on the nodes. 
+        when an app has exhausted it resources, the pod will be evicted it will go into an OOMKILLED, 
+            resources request: min CPU memory 
+            resource limit: Max CPU memory
+              if the CPU is exceeded, the pod goes into a throrrle state (if affects the performance of the app) the pod will be slow
+
+                How Quotas Connect to Pod level Resource Specs
+             ResourceQuota operates at the namespace aggregate level but connects directly to the resource requests and limits on individual pods and containers.
+
+            What Happens When a Quota is Exceeded
+     The API server returns a 403 Forbidden with a message like: pods "my-app-xyz" is forbidden: exceeded quota: team-quota, requested: requests.cpu=500m,
+     used: requests.cpu=200m, limited: requests.cpu=250m
+
+     Running kubectl describe quota -n <namespace> is the first thing to check when pods in a namespace are unexpectedly pending or unavailable.
+    
+    The ResourceQuota admission plugin adds up the requests and limits across all containers in all running pods in the namespace and compares the sum against the quota
+    whenever a new pod is submitted. This creates a dependency that catches many engineers off guard. When a namespace has a ResourceQuota defined, every pod submitted 
+    to that namespace must specify resource requests and limits on every container. A pod without them is rejected immediately.
+
+
+                 DEEP DIVE USE CASE
+      How Kubernetes Manages CPU and Memory Resources
+      Every engineer who has run Kubernetes in production has hit the same wall. A pod gets OOMKilled. A node goes NotReady because something consumed all its CPU. 
+      A deployment that worked fine in staging causes cascading failures in production because nobody set resource requests. These are not edge cases. They are the 
+      default outcome when you do not understand how Kubernetes actually thinks about resources.
+
+     Kubernetes does not manage CPU and memory the way an operating system does. It manages them through a layered system of declarations, scheduling decisions, enforcement 
+     mechanisms, and eviction policies that interact in ways that are non-obvious until you have been burned by them. Today we walk through that system from the ground up.
+
+           How a Pod Lands on a Node (The Scheduling Decision)
+     Before a pod runs anywhere, the scheduler must decide where it belongs. That decision is based entirely on resource requests, not limits, not actual usage.
+
+     The critical insight here is the gap between capacity and allocatable. A node with 4 CPU cores does not give 4000m to your pods. After kubelets reserved overhead, 
+     system-reserved space for OS processes, and the eviction threshold buffer that Kubernetes keeps to ensure it can evict pods before the node fully collapses, 
+     you might have 3500m of allocatable CPU. This is why pods can go Pending on a node that looks half empty in monitoring dashboards that show actual utilization
+
+    CPU Throttling (what limits actually do at runtime)
+    Once a pod is scheduled and running, the limits become the runtime enforcement layer. CPU and memory limits behave in fundamentally different ways, and
+    conflating them is one of the most common sources of production incidents.
+
+    CPU throttling and memory OOM killing are completely different mechanisms with completely different outcomes.
+
+    CPU limits enforce a quota in the Linux CFS scheduler. Every 100ms period, a container gets a proportional slice of CPU time. A container with cpu: 500m gets 50ms of CPU quota per 100ms period. When it exhausts its quota for a period, it gets throttled: it cannot run until the next period starts, even if the node has abundant idle CPU sitting unused. The container stays alive. Jobs take longer. Latency climbs. The process does not know it is being throttled.
+
+    Memory limits are binary. When a container's RSS reaches its memory limit, the kernel OOM killer terminates it immediately. No warning, no graceful 
+    shutdown, exit code 137. Kubernetes restarts it. If the memory leak is in the application, it will hit the limit again. This is CrashLoopBackOff.
+
+
+VIII - StatefulSet
+        mostly used for app that needs a data base.
+
+
