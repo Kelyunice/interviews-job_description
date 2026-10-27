@@ -366,5 +366,9 @@ configMaps and secrete are k8s volumes managed by k8s while PV,PVC are managed e
       - from configuration files
       - from one or more files or directories
 
-5 - Sectrets
+      kubectl create configmap (name) --from-file=index.html
 
+5 - Sectrets
+       They are 2 types (data, and stringData)
+              data:first do (echo 'password name" | base64
+              stringdata: 
