@@ -497,3 +497,17 @@ VIII - StatefulSet
         mostly used for app that needs a data base.
 
 
+
+      K8s DEployment strategies
+ 1 - Rolling Update
+         It is the default deployment strategy in k8s each time you deploy and object in k8s. teh old version start changing progressively from 25%=A, then 75%=B
+ 2 - BLUE/Green
+         here we have 2 environments. The blue is the active env where users are using. The green is the new test env. The same env is replicated
+ 3 - Canary deployment
+         here we have the old and new version. Traffic is being direted to users grdually and in acontrolled manner. gradually more users are beign exposed to 
+        the new version and when everything is okay more users are exposed. The test is done for a long time
+
+
+
+
+
