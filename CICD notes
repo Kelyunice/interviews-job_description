@@ -1,0 +1,114 @@
+CI =APP code == version = test and build==image
+       ends when you push to your image registry
+
+          tools used here include: Jenkins, Bamboo, Gitlab CI, GitHub Actions
+
+CD = continous deployment when the process is automated
+CD = Continous Delivery is not automated, requires that at one point upper management approves before it is pushed to Prod or the env where it is used
+
+  Jenkins is widely used for both CI/CD because it has alot of plugins which allows to extend its functionality. jenkins files are Java files with a .hpi extension
+  
+   Jenkins work on Java runtime 11 or 17 (if java is not installed jenkins cannot run)
+
+    - It can be installed as a stand alone war
+    - it can be installed as an apt package
+    - It can be installed on windows
+    - It can be installe as a container == you need a container runtime to install it as a container
+             Jenkins installation
+      - check docker ps 
+      - docker run -d -p 8080:8080 -p 50000:50000 -v jenjins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker jenkins/jenkins:lts
+      - docker ps
+      - on the browser localhost:8080
+      - cat (link provided after download)
+        or
+        on terminal mkdir jenkins
+      - docker volumes ls
+      - docker volumes inspect
+      - docker volume inspect (volume name)
+      - ls/sudo ls (Mountpoint)
+      - sudo cat ()
+
+
+          second method
+        - docker ps
+        - docker exec -it (container ID) /bin/bash
+        - ls var
+        - ls/var/jenkins_home
+
+            other tools used for CD
+            we have GitOps which is about setting up the CD on k8s. For this to be installed we need to ensure we have 
+              - IaC
+              - git for versioning
+              - CICD
+              - k8s cluster
+
+                 GitOps Tools
+              - ArgoCD
+              - FluxCD
+              - JenkinsX
+       - 
+          one disadvantage of using Jenkins for  CD 
+                - Is that you need to give it your credentials which is a security risk
+                - since is installed outside the cluster is has no visibility of the cluster and will not know if the deployment succeeded or not 
+                  (except you configure a slack notification)
+                - Jenkins does not have visibility of the git repo and will not be able to watch the git repo (except you configure a slack notification) 
+                  wheras a Tool like Argo is installed inside the cluster and can whatch over the cluster and helps reconcile the current state of the 
+                  cluster with the manifest file
+
+               key noted for jenkins pipe
+         1 - your source code repo should be diff from your manifest file repo (deployment, services, etc)
+         2 - ensure that you install the reconcilers in our cluster ==ArgoCD (it used a push mechanism) .after a commit or push on github it will be notifies after 3 min 
+             fluxCd used a pull mechanism = it watches your repo and goes to pull each time there's a commit
+         3 - write APP config file for ArgoCD : 
+                ==source = repo (put the url of our git repo)
+                ==Destination= cluster
+
+             how to install ArgoCd
+
+      - make sure you have your code available in the repo (in the same dir)
+                    -  create deployment
+                    -  create sevice
+                    - check if you are in a git repo on your terminal (git init)
+                    - git add, git commit, git push
+      - cd into a new dir
+                    - go to the documentation for argoCD 
+                        kubectl create namespace argocd
+                        kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+                    -  do a port-forwarding (include the namespace) and also add "& " at the end of the command 
+      - login ( use the doc)
+                    - kubectl get secret (copy from doc) -n (namespace created) -o yaml =" kubectl get secret argocd-initial-admin-secret -n argocd -o yaml"vi
+                         decode the password(echo password | base64 --decode)
+                    - login with name and password on argoCd
+      - go to doc and look for declarative step ( a minimal App spec)
+                    - create a file = vi filename and edit it as required 
+                                      target = where the last commit is,
+                                      path =dir of the project,
+                                      destination: DNS of the cluster
+                                      namespace= where you want the app to be deployed
+                                      add = syncPolicy and syncOptions
+                                      CreateNamespace=true
+                                      automated= 
+                                        selfHeal:true
+                                      prune: true
+
+
+     - push created file to github (code repo)
+     - create new namespace
+     - apply file created above 
+     - test connection from command line externally
+               minikube ip
+               curl http://Ip:NodePort
+     - test communication internally (pod to pod communication) 
+          minikube ssh
+          curl (cluster IP)
+    - test accessibility on the browser
+         port forwarding
+
+
+
+
+
+
+
+
+
