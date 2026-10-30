@@ -16,7 +16,7 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
     - It can be installe as a container == you need a container runtime to install it as a container
              Jenkins installation
       - check docker ps 
-      - docker run -d -p 8080:8080 -p 50000:50000 -v jenjins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker jenkins/jenkins:lts
+      - docker start jenkins-upgraded
       - docker ps
       - on the browser localhost:8080
       - cat (link provided after download)
@@ -55,7 +55,7 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
                   wheras a Tool like Argo is installed inside the cluster and can whatch over the cluster and helps reconcile the current state of the 
                   cluster with the manifest file
 
-               key noted for jenkins pipe
+               key notes for jenkins pipe
          1 - your source code repo should be diff from your manifest file repo (deployment, services, etc)
          2 - ensure that you install the reconcilers in our cluster ==ArgoCD (it used a push mechanism) .after a commit or push on github it will be notifies after 3 min 
              fluxCd used a pull mechanism = it watches your repo and goes to pull each time there's a commit
@@ -104,7 +104,72 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
     - test accessibility on the browser
          port forwarding
 
+====================================================================================================================================================
+                      Jenkins freestyle job
+   It's a job which allows you build any type of project.
+                - maven project
+                - Graddle project
+                - Shell script
+                - Ant project
+   It is a default project in jenkins. 
+   This is not pausable hence not good to use in projection meaning you cannot pause it for a human input
+   It does not keep state of a job, hence you cannot restart where a job ended
+   With afreestyle job once its running and the controller restarts the job end, wheras with the pipeline job if the controller restart it picks up from where 
+      it ended.
 
+  Its a sequential set of task defined by a user
+
+       steps included in a jenkins job include the following
+            - retrieving the latest source code from the version control
+            - compiling the soucre code
+            - running unit tests
+            - building and storing the artifacts
+            - notifying the end users of the outcome of a build
+
+  For a freestyle job
+    1- create the job and selectfreestyle
+    2- configure = git=add git credentials which can be ssh key, username & password to github account
+                      username= username to github account
+                      password= settings under profile-dev settings - tokens(classic) - generate
+                      ID : define the cred(any label)
+                      describtion= add any describtion
+    3- Branch specifier: check the branch you will be building from
+    4- Environmrnt:
+                select Add time stamp to the console
+                if it's a Java app then select= invoke top-level Maven targets
+
+   In jenkins when you build an artificate it creates the artificate directory (target directory), and the newly built artifact is stored in it
+   To install something inside a container you need to exec inside as root , not as regular user
+                docker exec -it -u 0 container ID /bin/bash
+
+================================================================================================================================================================
+              Pipeline job
+
+   It is a job used to provide an enhanced way to model and visualize CI/CD workflow for a software delivery project.
+   It is created by writting a bunch of instructions in a file called Jenkinsfile which can be checked into an SCM repository
+
+   we have 2 rypes
+      A declarative pipeline
+      A Scripted pipeline
+
+   Jenkins plugins are "java archives" with a .hpi/jpi extensions
+
+
+  The different  stages in a Jenkins file
+    1- Jenkins file have an agent: it specifies where the pipeline job will run e.g linux machine, windows machine (normally jenkins runs as a cluster with a 
+                                   controller and slaves)
+    2- stages : these show the acrual work of the CI/CD of the pipeline
+    3- stage  : it is one of the stage
+    4- steps  : each pipeline stage include steps
+    5- Post build: used to send an email notification
+
+     The Jenkins documentation gives samples of Jenkinsfile
+
+     1- Jenkins controller: this is the machine where Jenkins is installed and centrally stores all the configurations, plugins. It loads the plugins, and renders 
+                             a jenkins user interface. It makes sure that jobs can be deployed to the agent.  
+     2- Agent : It is the machine that connects to the controler and performs various operations as directed by a jenkins controller
+     3- Node: It allocates an executor to run a jenkins job
+     4- Executor
 
 
 
