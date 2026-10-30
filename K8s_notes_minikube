@@ -506,8 +506,83 @@ VIII - StatefulSet
  3 - Canary deployment
          here we have the old and new version. Traffic is being direted to users grdually and in acontrolled manner. gradually more users are beign exposed to 
         the new version and when everything is okay more users are exposed. The test is done for a long time
+============================================================================================================================================================
 
+                     𝗞𝘂𝗯𝗲𝗿𝗻𝗲𝘁𝗲𝘀 𝗶𝘀 𝗻𝗼𝘁 𝗮 𝘁𝗼𝗼𝗹. 𝗜𝘁𝘀 𝗮𝗻 𝗲𝗰𝗼𝘀𝘆𝘀𝘁𝗲𝗺. ❗
+ 
+      When I started learning Kubernetes, I thought mastering Pods, Deployments, and Services was enough. 
 
+              Then I stepped into real production environments.
+              Thats when I realized Kubernetes is only the center of a much bigger picture. 
+              To run applications at scale, you need much more than orchestration:
 
+      ✅ Want security? 
+             → Trivy scans your images. 
+             → Falco detects suspicious runtime activity. 
+             → Kyverno enforces governance policies.
 
+      ✅Want reliable deployments?
+             → Helm simplifies packaging. 
+             → Argo CD and Flux bring GitOps to life.
 
+      ✅Want visibility into your platform?
+             → Prometheus collects metrics. 
+             → Grafana turns data into insights. 
+             → Fluent Bit, Loki, and OpenTelemetry help you understand whats really happening inside your cluster.
+
+      ✅Need advanced networking?
+             → Calico and Cilium secure communication. 
+             → Istio manages traffic between services.
+
+      ✅Looking for scalability?
+             → KEDA scales based on events. 
+             → Karpenter automatically provisions infrastructure when demand grows.
+
+      ✅Worried about disasters?
+             → Velero backs up your cluster. 
+             → Longhorn provides cloud-native storage.
+
+     The beauty of Kubernetes isnt Kubernetes itself. 
+    The beauty is the ecosystem that allows organizations to build secure, observable, resilient, and highly automated platforms using specialized
+    tools that work together.
+=====================================================================================================================================================================
+Running Kubernetes in production is not just about deploying applications. The real skill is knowing how to diagnose what breaks — and where to look first.
+
+Here are 10 common issues every DevOps/Kubernetes engineer should be comfortable troubleshooting:
+
+🔹 1. CrashLoopBackOff
+       Pod keeps restarting → check logs, previous logs, configuration, dependencies, and probes.
+🔹 2. ImagePullBackOff
+      Container image can't be pulled → verify image name, tag, registry access, and imagePullSecrets.
+🔹 3. Pod Pending
+      Pod isn't scheduled → check CPU/memory, node availability, taints, selectors, and PVC status.
+🔹 4. Service Not Accessible
+       Check service selectors, endpoints, pod health, service type, and NetworkPolicies.
+🔹 5. Ingress 502/503
+      Check backend pods, service/port configuration, health probes, Ingress rules, and timeouts.
+🔹 6. OOMKilled
+      Container exceeds its memory limit → investigate memory usage, limits, and potential application memory issues.
+🔹 7. Node NotReady
+      Check node status, kubelet, networking, and resource pressure.
+🔹 8. PVC Not Bound
+      Check PV availability, StorageClass, access modes, and storage configuration.
+🔹 9. DNS Resolution Failure
+      Check CoreDNS, DNS configuration, and NetworkPolicies.
+🔹 10. High CPU/Memory Usage
+      Use metrics to identify resource-heavy pods/nodes and review resource settings and scaling.
+
+🔧        My basic troubleshooting flow:
+      Get status → Describe → Check Events → Check Logs → Identify root cause → Fix → Verify
+          Useful commands:
+
+                   kubectl get pods 
+                   kubectl describe pod <pod-name> 
+                   kubectl logs <pod-name>
+                   kubectl logs <pod-name> --previous
+                   kubectl get events 
+                   kubectl get nodes 
+                   kubectl top pods 
+                   kubectl top nodes 
+                   kubectl get svc 
+                   kubectl get endpoints
+                   kubectl get pvc
