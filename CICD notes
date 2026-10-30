@@ -203,6 +203,35 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
      3- Node: It allocates an executor to run a jenkins job
      4- Executor
 
+    how to configure a pipeline job
+    1- create the pipeline job
+    2- configure
+         - pipeline syntax ==>> Snippet Generator ==> chose with credentials : bind credentials to variables
+                                                  ==> under Bindings, chose credentials type (Username and Password (seperated)
+                                                    Username variable ? type : USERNAME, Password variable: PASSWORD, credentials ?: add repo url
+                                                  ==>>click on Generate pipeline script, and copy it then add to your Jenkinsfile
+
+     - Groovy scripts are used to decongest Jenkinsfiles
+     - in the code repo , the different files that are supposed to be there to ensure the pipeline runs include;
+              1- Dockerfile
+              2- source code (pom.xml if u are using maven project)
+              3- Jenkinfile
+    - if your pipeline fails with error : permission denied while trying to connect to the docker daemon socket(meaning jenkins cannot run docker commands)
+                                          because it doesn't have the permission. inside the container (docker exec -it ID /bin/bash) only permission is
+                                          rw-rw---, so permission for others.
+                                          exec inside container as root and modify the permission ( docker exec -it -u 0 ID /bin/bash)
+
+
+    - all jobs ran on jenkins can be found
+                      1- inside the container
+                      2- on the physical machine (sudo ls /var/lib/docker/volumes/jenkins_home/_data/workspace
+
+    - Jenkins shared library is used to remove duplications in a pipeline
+
+
+
+
+
 
 
 
