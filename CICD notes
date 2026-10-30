@@ -1,3 +1,35 @@
+                     CI/CD QUESTIONS
+
+  1- what is the CI/CD process in your project?
+  2- what is the difference between continous intergration, continous Delivery and continous Deployment?
+  3- Explain CI/CD with a Real-world example?
+  4- Explain the complete CI/CD pipeline architecture?
+  5- How would you implement DevOps Practice in a project that currently has manual deployments?
+  6- How would you design a multi-stage CI/CD pipeline with seperate environments?
+  7- How do you manage Dev, SIT, UAT, And production deployments?
+  8- Do you use a single CI/CD pipeline for multiple environments or seperate pipeline
+  9- How do you manage environment specifi configurations?
+  10- How do you prevent configuration drift between environments?
+  11- How do you implement approval workflows in CI/CD?
+  12- How many levels of approvals are before production?
+  13- Who approves infrastructure changes?
+  14- What approval gates exist before production deployment?
+  15- What happends if someone accidentally approves the wrong pipeline?
+  16- How would you handle an incorrect Terraform deployment caused by a wrong approval?
+  17- What Rollback strategy would you follow?
+  18- What preventive controls would you implement to avoid deployment mistakes?
+  19- How would you design a Zer0 down-time CI/CD pipeline?
+  20- How would you design a GitOps workflow for multiple teams with independent release cycles?
+
+
+
+
+
+
+
+
+====================================================================================================================================================
+
 CI =APP code == version = test and build==image
        ends when you push to your image registry
 
