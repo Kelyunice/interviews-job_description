@@ -227,14 +227,30 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
                       2- on the physical machine (sudo ls /var/lib/docker/volumes/jenkins_home/_data/workspace
 
     - Jenkins shared library is used to remove duplications in a pipeline
+    - Normally jobs should not be running on a jenkins contoller because its a security issue, it needs to run on the slave
 
+        if you don't want your job to run on the jenkins controller you can configure
+     - click on build executors status
+     - Nodes
+     - Build-in node: click configure then change executors to zero
+                      - usage : select Only jobs with label expressions matching this node, then save
+     - create a linux agent on aws and turn it up(running)
+     - on the jenkins controller
+                      ==> manage jenkins ===> nodes===>new node====> permanent, and add description)
+                      ==> chose the numbe of executors
+                      ==> Remote root directory ( look for the path to your home dir on the linux agent created on aws and paste it her)
+                      ==> label: write the name under agents in your Jenkins file
+                      ==> usage: use this node as much as possible
+                      ==> launch method: select launch agents via ssh 
+     - To set the host name of your computer : on the terminal type sudo hostnamectl set-hostname (name of your choice)
+                      ==> put the public IP found on the linux server on AWS
+                      ==> credentials:  copy the private key and put  
+                      ==> host key verification strategy: select Non verifying verification strategy
+                      ==> availability: chose "keep this agent online as much as possible" or schedule a cron to reduce cost so it doesn't run dur
+                      ==> install Java on the AWS machine (make the java versions on the controller and the slave are the same else compatibility issues)
+                      ==> install docker  ( check if you have space df -h, check file permission, check if the $USER is the docker group)
 
-
-
-
-
-
-
+     - Groovy script
 
 
 
