@@ -1,0 +1,255 @@
+
+
+Let's imagine we're working in a bank. The bank has an application that allows customers to check their account balances and transfer money.
+
+The development team writes the application, GitHub stores the code, Jenkins builds it, Docker packages it, and Kubernetes deploys it.
+
+But before the application reaches customers, how do we make sure it is secure?
+
+             That's where SAST, OWASP, SCA, DAST, CIS and NIST come in.
+  1. First, what is DevSecOps?
+         DevSecOps stands for:
+                - Dev – Development
+                - Sec – Security
+                - Ops – Operations
+Traditional DevOps focuses on delivering software quickly and reliably through automation and collaboration.
+DevSecOps adds security throughout that process rather than waiting until the application is finished.
+
+                 Think of it this way:
+      - Dev builds the application.
+      - Sec checks that it is protected.
+      - Ops ensures it runs reliably and securely.
+
+       The objective is to make security everyone's responsibility.
+
+ 2. Understanding the six concepts
+
+    A. SAST — Static Application Security Testing
+                    Tests the source code
+              SAST examines your application's source code to identify security weaknesses without running the application.
+
+       Imagine a developer writes this code:
+   const query = "SELECT * FROM users WHERE name = '" + username + "'";
+
+
+   This could expose the application to SQL injection if user input is not handled safely.
+   A SAST tool can inspect the code and flag the unsafe pattern.
+
+   When does it happen in the pipeline?
+   Usually during development or after developers push code to GitHub.
+
+         Popular SAST tools:
+       - SonarQube
+       - Semgrep
+       - Checkmarx
+       - Fortify
+
+      Banking example: Before merging code that handles customer account information, SAST checks for insecure coding patterns.
+
+ B. OWASP — Open Worldwide Application Security Project
+                   Application security guidance
+            OWASP is not a single testing tool. It is an organisation and a collection of security standards, guidance and projects.
+
+  One of its best-known resources is the OWASP Top 10, which describes major categories of web application security risks.
+
+           Examples include:
+      - Broken access control
+      - Cryptographic failures
+      - Injection
+      - Security misconfiguration
+      - Authentication failures
+
+   Think of OWASP as a security checklist that helps developers understand what can go wrong in an application.
+   A related resource is the OWASP ASVS (Application Security Verification Standard), which provides more detailed security requirements.
+
+   Banking example: The bank uses OWASP guidance to check whether customers can access only their own accounts and transactions.
+
+              Official resource: OWASP website.
+
+  C. SCA — Software Composition Analysis
+                       Checks third-party dependencies
+          Your application doesn't contain only code written by your developers.
+
+         It also uses external libraries and packages.
+
+         For example, a Node.js application may use:
+                    npm install express
+                    npm install lodash
+                    npm install axios
+
+
+        What if one of these packages contains a known security vulnerability?
+
+               SCA scans your dependencies and identifies:
+                   - Vulnerable libraries.
+                   - Outdated packages.
+                   - Known security vulnerabilities.
+                   - Licence compliance risks.
+
+           Popular SCA tools:
+               - Snyk
+               - OWASP Dependency-Check
+               - Mend
+               - GitHub Dependabot
+         Banking example: Your banking application uses a third-party library with a known vulnerability. SCA identifies it before the application is released.
+
+    D. DAST — Dynamic Application Security Testing
+                        Tests the running application
+           Unlike SAST, DAST tests an application while it is running.
+
+           Imagine that our banking application has been deployed to a test environment.
+
+           A DAST tool interacts with the application, simulating requests an attacker might make.
+
+              It can look for weaknesses such as:
+                     - Authentication problems.
+                     - Insecure configuration.
+                     - Injection vulnerabilities.
+                     - Exposure of sensitive information.
+
+             Popular DAST tools:
+                     - OWASP ZAP
+                     - Burp Suite
+                     - Invicti
+           Banking example: DAST tests the running login page to determine whether it has security weaknesses.
+
+          Important: DAST should be run against authorised test environments, not a live banking production system without explicit approval.
+
+    E. CIS — Center for Internet Security
+                     Infrastructure and configuration security
+             CIS provides security recommendations and benchmarks for configuring systems securely.
+
+                 Imagine your banking application is running on:
+                     - Ubuntu Linux servers.
+                     - Docker containers.
+                     - Kubernetes clusters.
+                     - Cloud infrastructure such as AWS.
+               How do you know these systems are configured securely?
+
+             CIS provides CIS Benchmarks, which are recommended security configurations.
+
+                      Examples:
+                Technology	What CIS helps check
+                Linux	SSH configuration, user permissions, firewall settings
+                Docker	Container privileges, daemon security, exposed ports
+                Kubernetes	API server security, RBAC, pod security
+                AWS	Cloud configuration and security settings
+
+             Banking example: Your bank requires Kubernetes clusters to follow approved CIS Kubernetes Benchmark recommendations.
+
+                   Useful tools:
+                      - CIS-CAT
+                      - kube-bench
+                      - OpenSCAP
+
+            Official resource: CIS website.
+
+      F. NIST — National Institute of Standards and Technology
+                      Security frameworks and risk management
+               NIST provides cybersecurity frameworks, standards and guidelines that organisations use to manage security risks.
+
+      Think of NIST as a structured approach to managing cybersecurity across an entire organisation.
+      One important framework is the NIST Cybersecurity Framework (CSF).
+
+                  It has six functions:
+       1. Govern – Establish cybersecurity strategy, responsibilities and policies.
+       2. Identify – Understand assets, systems and risks.
+       3. Protect – Implement security controls.
+       4. Detect – Identify security threats and suspicious activities.
+       5. Respond – Handle security incidents.
+       6. Recover – Restore systems and services after incidents.
+      
+          Banking example: A bank uses NIST guidance to establish how it identifies cybersecurity risks, protects customer information, detects attacks and responds 
+                      to security incidents.
+
+          Official resource: NIST Cybersecurity Framework.
+
+     3. The difference between all six
+            This is particularly important for technical interviews.
+            Concept	Main purpose	What it examines
+            SAST	Find coding vulnerabilities	Source code
+            OWASP	Provide application security guidance	Application security risks and requirements
+            SCA	Find vulnerable dependencies	Third-party libraries
+            DAST	Find vulnerabilities in running applications	Running application
+            CIS	Provide secure configuration benchmarks	Infrastructure and systems
+            NIST	Provide cybersecurity frameworks	Organisation-wide security and risk management
+
+            Notice something important:
+
+             SAST, SCA and DAST are testing approaches. OWASP, CIS and NIST provide guidance, standards or frameworks.
+             They are related, but they are not interchangeable.
+
+  4. How they fit into a DevSecOps pipeline
+           Now let's connect everything to the Jenkins and CI/CD work we've been doing.
+
+           Imagine a developer pushes new code to GitHub.
+
+          Here is how a secure pipeline could work:
+
+                Banking application — DevSecOps pipeline
+   1. Developer pushes code to GitHub
+   
+         Source code and version control.
+   2. SAST scan
+   
+        SonarQube or Semgrep checks source code for security vulnerabilities.
+   3. SCA scan
+   
+        Snyk or Dependency-Check checks third-party dependencies.
+   4. Build and test
+   
+       Jenkins builds the application and runs automated tests.
+   5. Docker image security scan
+   
+       Trivy checks the container image for vulnerabilities and misconfigurations.
+   6. Deploy to test environment
+   
+       Kubernetes deploys the application.
+   7. DAST scan
+   
+      OWASP ZAP tests the running application.
+   8. CIS compliance checks
+   
+      kube-bench checks Kubernetes configuration against CIS recommendations.
+   9. Security approval and release
+   
+       Evidence is reviewed against organisational security policies and applicable NIST controls.
+   10. Production deployment
+         Approved release
+
+One important distinction: NIST and CIS checks aren't necessarily single steps at the end of a pipeline. Their controls can apply throughout development,
+                          infrastructure provisioning, deployment and operations.
+
+  5. What does compliance testing mean?
+                 Let's say you work for a bank.
+
+            The bank has security policies requiring:
+                  - All sensitive data must be encrypted.
+                  - Only authorised employees can access production.
+                  - All code must be scanned for vulnerabilities.
+                  - Infrastructure must follow approved security configurations.
+                  - All deployments must be traceable.
+                  - Security incidents must be logged and investigated.
+                    Compliance testing checks whether the organisation's systems and processes meet the applicable requirements.
+
+       For example:
+             Requirement	Possible verification
+             Secure source code	SAST reports
+             No known vulnerable dependencies above the allowed threshold	SCA reports
+             Secure running application	DAST reports
+            Secure Kubernetes configuration	CIS Benchmark results
+            Access control and risk management	NIST-aligned control assessments
+            Evidence of release approval	Jenkins logs and deployment records
+
+      Compliance is not simply about running security tools and getting green results. It also involves evidence, policies, access controls, risk acceptance,
+      audit trails and human approvals.
+
+     Depending on the bank and jurisdiction, other requirements may apply, such as PCI DSS for payment card environments.
+
+
+
+
+
+
+
+
