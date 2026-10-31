@@ -361,3 +361,28 @@ By completing this project, you practiced the following real DevOps skills:
 - Understanding manual rollback and what is still required for automated rollback.
 Your strongest accurate project statement is:
 I containerized a Node.js application, orchestrated its services using Docker Compose, and built a GitHub Actions CI/CD workflow that validates the configuration, runs a smoke test, and publishes versioned Docker images to Docker Hub.
+
+===================================================================================================================================================================
+                           ===========General Best Practice of Writting Dockerfile========================
+1. Use Multi-stage builds:
+   Multi-stage builds let you reduce the size of your final image, by creating a cleaner separation between the building of your image and the final output
+
+2. Exclude with .dockerignore: files which are not relevant to the build
+
+3. Create ephemeral containers: meaning the container can be stopped and destroyed and then rebuilt and replaced with an absolute minimum set up and configuration
+
+4. Don't install unnecessary packages
+
+5. Decouple application: Decoupling applications into multiple containers makes it easier to scale horizontally and reuse containers
+
+6. Sort Multi-line arguments: Whenever possible, sort multi-line arguments to make maintenance easier
+
+7. Leverage build cache: When building an image, Docker steps through the instructions in your Dockerfile, executing each in the order specified.  For each instruction, Docker checks whether it can reuse the instruction from the build cache.
+
+8. Pin base image version: using image tag
+
+
+
+
+
+
