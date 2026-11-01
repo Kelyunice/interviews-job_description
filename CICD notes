@@ -94,7 +94,7 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
          3 - write APP config file for ArgoCD : 
                 ==source = repo (put the url of our git repo)
                 ==Destination= cluster
-
+========================================================================================================================================================================
              how to install ArgoCd
 
       - make sure you have your code available in the repo (in the same dir)
@@ -251,6 +251,8 @@ CD = Continous Delivery is not automated, requires that at one point upper manag
                       ==> install docker  ( check if you have space df -h, check file permission, check if the $USER is the docker group)
 
      - Groovy script
+            it is use to decongest a Jenkins file
 
-
+     - Environment variables are inbuilt. You don't need to define them to use them.
+                     it can be placed anywhere. It could be at a global level or at a stage level e.g branch name, image tag
 
