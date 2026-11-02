@@ -52,12 +52,20 @@
 
      - you can use bash shell script to stop a process that is running by doing a count down script
      - i use scripts to create files
+     - I can write a script to do a health check on an app
 ============================================================================================================================================================================
 
                           FUNCTIONS
        - it is a block of code and starts with name
 
+===========================================================================================================================================================================
+      - To copy a file from one server to another we use ==> scp -i ~/.ssh/id_rsa filename new server@ip of server ~/where the files will be 
 
+      - for this work, you need to give me the pub key of you .ssh/authorized_keys so i save them in my .ssh/authorized key.
+
+      - I give you my pub ip address
+
+          or File transfer Protocol=FTP
 
 
 
