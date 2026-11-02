@@ -25,12 +25,39 @@
 
         To create your script vi name.sh
 =====================================================================================================================================================================
-               How to define variables ina script
+               How to define variables in a script
         A variable is a container that stores values that we call when we need to use it. 
              - you can call a variable $variablename
              - For a user to be able to input anything use ==> read
              - For the input to save so you can use it later ==> read + a letter of the alphabet ( to call it $a $b)
              - if you need line numbers on your script ==> :se nu
+
+=======================================================================================================================================================================
+    FOR LOOP and WHILE Loop
+     - For Loops will loop accross a condition till the end
+     - While loop will loop until a certain condition fails
+
+=====================================================================================================================================================================
+       - eq=
+       - ==
+       - -ne
+       - !==
+       - lt  :less than
+       - le  : less than or equal to
+       - gt  : greate than
+       - ge  : greater than or equal to
+       - $?  : output of the last run command
+       - a dev/null  file a file that when you put something inside it is directly deleted
+===========================================================================================================================================================================
+
+     - you can use bash shell script to stop a process that is running by doing a count down script
+     - i use scripts to create files
+============================================================================================================================================================================
+
+                          FUNCTIONS
+       - it is a block of code and starts with name
+
+
 
 
 
