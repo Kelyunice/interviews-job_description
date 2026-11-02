@@ -1,5 +1,36 @@
 
-A shell is an interpreter
+      A shell is a command interpreter. It communictaes with the OS of a hardware interpreting what was typed. It could be a UI or a command Line.
+     in linux we can UI as denom, and KDE, while on window UI include 
 
-when a user types on an app on a browser(google), the app needs to use a shell to be able to communicate with the operating system for the OS to talk with the hardwarw
+                to see the shell running your commands type== echo $0
+                if /bin/bash fails try /bin/sh
+
+     A shell script is used to automate repeatitive task
+     when a user types on an app on a browser(google), the app needs to use a shell to be able to communicate with the operating system for the OS to talk with the hardwarw
+
+    all shells in an OS are found in == etc directory ( cat /etc/shells) or (cat /etc/passwd which is also used to see all users in the system)
+
+    To check if a user has permission or he can escalate his privileges == sudo vi /etc/sudoers
+
+    ====To write a shell script
+     1- you need to define the shell
+         #!/bin/bash
+     2- comment #
+     3- you define the author
+     4- you need to write the date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
