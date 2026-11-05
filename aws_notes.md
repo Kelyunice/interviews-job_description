@@ -68,16 +68,154 @@
                          sudo -i
                          apt install stress -y
                          stress -c 10
+                         
  12- In aws with the help of which components are you going to monitor you use prometheuse.
         Prometheuse pulls the metrics fro the server (VM)
         Grafana uses the metrics to create the dashboard and visualize the metrics
 
+13- to monitor the metrics on grafana , you need to connect it and enter the Id of Prometheus by doing (vi /etc/Prometheus/prometheuse.yml) under targets add the pub Ip                               of server and port its listening to
+                           the do a systemctl restartprometheuse service
 
+====================================================================================================================================================================        
+                              Content Delivery Network (CDN) = GLOBAL CONTENT ACCELERATOR its most asked in interviews
 
+ 1- Generally when we launch vm and create load balancers for them
+ 2- if you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select Image and                                                                                        templates ==> launch more like this. 
+    You need to change the name and the availability zone, for high availability. Proceed now to create the load balancer 
+    select load balancers ==>> create load balancer ==>> select Application load balancer  then create ==>> add the name ==>> select scheme (internet facing bc it follows 
+                              Http protocols and all web servers use internet) ==>> create the availability zone and subnets ==>> launch the security groups. 
+                              Proceed to create target group( add the name) ==>> select the instances you want to create the LB for
+ 3- WE have a web server hosted in USA but people access the app in India at same speed. How does this happen. This is made possible through the use of EDGE LOCATION         which are dommy servers .
+ 4- If an app uses CDN its benefits are( faster reach by user, lower latency, better user experience) wheras an app that doesn't use CDN faces challenges such as (high         latency, slow video loading, Buffering, Expensive bandwidth)
+    
+    WHY CDN EXIST
+         - Performance: to reduce latency
+         - Scalability: Handle millions of users
+         - Cost reduction: reduce origin server traffic
+         - Security: Protect against attacks
+         - High availability: serve content even during origin issues
+5- CORE CDN COMPONENTS
+         - ORIGIN SERVER
+               Examples: EC2, S3, load Balancer, Web server, Kubernetes cluster
+         - EDGE LOCATIONS
+               Examples: mumbai, Hyderabad, London, New York, Tokyo, Sydney
+         - CACHE
+              Examples temporary storage: Images, Videos, CSS, JS, API Responses
+
+       when you make a request for the first time, your request goes to the edge location and since it doesn't have data it will go and fetch from origin server. The next         time you make a request it goes to edge location and since edge location now has data it no longer has to ask from origin, it will respond with the data (Cache) it        first collected.
+
+               HOW TO IMPLEMENT THE CDN
+
+6-  CDN are attached to only few resources e.g s3, ALB, EC2, API GATEWAY, MEDIA SERVER
+    
+     A- create the LB
+         check if the LB is active, copy the DNS name
+
+           504 gateway time-out means application is running but not loading due to port number issue
+           404 error means  application is loading but not running
+
+          to check this go to your terminal and do
+                   sudo -i
+                   systemctl status (apache2.service)
+                   if all good check security groups on AWS and change them
+     B- create the CLOUDFRONT
+        cloudfront ==>> create distribution ==>> choose plan based on how fast you want the app to be available to user ===>> add distribution name ==>>under domain, if            you have your own domain name you can use it ==>> click next ==>> under origin type chose Elastic Load balancer( based on how your traffic is routed) ==>> browse           load balancer and chose the name of the hosting zone where you created the LB, then select the name of the app ==> under settings 
+        select customize origin settings. For security you can enable origin mutual TLS for high security, proceed to create the CDN. 
         
+        Once you have a time stamp then it has fully loaded, you copy the distribution domain name
 
-                
+        to test it, go to a new browser start with the LB DNS and paste on your browser to see if the app will be accessible
+                                              take the CDN and paste on another browser and test which is faster
+
+
+   9-  Interview question
+       How can you limit user from hitting your servers multiple times?
+        By using rate limiting in cloufront as you create your distribution
+
+  10- How to block the app for certain region
+       Go to security still while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block lis ==>>
+  11- what is CDN?
+        It is a globally distributed network that caches content closer to users
+  12- what is cache HIT?
+        Content serves from EDGE CACHE
+  13- What is cache MISS?
+        Content fetched from origin
+  14- What is TTL?
+        Duration content remains in cache
+  15- What is CloudFront?
+        It is the service used in Aws to implement CDN service.
+  16- What is Origin?
+       source location of content
+
+   ======================================================================================================================================================================
+
+                                                TTL ( TIME TO LIVE) 
+
+      1- when you create an edge location served by a CDN or geolocation, when user send their request the first time is might take 4 sec to get a response and the next              time 3 sec or less since the data is stored in cache> you need to set the TTL after which if another request comes in it will go back to the origin server
+
+      2- TTL describes how much you are going to store the temporary content (cache) . It be 24 hours or up to 1 week
+
+      3- There are 2 types of content (cache)
+           - STATIC CONTENT
+                 It rarely changes. example include; images, videos, CSS,JavaScript, Fonts, PDF. 
+                 Static content is good for CDN. TTL here can be 7 hours
+           - DYNAMIC CONTENT
+                 It changes frequently. Examples include Bank Balance, Shopping Cart, Stock prices, Live Scores.
+                 More difficult to cache. Cache here can be put lower
+
+   ====================================================================================================================================================================
+                  MULTI-CDN STRATEGY
+                  
+      - In real life you can check the number servers on a particular cloud for a particular app e.g netflix servers on aws regions
+      - This is the ability to use multiple CDNs for max Reliability and Performance. It is used by companies such as ( Netflix, META, GOOGLE, AMAZOn0
+      - The architecture is such that the user request is sent to (DN1, CDN 2, CDN3) and the all fetch their data from 1 CDN which is the origin server
+      - The benefits: It helps with better availability , Better performance, Failover capability
+
+========================================================================================================================================================================
+
+                                   SNAPSHOTS- EBS VOLUMES
+
+     -  It is a storage used for EC2 instances. It is a kind of storage used from the server only
+     -  You attach it to the instance or server with the help of a VN (virtual Network)
+     -  It is a persistent volume so even if you stop the server, the data will still be available
+
+                CHARCTERISTICS OF EBS 
+    - PERSISTENT STORAGE
+          It means data survives even if you reboot the server, you stop and start your server, or you migrate the server( instance replacement) data will not be removed.             So it is persistent
+    - BLOCK STORAGE
+         It provides raw disk blocks. examples NTFS, EXT4 (it supports EXT by default), XFS .
+         You can format it just like a physical hard disk
+
+                                 There are 2 types of Volumes
+   - ROOT VOLUME
+       It contains Operating systems and Boot files. It can also be called Boot volume. Examples include; Ubuntu, AMAZON, Windows. Without ROOT VOLUME EC2 cannot boot
+   - DATA VOLUME or non root volume
+       It stores database files, logs, application data. It can be attached or detached ANYTIME
+
+        ( ROOT VOLUME = BOOT THE SERVER, DATA VOLUME = STORE YOUR DATA)
+
+                                  There 2 kinds of EBS VOLUMES TYPES
+     
+    1- SSD
+       - Genral Purpose
+         GP3 and GP2 (Legacy)
+         Here we store data that is not very important but we just want to store it for reusability. Here you store the data with no details
+         When creating webserver and Applications servers,containers, Dev/Test, medium databses we use genral purpose
+         Features: it is independent IOPS, it is throughout, it has lower cost. 
+         GP2 is an older version of GP3. 
+       - Provisioned 
+       Here we store important data. It is also known as IOPS. Once you store data and provision IOPS , your data will be very fast(speed to open)
+       when creating volumes for database you need to provision it reason why we us IOPS
+    2- HDD
+       - ST1 : It is throughput Optimized HDD
+               It used for data lakes, hadpop, and log processing
+       - SC1 : Its also called Cold HDD
+               It is used for archive storage, rarely accessed data. 
+               It is lowest in cost
+       
+   
 
 
 
+   
                                      
