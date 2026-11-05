@@ -173,7 +173,7 @@
 
 ========================================================================================================================================================================
 
-                                   SNAPSHOTS- EBS VOLUMES
+                                   SNAPSHOTS- EBS VOLUMES   to check your EBS volume (lsblk)
 
      -  It is a storage used for EC2 instances. It is a kind of storage used from the server only
      -  You attach it to the instance or server with the help of a VN (virtual Network)
@@ -206,12 +206,62 @@
        - Provisioned 
        Here we store important data. It is also known as IOPS. Once you store data and provision IOPS , your data will be very fast(speed to open)
        when creating volumes for database you need to provision it reason why we us IOPS
+          - IO2: used for high performance SSD
+                it used for oracle, SQL server, SAP HANA, MYSQL Production PostgrSQL
+                It provides extremly high IOPS
+                High durabiltiy
+          - IO2 Block Express: Highest performance EBS offering
+               used for Netflix scale systems
+               enterprise database
+               SAP 
+               supports millions of IOPS, multi TB database
     2- HDD
        - ST1 : It is throughput Optimized HDD
                It used for data lakes, hadpop, and log processing
        - SC1 : Its also called Cold HDD
                It is used for archive storage, rarely accessed data. 
                It is lowest in cost
+
+
+                                      EBS PERFORMANCE FUNDAMENTALS
+
+   1- Storage Size
+       here we look at capacity( GB and TB) max storage is 64TB of data
+   2- IOPS -Input Output Per Second
+            you can check it under an instance , under configuration storage==>> IOPS
+   3- Throughput
+       Amount of data transferred e.g ( 500 MB/s)
+   4- Latency
+      Time required to complete an operation. 
+      The goal is low latency especially for databases
+
+               ==============================================================================================================
+
+   An app is running ins (asia-singapore) hosted region and we want to migrate it to USA for example. How to proceed
+
+    1- we need to take a snapshot of the server
+       when ever you create an instance it stores your data on EBS volume and snapshot takes a copy of it also send to s3 backend. If your EBD volume is deleted you can           always have a copy of it by using the snapshot or using the restoration.
+       Benefits: it is a backup , it helps in disaster recovery, Migration (moving the Vm from one region to another) and Cloning
+
+   2- How do you take the snaptshot?
+      - go to your server, scroll down to storage ,==>> click on the volume ==>  actions at the top ==>. create snapshot ==>> add snapshot details
+      - Always stop the server before taking the snapshot. Snapshots can also be created using python scripts and also from the CLI using linux commands
+      - Go back to the snapshot ==>> select actions and copy the snapshot ==>> add destination Region ==>>
+   3- You cannot create a vm from a snapshot or attach a server to a snapshot. It is meant only for backup
+      - From a snapshot you can create a volume by clicking on the snapshot, then actions,==>. create volume
+      - After creating the volume , you can attache it to a server by launching a new instance, add the name you want , then under storage volume select advance options==>>
+        select default
+      - NOTE: if you create a volume in an availability zone, your new VM must be in that same zone else you cannot attach them. 
+        Stop the running Vm  and remove the root volume by going to actions ==>> detach volume . 
+      -  Go back to the new instance and attch old volume, under actions
+ 
+
+
+
+
+
+
+
        
    
 
