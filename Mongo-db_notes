@@ -1,0 +1,57 @@
+By SUNBUM Lee from MONGODB solution architec South Korea
+
+
+1- flexible schema (jason type) helps you polymorpgic data. data which can take various form. ( IOT APPL. Mobile APS, ocntent management, Artificcial intelligence)
+
+     Hierachy for organising data
+DOcument==> collection ==> database==>>Node==>> cluster
+
+datamodeling = it is flexible and allows you design it
+
+data relationships
+one-to one
+one-to -many
+many-to-many
+
+      Access patterns
+embedding data : when dta is accessed together. 
+referencing data: data accessed diff.
+
+data access together should be stored together
+
+
+Distributed : horizontal scalling and good for high avail
+  types of cluster: REPLICASET and sharded 9 allows hroizontal scalling. large data set to move accross wide area)
+
+Monos : helps to distribute data
+
+vecors and vectorsearch: it represents numerical values
+$vectorsearch: you can search by symentric meaning
+
+Mongo DB atlas: cloudbase dtat-as -a service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
