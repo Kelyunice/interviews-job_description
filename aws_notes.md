@@ -175,6 +175,13 @@
 
                                    SNAPSHOTS- EBS VOLUMES   to check your EBS volume (lsblk)
 
+
+                                   VARIOUS WAYS TO TAKE SNAPSHOTS
+                                   - SCRIPTS
+                                   - LAMBDA FUNCTIONS
+                                   - MANUAL
+                                   - LIFCYCLE MANAGER
+
      -  It is a storage used for EC2 instances. It is a kind of storage used from the server only
      -  You attach it to the instance or server with the help of a VN (virtual Network)
      -  It is a persistent volume so even if you stop the server, the data will still be available
@@ -237,7 +244,7 @@
 
                ==============================================================================================================
 
-   An app is running ins (asia-singapore) hosted region and we want to migrate it to USA for example. How to proceed
+   An app is running in (asia-singapore) hosted region and we want to migrate it to USA for example. How to proceed
 
     1- we need to take a snapshot of the server
        when ever you create an instance it stores your data on EBS volume and snapshot takes a copy of it also send to s3 backend. If your EBD volume is deleted you can           always have a copy of it by using the snapshot or using the restoration.
@@ -254,12 +261,37 @@
       - NOTE: if you create a volume in an availability zone, your new VM must be in that same zone else you cannot attach them. 
         Stop the running Vm  and remove the root volume by going to actions ==>> detach volume . 
       -  Go back to the new instance and attch old volume, under actions
- 
 
+          ============================================================================================================
 
+               HOW TO TAKE A SNAPSHOT USING LIFECYCLE MANAGER
+      -  under Elastic Block Store on the left choose ===>> lifecycle manager  ===>> custom policy, check for policy type as: EBS snapshot policy==>> click on next step
+      - under target resource types chose ==>> volume,  target resource tags ==>> chose (NAME), then add server name under (enter a value) then add 
+      - Add a description, it will add a default IAM ROLE so don't touch, then click next. Under configure schedule 1 - Schedule 1, chose frequency : DAILY ,==>> 24 hours
+      - Indicate at what time ( chose when people are using the app less)==>. specify the retention type: either "age" or "count" is fine==>> Expiry date
+      - if you want to copy for another region then chose (cross-Region copy) ==>> chose (REGION 1) where you are copying it to ==>> expire days
+      
+      - you can copy from one account to another ==>> enabling Cross-account sharing ==>> add account
+                                        This is not done in real world
+      
+           ======================================================================================================================================================
 
+                                           HOW TO CUT DOWN ON COST OF SNAPSHOT AS SOLUTION ARCHITECH
+      -  you need to make use of archiving under Actions ( once you archive a snapshot its cost is reduced by 75%)
+         when you put a snapshot in archive it takes 24 to 72 hours to retrive and if you need it within that time you need to make use of the 
+         FSR = fast snapshot Restore  mechanism
 
+              To enable it, chose the snapshot you archive ==>> Actions ==>> snapshot setting ==>> manage fast snapshot restore
 
+         =====================================================================================================================================================
+                                          INCREMENTAL SNAPSHOTS
+
+      - This is a process where by whenever you store volumes(snapshots) on day 1 and day 2 you need to store more snapshots, only the new snapshot not store on day 1 will          move to snapshot 2 to reduce cost
+      - You can have more than one volume attached to a vm 
+         volume ==>> create the volume ==>> go back to actions and attach the volume ==>> chose the instance ==>> here you attach data volume not root volume
+                    
+                  
+         In real life we don't add multiple volumes on a vm. we instead increase the size of the  by choosing the volume and the ==>>actions
 
 
        
