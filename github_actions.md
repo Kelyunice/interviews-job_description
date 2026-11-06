@@ -4,3 +4,11 @@
      
      Developer    ===>  Github      ==>>  Workflow              ===>    Runner      ==>>     Artifacts     ===>>    Security        ===>> Deployment
      Push Code       Event Trigger        starts                     Executes jobs          generated              validation           
+
+    
+     Push === >>    pull request   ===>>  workflow dispatch  ==>> schedule  ==>>  release ==>> issue comment
+
+
+
+
+
