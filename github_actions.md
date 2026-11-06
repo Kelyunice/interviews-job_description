@@ -8,7 +8,8 @@
     
      Push === >>    pull request   ===>>  workflow dispatch  ==>> schedule  ==>>  release ==>> issue comment
 
-
+     How do you build cut cost optimization in GitHub actions ========>> by building with a light image like "ubuntu slim"
+   ==============================================================================================================================================================
 
 
 
