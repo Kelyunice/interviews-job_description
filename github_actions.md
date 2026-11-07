@@ -51,6 +51,8 @@
                    Runs thousands of security queries and uploads a report to the Github Security UI
 
        CodeQl automatically scans your code for security bugs and blocks risky code.
+       
+       When your workflow gives runners the job to scan or do SAST , it needs to bring you the feedback . Under job ==>> permissions: give R, R, W
 
 
 
