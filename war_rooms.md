@@ -35,14 +35,14 @@
         No one leaves until stable
 
 ============================================================================================================================
-           IN REAL LIFE WHO HAVE INCIDENT SEVERITY
+           IN REAL LIFE HOW INCIDENT SEVERITY IS MANAGED
 
   - SEV-1:  The entire Platform is down e.g Netflix cannot stream
   - SEV-2:  A major feature is broken e.g login broken, payment broken
   - SEV-3   Minor issue e.g few users are affected . Although the the feature is broken some people are still able to use it successfully
   - SEV-4   BUG issue e.g low priority
 
-           REAL LIFE INVESTIGATION
+           REAL LIFE INVESTIGATION (DEVOPS QUESTION)
     
     1-  CHECK DASHBOARDS:
              Grafana:
@@ -61,7 +61,52 @@
                Ec2, RDS, ALB, NLB, EKS, CloudWatch, IAM, VPC
 ========================================================================================================================================
 
-                     
+                     DECISION TREE   (SRE question)        
+
+    Suppose deployment caused issues we have 2 options
+             1- ROOLBACK:
+                        IF: ROLLBACK can fix the issue in 5 min then we chose this option.
+             2- FIX FORWARD
+                        IF: Database schema changed. Here we cannot rollback. We need a HOTFIX
+
+
+======================================================================================================================================
+
+                          GOLDEN SIGNALS  CONSIDER AN APPLICATION IS HEALTHY (SRE question)
+
+      1- LATENCY:
+             How long it takes to serve a request
+      2- TRAFFIC:
+             How much demand your system handles. millions of request per sec
+      3- ERRORS:
+             The rate of requests that fail. for every 100 people only 1% are experiencing the issue then its okay. But if 10 people or
+             20 people then its not acceptable
+      4- SATURATION:
+             How full your system resources are. How much of CPU and Memory comes under your Vm pressure
+
+==================================================================================================================================
+
+                        WAR ROOMS TOOL
+
+      CATEGORY                                            TOOLS
+      
+      ALERTING                ============>>>      PagerDuty, Opsgenie
+      CHAT                    ===========>>>       Slack or Microsoft Teams
+      MONITORING              ===========>>>       Prometheus or Grafana
+      LOGS                    ===========>>>       Loki, or ELK, or Splunk
+      TRACING                 ===========>>>       Jaeger or Tempo
+      INCIDENT MANAGEMENT     ===========>>>       Jira or servicenow , or ServiceNow
+      CLOUD                   ===========>>>       aws , or aws cloudWatch
+      STATUS PAGE             ===========>>>       Atlassian Statuspage
+      RUNBOOKS                ===========>>>       Confluence , or Notion
+
+
+
+
+
+
+
+
 
 
 
