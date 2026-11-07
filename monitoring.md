@@ -59,15 +59,40 @@
 
     ===============================================================================================================================================================
 
-  
+                                                GRAFANA
 
+           - TYPE: It is a free and open source tool
+           - PURPOSE: it is used to create Monitoring dashboards for servers
+           - PORT: 3000
+           - INTERGRATE: It can be intergraded to Alert managers like Email, Mobile and Slack
+           - CRED : Username: admin and Password: admin
 
+    =======================================================================================================================================================
 
+                                              NODE-EXPORTER
 
+          - To monitor any server/vm you need to install a node-exporter inside the vm
 
+          - Tool: Node Exporter
+          - TYPE: It's a data source
+          - PURPOSE:  It is used to send metrics from a worker Node to prometheus
+          - PORT: 9100
 
+          for the node exporter to be able to send the data collected to the TSDB in prometheus, you need to configure it 
+                                                             vi /etc/prometheus/prometheus.yml
+                                                             under targets ( add the IP address of the vm where you installed the node exporter)
+          
+          In real life we use service discovery to add targets to prometheuse because as we scale and more vm are prodcued it dificult to manually add ip to prometheus
 
+    ===============================================================================================================================================================
 
+           since it is difficult to go an query prometheus all the time, you need to go to grafana and add the data source 
+
+           data source ==>>  add == >> prometheus ==>> url of prometheus ==>> save and test
+
+           import dashboard ==>> 1860 ( 10180, 14731, 11074) ==>> load ==>> prometheus ==>> import
+
+                -  apt update && apt install stress -y && stress -c 10
 
 
 
