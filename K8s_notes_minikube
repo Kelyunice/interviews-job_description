@@ -555,21 +555,26 @@ Here are 10 common issues every DevOps/Kubernetes engineer should be comfortable
 🔹 2. ImagePullBackOff
       Container image can't be pulled → verify image name, tag, registry access, and imagePullSecrets.
 🔹 3. Pod Pending
-      Pod isn't scheduled → check CPU/memory, node availability, taints, selectors, and PVC status.
+           Pod isn't scheduled → check CPU/memory, node availability, taints, selectors, and PVC status.
 🔹 4. Service Not Accessible
-       Check service selectors, endpoints, pod health, service type, and NetworkPolicies.
+           Check service selectors, endpoints, pod health, service type, and NetworkPolicies.
 🔹 5. Ingress 502/503
-      Check backend pods, service/port configuration, health probes, Ingress rules, and timeouts.
+          Check backend pods, service/port configuration, health probes, Ingress rules, and timeouts.
 🔹 6. OOMKilled
-      Container exceeds its memory limit → investigate memory usage, limits, and potential application memory issues.
+          Container exceeds its memory limit → investigate memory usage, limits, and potential application memory issues.
 🔹 7. Node NotReady
-      Check node status, kubelet, networking, and resource pressure.
+         Check node status, kubelet, networking, and resource pressure.
+
 🔹 8. PVC Not Bound
-      Check PV availability, StorageClass, access modes, and storage configuration.
+        Check PV availability, StorageClass, access modes, and storage configuration.
 🔹 9. DNS Resolution Failure
-      Check CoreDNS, DNS configuration, and NetworkPolicies.
+        Check CoreDNS, DNS configuration, and NetworkPolicies.
 🔹 10. High CPU/Memory Usage
-      Use metrics to identify resource-heavy pods/nodes and review resource settings and scaling.
+        Use metrics to identify resource-heavy pods/nodes and review resource settings and scaling.
+-  11. How to fix k8s Node Disk Pressure?
+-  12. How to fix CreateContainerError?
+-  13. How to fix CreateContainerConfigError?
+-  14. How to fix RunContainerError
 
 🔧        My basic troubleshooting flow:
       Get status → Describe → Check Events → Check Logs → Identify root cause → Fix → Verify
@@ -586,3 +591,49 @@ Here are 10 common issues every DevOps/Kubernetes engineer should be comfortable
                    kubectl get svc 
                    kubectl get endpoints
                    kubectl get pvc
+
+  -  15. How would you design a multi-region k8s architecture for high availability?
+  -  16. Your k8s cluster is healthy, but requests intermittently return 503. How would you troubleshoot it?
+  -  17. How do you perform a zero-downtime k8s cluster upgrade in production?
+  -  18. How would you migrate a staeful application to k8s with minimal downtime?
+  -  19. design a GitOps workflow for 20+ teams with independent release cycles.
+  -  20. Your CI/CD pipeline takes 30 minutes> how would you reduce it to under 5 minutes?
+  -  21. How do you design a rollback strategy that works even if the deployment stage fails?
+  -  22. How would you implement multi-envirnment CI/CD while preventing configuration drift?
+  -  23. Terreform state is  300 MB and Planning atkes 15 minutes. How would you optimize it?
+  -  24. Terraform patially created infrastructure before failing. How would you recover safely?
+  -  25. How do you implement runtime security beyond image vulnerability scanning?
+  -  26. How would you secure secrets secrets for 100+ microservices without exposing credentials?
+  -  27. How do you design SLO-based alerting that minimises alert fatigue?
+  -  28. How do you correlate logs, metrics, and traces during a production incident?
+  -  29. Design a self-healing platform for critical production services?
+  -  30. How would you handle cascading failures across multiple microservices?
+  -  31. Your cloud bill suddently increased by 40% overnight. How would you investigate it?
+  -  32. How do you design a disaster recovery strategy with defined RTO and PRO requirements?
+  -  33. A deployment succeeds, but latency increases from 80 ms to 2 seconds. Walk me through yourdebugging approach.
+  -  34. Explain the most challenging production incident you've handled and the architecture improvements you made aftewards.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
