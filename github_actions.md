@@ -18,3 +18,45 @@
             If you are using a node.js app and need a sample code, ====>> google ==>> github actions nodejs installation code
                                                                        For the Artifact===>> GitHub actions nodejs artifact upload stage code
 
+           IF you asked to build a Java app ===>> new workflows ==>> java or Dockerfile , or deploy to k8s
+
+  ========================================================================================================================================================
+
+                                   There are 2 types of RUNNERS IN GITHUB ACTIONS
+
+           1- Github Hosted Runner
+           2- Self Hosted Runner
+===================================================================================================================================================
+
+                                 SAST  =  STATIC APPLICATION SECURITY TEST
+
+          Nowadays most company use it because when dev push code it has issues such as
+                   - coding flaws 
+                   - hardcoded credentials ( dev mistakenly pushed their credentials)
+                   - SQL injections
+                   - security vulnerabilities
+          Some of the tools used for SAST include
+                   - sonaqube
+                   - codeQl
+                   - vera cora
+
+=============================================================================================================================================
+
+                          CODEQL HAS 3 STAGES
+          1- INITIALIZE
+                   It prepares the env and detects languages ( e.g JavaScript, Python, GO).
+          2- AUTOBUILD
+                   It compile langauges (Java, C==), It watches the code compile to understand the data flow. (Python bypasses this)
+          3- ANALYZE
+                   Runs thousands of security queries and uploads a report to the Github Security UI
+
+       CodeQl automatically scans your code for security bugs and blocks risky code.
+
+
+
+
+
+
+
+
+                                   
