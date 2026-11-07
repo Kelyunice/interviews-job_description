@@ -84,6 +84,35 @@
           
           In real life we use service discovery to add targets to prometheuse because as we scale and more vm are prodcued it dificult to manually add ip to prometheus
 
+                           ====================================================================================================
+
+                                  SERVICE DISCOVERY (SD)
+
+          - For EC2 based 
+                   1- create a Role: 
+                             ==>> go to IAM on aws ==>> scroll down to IAM resources and select Roles ==>> create a role ==>> chose who ur adding the role for (EC2)
+                                                      ==> go to add permissions ===>> use existing policy
+                                                     ==>> Permission policy select ==>> AmazonEC2ReadOnlyAccess ==>> give any name
+                            ==>> attach the role to the vm you are monitoring: go to actions ==>> security ==>> modify the IAM role ==>. chose the role you created
+                   2- Install Node exporter
+                   3- vim /etc/prometheus/prometheus.yml
+
+                               scrape_configs:
+                                 - job_name: 'ec2-discovery' 
+                                 #for k8s we use port-discovery, for Azure we use azure-service-discovery
+
+                                   ec2_sd_configs:
+                                     - region: us-east-1
+                                       port: 9100
+
+                                   relabel_configs:
+                                     - source_labels: [__meta_ec2_private_ip]
+                                       target_label: instance
+
+
+
+          
+
     ===============================================================================================================================================================
 
            since it is difficult to go an query prometheus all the time, you need to go to grafana and add the data source 
