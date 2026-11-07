@@ -88,6 +88,14 @@
 
                                   SERVICE DISCOVERY (SD)
 
+                manually we can do: 
+                           file based
+                           http
+
+
+                automated method of monitoring we
+                            service discovery
+     
           - For EC2 based 
                    1- create a Role: 
                              ==>> go to IAM on aws ==>> scroll down to IAM resources and select Roles ==>> create a role ==>> chose who ur adding the role for (EC2)
@@ -108,6 +116,9 @@
                                    relabel_configs:
                                      - source_labels: [__meta_ec2_private_ip]
                                        target_label: instance
+
+                  4- systemctl daemon-reload
+                     systemctl restart prometheus.service
 
 
 
