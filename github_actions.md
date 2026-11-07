@@ -11,5 +11,10 @@
      How do you build cut cost optimization in GitHub actions ========>> by building with a light image like "ubuntu slim"
    ==============================================================================================================================================================
 
+                                     uses: These are pre-build github actions command.
+                                     Run: when you want to pass a shell command
+
+
+            If you are using a node.js app and need a sample code, ====>> google ==>> github actions nodejs installation code
 
 
