@@ -31,7 +31,11 @@
 ================================================================================================================================================
 
                           AWS NOTES FROM NEW DEVOPS CLASS
-   1-  If you realize someone accidentally deleted the s3 of your org with over 100 people who do you check?
+
+                        CLOUD AUDITING
+
+                          
+   1-  If you realize someone accidentally deleted the s3 of your org with over 100 people how do you check?
                 CloudTrail==>> Event History==> event name or even source
    2- which AWS resource Audits logs?
                 CloudTrial: It records every API call , user action, console login, CLI command, SDK request, and service activity happening inside your aws account
