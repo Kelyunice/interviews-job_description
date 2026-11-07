@@ -1,8 +1,8 @@
 
                   MONITORING MEANS OBSERVING THE BEHAVIOUR OF A SYSTEM . IT CAN BE APP, INFRASTRUCTURE, or even SERVERS
 
-               MOST WIDELY USED TOOLS HERE ARE 
-                    - PROMETHEUSE AND GRAFANA
+                          MOST WIDELY USED TOOLS HERE ARE 
+                                                       - PROMETHEUSE AND GRAFANA
         =======================================================================================================================
 
                                     PROMETHEUSE
