@@ -217,10 +217,10 @@ DevSecOps adds security throughout that process rather than waiting until the ap
    10. Production deployment
          Approved release
 
-One important distinction: NIST and CIS checks aren't necessarily single steps at the end of a pipeline. Their controls can apply throughout development,
+                One important distinction: NIST and CIS checks aren't necessarily single steps at the end of a pipeline. Their controls can apply throughout development,
                           infrastructure provisioning, deployment and operations.
 
-  5. What does compliance testing mean?
+  11. What does compliance testing mean?
                  Let's say you work for a bank.
 
             The bank has security policies requiring:
@@ -237,16 +237,18 @@ One important distinction: NIST and CIS checks aren't necessarily single steps a
              Secure source code	SAST reports
              No known vulnerable dependencies above the allowed threshold	SCA reports
              Secure running application	DAST reports
-            Secure Kubernetes configuration	CIS Benchmark results
-            Access control and risk management	NIST-aligned control assessments
-            Evidence of release approval	Jenkins logs and deployment records
+             Secure Kubernetes configuration	CIS Benchmark results
+             Access control and risk management	NIST-aligned control assessments
+             Evidence of release approval	Jenkins logs and deployment records
 
-      Compliance is not simply about running security tools and getting green results. It also involves evidence, policies, access controls, risk acceptance,
-      audit trails and human approvals.
+          Compliance is not simply about running security tools and getting green results. It also involves evidence, policies, access controls, risk acceptance,
+          audit trails and human approvals.
 
-     Depending on the bank and jurisdiction, other requirements may apply, such as PCI DSS for payment card environments.
+         Depending on the bank and jurisdiction, other requirements may apply, such as PCI DSS for payment card environments.
 
+   12- 
 
+   13- 
 
 
 
