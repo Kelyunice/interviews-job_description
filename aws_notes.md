@@ -133,11 +133,11 @@
 
 
    9-  Interview question
-       How can you limit user from hitting your servers multiple times?
+       How can you limit users from hitting your servers multiple times?
         By using rate limiting in cloufront as you create your distribution
 
   10- How to block the app for certain region
-       Go to security still while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block lis ==>>
+       Go to security still while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block list ==>>
   11- what is CDN?
         It is a globally distributed network that caches content closer to users
   12- what is cache HIT?
