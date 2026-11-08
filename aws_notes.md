@@ -60,7 +60,7 @@
 
   10- To track the records of a particular resource e.g ECS you need to record the trial although by default AWS records everything.
           TO create the Trial: CLoudTrial==>> Trials ==>> Add Trail Name ==>. Storage Location ==> Disable Log file SSE-KMS encryption ==>. Enable additional setting
-                               click on next ==> chose und management events or add data events ==>> select all the resource type (EC2 , S3) ==>> next
+                               click on next ==> chose and management events or add data events ==>> select all the resource type (EC2 , S3) ==>> next
                               under aggregation templates==>> select ALL ==>> Next and create the trial
  11- in AWS by default every resource is being monitored, but if you want to monitor your resource you are going  to create a dashboard. 
       99% of the time we use PROMETHEUSE for monitoring but it can also be done using AWS cloudWatch
