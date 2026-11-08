@@ -52,7 +52,7 @@
            Monitoring: it questions is it healthy by using tools such as ( cloudWatch, grafana, Prometheuse, Datadog) to check metrics such as (CPU, Memory, Disk, Network
                        Errors, Latency)
            AUDITING: Questions who changes something by using tools such as ( cloudTrial, AWS config, Security Hub) to check metrics such as (who, what, when, from where)
-   8- Data captured by CloudTrail on AWS can be stored either in s3 or CloudWatch lods        
+   8- Data captured by CloudTrail on AWS can be stored either in s3 or CloudWatch logs        
    9- CloudTrial events and Pricing
            Management Events are free. Events such as e. creating, stop , start deleting resources ( Control AWS resourcs, ENable by default, cheap, create EC@,
                                        Create IAM USer)
