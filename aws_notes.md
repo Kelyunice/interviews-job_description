@@ -47,7 +47,7 @@
    5- what actually creates the resource in AWs after the controle plane has verified when, where and how to create the resources?
             Data Plane is the one that actually creates the resource
    6- Connectivity.
-            ones you create any server s3 or EKS cluster without connectivity no resource can be able to communicate to the users?
+            ones you create any server s3 or EKS cluster, without connectivity no resource can be able to communicate to the users?
    7- MONITORING AND AUDITING===VISIBILTY
            Monitoring: it questions is it healthy by using tools such as ( cloudWatch, grafana, Prometheuse, Datadog) to check metrics such as (CPU, Memory, Disk, Network
                        Errors, Latency)
@@ -62,7 +62,7 @@
           TO create the Trial: CLoudTrial==>> Trials ==>> Add Trail Name ==>. Storage Location ==> Disable Log file SSE-KMS encryption ==>. Enable additional setting
                                click on next ==> chose and management events or add data events ==>> select all the resource type (EC2 , S3) ==>> next
                               under aggregation templates==>> select ALL ==>> Next and create the trial
- 11- in AWS by default every resource is being monitored, but if you want to monitor your resource you are going  to create a dashboard. 
+ 11- In AWS by default every resource is being monitored, but if you want to monitor your resource you are going  to create a dashboard. 
       99% of the time we use PROMETHEUSE for monitoring but it can also be done using AWS cloudWatch
       To create a dashboard
           cloudwatch ==>> dashboards ==>> create dashboards ==.. add the name you want ==>> chose what you want to monitor ( metrics, logs, Alarms)==>> then widget type
@@ -73,18 +73,18 @@
                          apt install stress -y
                          stress -c 10
                          
- 12- In aws with the help of which components are you going to monitor you use prometheuse.
+ 12- In aws with the help of which components are you going to monitor you use prometheus.
         Prometheuse pulls the metrics fro the server (VM)
         Grafana uses the metrics to create the dashboard and visualize the metrics
 
-13- to monitor the metrics on grafana , you need to connect it and enter the Id of Prometheus by doing (vi /etc/Prometheus/prometheuse.yml) under targets add the pub Ip                               of server and port its listening to
-                           the do a systemctl restartprometheuse service
+13- To monitor the metrics on grafana , you need to connect it and enter the Id of Prometheus by doing (vi /etc/Prometheus/prometheuse.yml) under targets add the pub Ip                               of server and port its listening to
+                           then do a systemctl restartprometheuse service
 
 ====================================================================================================================================================================        
                               Content Delivery Network (CDN) = GLOBAL CONTENT ACCELERATOR its most asked in interviews
 
  1- Generally when we launch vm and create load balancers for them
- 2- if you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select Image and                                                                                        templates ==> launch more like this. 
+ 2- If you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select Image and                                                                                        templates ==> launch more like this. 
     You need to change the name and the availability zone, for high availability. Proceed now to create the load balancer 
     select load balancers ==>> create load balancer ==>> select Application load balancer  then create ==>> add the name ==>> select scheme (internet facing bc it follows 
                               Http protocols and all web servers use internet) ==>> create the availability zone and subnets ==>> launch the security groups. 
