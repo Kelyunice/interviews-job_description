@@ -89,8 +89,9 @@
     select load balancers ==>> create load balancer ==>> select Application load balancer  then create ==>> add the name ==>> select scheme (internet facing bc it follows 
                               Http protocols and all web servers use internet) ==>> create the availability zone and subnets ==>> launch the security groups. 
                               Proceed to create target group( add the name) ==>> select the instances you want to create the LB for
- 3- WE have a web server hosted in USA but people access the app in India at same speed. How does this happen. This is made possible through the use of EDGE LOCATION         which are dommy servers .
- 4- If an app uses CDN its benefits are( faster reach by user, lower latency, better user experience) wheras an app that doesn't use CDN faces challenges such as (high         latency, slow video loading, Buffering, Expensive bandwidth)
+ 3- We have a web server hosted in USA but people access the app in India at same speed. How does this happen. This is made possible through the use of 
+              EDGE LOCATION which are dommy servers .
+ 4- If an app uses CDN its benefits are( faster reach by user, lower latency, better user experience) wheras an app that doesn't use CDN faces challenges such as (high                  latency, slow video loading, Buffering, Expensive bandwidth)
     
     WHY CDN EXIST
          - Performance: to reduce latency
