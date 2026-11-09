@@ -171,7 +171,7 @@
                   MULTI-CDN STRATEGY
                   
       - In real life you can check the number servers on a particular cloud for a particular app e.g netflix servers on aws regions
-      - This is the ability to use multiple CDNs for max Reliability and Performance. It is used by companies such as ( Netflix, META, GOOGLE, AMAZOn0
+      - This is the ability to use multiple CDNs for max Reliability and Performance. It is used by companies such as ( Netflix, META, GOOGLE, AMAZON
       - The architecture is such that the user request is sent to (DN1, CDN 2, CDN3) and the all fetch their data from 1 CDN which is the origin server
       - The benefits: It helps with better availability , Better performance, Failover capability
 
