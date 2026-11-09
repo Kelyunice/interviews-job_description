@@ -251,10 +251,10 @@
 
                ==============================================================================================================
 
-   An app is running in (asia-singapore) hosted region and we want to migrate it to USA for example. How to proceed
+              An app is running in (asia-singapore) hosted region and we want to migrate it to USA for example. How to proceed
 
     1- we need to take a snapshot of the server
-       when ever you create an instance it stores your data on EBS volume and snapshot takes a copy of it also send to s3 backend. If your EBD volume is deleted you can           always have a copy of it by using the snapshot or using the restoration.
+       when ever you create an instance it stores your data on EBS volume and snapshot takes a copy of it also and send to s3 backend. If your EBS volume is             deleted you can always have a copy of it by using the snapshot or using the restoration.
        Benefits: it is a backup , it helps in disaster recovery, Migration (moving the Vm from one region to another) and Cloning
 
    2- How do you take the snaptshot?
@@ -263,20 +263,20 @@
       - Go back to the snapshot ==>> select actions and copy the snapshot ==>> add destination Region ==>>
    3- You cannot create a vm from a snapshot or attach a server to a snapshot. It is meant only for backup
       - From a snapshot you can create a volume by clicking on the snapshot, then actions,==>. create volume
-      - After creating the volume , you can attache it to a server by launching a new instance, add the name you want , then under storage volume select advance options==>>
-        select default
+      - After creating the volume , you can attache it to a server by launching a new instance, add the name you want , then under storage volume select advance           options ==>> select default
       - NOTE: if you create a volume in an availability zone, your new VM must be in that same zone else you cannot attach them. 
         Stop the running Vm  and remove the root volume by going to actions ==>> detach volume . 
-      -  Go back to the new instance and attch old volume, under actions
+      -  Go back to the new instance and attach old volume, under actions
 
           ============================================================================================================
 
                HOW TO TAKE A SNAPSHOT USING LIFECYCLE MANAGER
-      -  under Elastic Block Store on the left choose ===>> lifecycle manager  ===>> custom policy, check for policy type as: EBS snapshot policy==>> click on next step
+      -  under Elastic Block Store on the left choose ===>> lifecycle manager  ===>> custom policy, check for policy type as: EBS snapshot policy==>> click on              next step
       - under target resource types chose ==>> volume,  target resource tags ==>> chose (NAME), then add server name under (enter a value) then add 
-      - Add a description, it will add a default IAM ROLE so don't touch, then click next. Under configure schedule 1 - Schedule 1, chose frequency : DAILY ,==>> 24 hours
-      - Indicate at what time ( chose when people are using the app less)==>. specify the retention type: either "age" or "count" is fine==>> Expiry date
-      - if you want to copy for another region then chose (cross-Region copy) ==>> chose (REGION 1) where you are copying it to ==>> expire days
+      - Add a description, it will add a default IAM ROLE so don't touch, then click next. Under configure schedule 1 - Schedule 1, chose frequency : DAILY ,
+         ==>> 24 hours
+      - Indicate at what time ( chose when people are using the app less)==> specify the retention type: either "age" or "count" is fine ==>> Expiry date
+      - If you want to copy for another region then chose (cross-Region copy) ==>> chose (REGION 1) where you are copying it to ==>> expire days
       
       - you can copy from one account to another ==>> enabling Cross-account sharing ==>> add account
                                         This is not done in real world
@@ -284,6 +284,7 @@
            ======================================================================================================================================================
 
                                            HOW TO CUT DOWN ON COST OF SNAPSHOT AS SOLUTION ARCHITECH
+                                           
       -  you need to make use of archiving under Actions ( once you archive a snapshot its cost is reduced by 75%)
          when you put a snapshot in archive it takes 24 to 72 hours to retrive and if you need it within that time you need to make use of the 
          FSR = fast snapshot Restore  mechanism
