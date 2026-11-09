@@ -25,7 +25,7 @@
     - To see all env var available ===>> printenv
     - Env var can be set at different levels
                    - terminal level which will not be persisted
-                   -  individual level which will persisted at for that individual (.bashrc file) once done reinitialize it
+                   -  individual level which will persisted for that individual (.bashrc file) once done reinitialize it
                    - Glosbl level so that every use locked into the system can use it (/etc/environment
 
 ================================================================================================================================================
