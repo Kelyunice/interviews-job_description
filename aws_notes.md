@@ -77,7 +77,8 @@
         Prometheuse pulls the metrics fro the server (VM)
         Grafana uses the metrics to create the dashboard and visualize the metrics
 
-13- To monitor the metrics on grafana , you need to connect it and enter the Id of Prometheus by doing (vi /etc/Prometheus/prometheuse.yml) under targets add the pub Ip                               of server and port its listening to
+13- To monitor the metrics on grafana , you need to connect it and enter the Id of Prometheus by doing (vi /etc/Prometheus/prometheuse.yml) under targets 
+          add the pub Ip of server and port its listening to
                            then do a systemctl restartprometheuse service
 
 ====================================================================================================================================================================        
@@ -124,14 +125,14 @@
                    systemctl status (apache2.service)
                    if all good check security groups on AWS and change them
      B- create the CLOUDFRONT
-        cloudfront ==>> create distribution ==>> choose plan based on how fast you want the app to be available to user ===>> add distribution name ==>>under domain, if            you have your own domain name you can use it ==>> click next ==>> under origin type chose Elastic Load balancer( based on how your traffic is routed) ==>> browse           load balancer and chose the name of the hosting zone where you created the LB, then select the name of the app ==> under settings 
-        select customize origin settings. For security you can enable origin mutual TLS for high security, proceed to create the CDN. 
+        cloudfront ==>> create distribution ==>> choose plan based on how fast you want the app to be available to user ===>> add distribution name ==>>under              domain, if you have your own domain name you can use it ==>> click next ==>> under origin type chose Elastic Load balancer( based on how your traffic 
+         is routed) ==>> browse load balancer and chose the name of the hosting zone where you created the LB, then select the name of the app ==> under 
+         settings select customize origin settings. For security you can enable origin mutual TLS for high security, proceed to create the CDN. 
         
         Once you have a time stamp then it has fully loaded, you copy the distribution domain name
 
         to test it, go to a new browser start with the LB DNS and paste on your browser to see if the app will be accessible
                                               take the CDN and paste on another browser and test which is faster
-
 
    9-  Interview question
        How can you limit users from hitting your servers multiple times?
@@ -152,7 +153,7 @@
   16- What is Origin?
        source location of content
 
-   ======================================================================================================================================================================
+   ==============================================================================================================================================================
 
                                                 TTL ( TIME TO LIVE) 
 
@@ -168,7 +169,7 @@
                  It changes frequently. Examples include Bank Balance, Shopping Cart, Stock prices, Live Scores.
                  More difficult to cache. Cache here can be put lower
 
-   ====================================================================================================================================================================
+   =================================================================================================================================================================
                   MULTI-CDN STRATEGY
                   
       - In real life you can check the number servers on a particular cloud for a particular app e.g netflix servers on aws regions
@@ -176,7 +177,7 @@
       - The architecture is such that the user request is sent to (DN1, CDN 2, CDN3) and the all fetch their data from 1 CDN which is the origin server
       - The benefits: It helps with better availability , Better performance, Failover capability
 
-========================================================================================================================================================================
+==============================================================================================================================================================
 
                                    SNAPSHOTS- EBS VOLUMES   to check your EBS volume (lsblk)
 
@@ -193,14 +194,15 @@
 
                 CHARCTERISTICS OF EBS 
     - PERSISTENT STORAGE
-          It means data survives even if you reboot the server, you stop and start your server, or you migrate the server( instance replacement) data will not be removed.             So it is persistent
+          It means data survives even if you reboot the server, you stop and start your server, or you migrate the server( instance replacement) data will not be           removed So it is persistent
     - BLOCK STORAGE
          It provides raw disk blocks. examples NTFS, EXT4 (it supports EXT by default), XFS .
          You can format it just like a physical hard disk
 
                                  There are 2 types of Volumes
    - ROOT VOLUME
-       It contains Operating systems and Boot files. It can also be called Boot volume. Examples include; Ubuntu, AMAZON, Windows. Without ROOT VOLUME EC2 cannot boot
+       It contains Operating systems and Boot files. It can also be called Boot volume. Examples include; Ubuntu, AMAZON, Windows. Without ROOT VOLUME EC2
+       cannot boot
    - DATA VOLUME or non root volume
        It stores database files, logs, application data. It can be attached or detached ANYTIME
 
