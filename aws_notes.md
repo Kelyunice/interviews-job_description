@@ -240,15 +240,15 @@
 
                                       EBS PERFORMANCE FUNDAMENTALS
 
-   1- Storage Size
-       here we look at capacity( GB and TB) max storage is 64TB of data
-   2- IOPS -Input Output Per Second
-            you can check it under an instance , under configuration storage==>> IOPS
-   3- Throughput
-       Amount of data transferred e.g ( 500 MB/s)
-   4- Latency
-      Time required to complete an operation. 
-      The goal is low latency especially for databases
+         1- Storage Size
+                  here we look at capacity( GB and TB) max storage is 64TB of data
+         2- IOPS -Input Output Per Second
+                you can check it under an instance , under configuration storage==>> IOPS
+         3- Throughput
+                Amount of data transferred e.g ( 500 MB/s)
+         4- Latency
+              Time required to complete an operation. 
+            The goal is low latency especially for databases
 
                ==============================================================================================================
 
@@ -303,7 +303,7 @@
          In real life we don't add multiple volumes on a vm. we instead increase the size of the storage by choosing the volume and the ==>>actions
 
         =======================================================================================================================================================
-                                          AWS RATIONAL DATA BASE
+                                          AWS RELATIONAL DATA BASE
 
          - Before RDS developers would have to:
                            - Develope the app code,
@@ -424,6 +424,13 @@
                 Replication                         Sync                                  Async
                 Automatic failover                  yes                                   No
 
+                                         HOW TO SCALE RDS
+
+                     VERTICAL SCALING                                               STORAGE SCALING
+                db.r5.large ===>> db.r5.2xlarge                                 100 GB ===>> 500 GB
+                More CPU and RAM                                                No downtime for most engines
+
+
           ==================================================================================================================================
                                                    AUTOMATED BACKUPS OF RDS in AWS
 
@@ -453,14 +460,50 @@
           - under additional VPC security group==>> chose mysql
           - Under RDS Proxy==>> if you enable RDS proxy the best advantage is we save alot of time and alot of money
 
+       
+       FOr example 10,000 people are trying to access the database. They want to run queries. We can pull all of them and serve the traffic
+       from RDS proxy. The advantage of RDS proxy is that instaed of having individual queries we will pull all the queries togther and serve 
+       the data as one. We can also do better scaling with the help of RDS proxy and connection will be faster and safer
+         
+                 AS for ENGINES UPGRADES OR MAINTENANCE WINDOW
+
+                 
+      - we have MINOR UPGRADE
+                      mysql 8.0.35 ==>> mysql 8.0.36
+      - WE HAVE MAJOR UPGRADE
+                     mysql 5.7 ==>> mysql 8
+
+       - GENRALLY for database while we are doing Patching and minor upgrades, server needs to be stopped especially for production and 
+          nobody can access the data.
+             - we enable AWS upgrades for AWS performs maintenance during configured window. to do so
+
+             - select database ==>> create database ==>> additional configuration ==>> maintenance window ==>> choose window (set your preferred window)
+
+
+  ==========================================================================================================================================
+  
        interview question:
                    As a cloud architect i want you to design an architect where you can save time and cost both?
 
-            ANswer: i will make use of RDS Proxy: with the help of RDS proxy it saves 55% of cost
+            ANswer: I will make use of RDS Proxy: with the help of RDS proxy it saves 55% of cost
 
          - Once fully connected, scroll down to endpoint( it is like our url) and copy the endpoint and port
          - go to your terminal and type
                                  MySQL -h (endpoint and point) -u (host name of database by default) -p(copy from aws secret manager)
+
+            IF you want to make sure your data is higly available : 
+                        make use of MULTI - AZ architecture
+            If you want your database to perform a number of read operations for every 1 minutes: 
+                        make use of READ REPLICAS
+            If you are creating a database but you want to ensure data is available globally (for entire regions what do you use) what do you use: 
+                        AUrora Global database
+            if you want to create one database that would not to maintain the server ?  
+                        make use of Aurora serverless DB
+            If you want your database to make pooling connections at a time what are you going to use?
+                       make use of DS PROXY
+
+
+
 
              to get the password go back to secret manager
         - create database kely;
@@ -482,11 +525,11 @@
         SNAPSHOTS: when ever you take backups, it is available for max 35 days. If you want it to be available forever you need to take snapshots
 
           - Go back to the database ===>> actions ==>> take a snapshot
+    ================================================================================================================================================
 
+                               REAL LIFE CLOUD ARCHITECTURE DESIGN
 
-
-
-
+     WHEN users send their request, ===>> it goes to CLOUDFRONT ( Global CDN for fast content deliver) ==>> the request will go to ALB which will distribute traffic. Next the traffic goes to EKS/ECS ( container orchestration-Runs microservices). Since people will be using the app from the cluster , we will create  RDS proxy ( which manages and pools database connections). When it pools millions of request , it will send it to Primary DB( Primary DB handles writes). This Primary DB will send the same data to multiple READ REPLICAs. (netflix doesn't use multi-az it uses global aurora replication because once this is created it will available for all the regions.)
 
 
 
