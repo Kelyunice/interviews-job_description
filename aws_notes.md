@@ -302,11 +302,46 @@
                   
          In real life we don't add multiple volumes on a vm. we instead increase the size of the storage by choosing the volume and the ==>>actions
 
+        =======================================================================================================================================================
+                                          AWS RATIONAL DATA BASE
 
+         - Before RDS developers would have to:
+                           - Develope the app code,
+                           - install the EC2 server,
+                           - install Database,
+                           - configure the Backups,
+                           - Configure Replication,
+                           - Patch the OS,
+                           - Monitor the Database
+
+         - Today with RDS
+                           - Developer creates AWS RDS
+                           - it handles Patching
+                           - Backup
+                           - Monitoring
+                           - Replication
+                           - Failover
+                           - Scaling
        
    
+       =============================================================================================================================================
+                          DIFFERENT DATABSE ENGINES SUPPORTED BY RDS
 
+         - MySQL:
+                Best database For web Application
+         - PostgreSQL:
+                For enterprise Applications it works best
+         - MariaDB:
+                It is also good for web Application and is an alternative for MySQl
+         - ORACLE:
+                It is best for enterprise ERP
+         - Microsoft SQL server:
+                 It is best for windows applications
+         - Aurora MySQL:
+                 If you want High performance of your database, it is best fit. It is developed by Aurora which is an AWS proprietor solution
+         - Aurora PostgreSQL:
+                 It is highest performance . Created by Aurora as well
 
-
+            Aurora supports MySQL and PostgreSQL dtabases
    
                                      
