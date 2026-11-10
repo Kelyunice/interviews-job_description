@@ -49,9 +49,9 @@
    6- Connectivity.
             ones you create any server s3 or EKS cluster, without connectivity no resource can be able to communicate to the users?
    7- MONITORING AND AUDITING===VISIBILTY
-           Monitoring: it questions is it healthy by using tools such as ( cloudWatch, grafana, Prometheuse, Datadog) to check metrics such as (CPU, Memory, Disk, Network
+           Monitoring: it questions is it healthy by using tools such as ( cloudWatch, grafana, Prometheuse, Datadog) to check metrics such as (CPU, Memory,                       Disk, Network
                        Errors, Latency)
-           AUDITING: Questions who changes something by using tools such as ( cloudTrial, AWS config, Security Hub) to check metrics such as (who, what, when, from where)
+           AUDITING: Questions who changes something by using tools such as ( cloudTrial, AWS config, Security Hub) to check metrics such as (who, what, when,                          from where)
    8- Data captured by CloudTrail on AWS can be stored either in s3 or CloudWatch logs        
    9- CloudTrial events and Pricing
            Management Events are free. Events such as e. creating, stop , start deleting resources ( Control AWS resourcs, ENable by default, cheap, create EC@,
@@ -59,13 +59,13 @@
            Data Reource are not free. Events such as upload, download , copying data ( ACCESS resource data, Disabled, Expensive, Read file in s3, GetObject)
 
   10- To track the records of a particular resource e.g ECS you need to record the trial although by default AWS records everything.
-          TO create the Trial: CLoudTrial==>> Trials ==>> Add Trail Name ==>. Storage Location ==> Disable Log file SSE-KMS encryption ==>. Enable additional setting
+          TO create the Trial: CLoudTrial==>> Trials ==>> Add Trail Name ==>. Storage Location ==> Disable Log file SSE-KMS encryption ==>. Enable additional                                     setting
                                click on next ==> chose and management events or add data events ==>> select all the resource type (EC2 , S3) ==>> next
                               under aggregation templates==>> select ALL ==>> Next and create the trial
  11- In AWS by default every resource is being monitored, but if you want to monitor your resource you are going  to create a dashboard. 
       99% of the time we use PROMETHEUSE for monitoring but it can also be done using AWS cloudWatch
       To create a dashboard
-          cloudwatch ==>> dashboards ==>> create dashboards ==.. add the name you want ==>> chose what you want to monitor ( metrics, logs, Alarms)==>> then widget type
+          cloudwatch ==>> dashboards ==>> create dashboards ==.. add the name you want ==>> chose what you want to monitor ( metrics, logs, Alarms)==>> then                                widget type
                         metrics are in line widget form ==>> next ==>> which resource ==>> copy the server private Ip and paste under Per-instance Metrics ==>>
                          chose what you want to monitor e.g CPU Utilization by checking options==>> create ==>> save dashboard
 
@@ -328,7 +328,7 @@
                           DIFFERENT DATABSE ENGINES SUPPORTED BY RDS
 
          - MySQL:
-                Best database For web Application
+                Best database For web Application ( it port number is 3306)
          - PostgreSQL:
                 For enterprise Applications it works best
          - MariaDB:
@@ -415,14 +415,69 @@
                      Used cases:
                              It is used for reporting, Analytics, READ-Heavy APLLICATIOns
 
-           MUTLI - AZ VS READ REPLICA
+                     MUTLI - AZ VS READ REPLICA ( Read replicas are used after Multi AZ has already been implemented depending on the need)
 
 
-            FEATURE                         MULTI - AZ                          READ REPLICA
-           High avail                          YES                                   NO
-           Read Scaling                        No                                    Yes                     
-           Replication                         Sync                                  Async
-           Automatic failover                  yes                                   No
+                 FEATURE                         MULTI - AZ                          READ REPLICA
+                High avail                          YES                                   NO
+                Read Scaling                        No                                    Yes                     
+                Replication                         Sync                                  Async
+                Automatic failover                  yes                                   No
+
+          ==================================================================================================================================
+                                                   AUTOMATED BACKUPS OF RDS in AWS
+
+          - AWS automatically creates and manages your database backups. 
+                    - FULL BACKUP: it is done daily
+                    - Transaction Logs: it can be scheduled every 5 minutes
+                    - Retention: 1 to 35 days max but in real life backups are stored in s3 because its cheap
+                    - Default: by default data is stored for 7 days
+
+            PRACTICALL WORK  -- AWS has introduce a new feature called express configuration, meaning best options are selected my default
+
+            - First lunch your instance with name as mysql==>> check its default port ==>>create from existing group
+            - create RDS ==>. create full config, ==>>chose mysql ==>> full configuration -->> under templates set Production(for real world app)
+                            for practice you can select sandbox
+
+                        - under engine version==>. if you enable RDS extended support when ever the engine expires you can still be able to use it. 
+                          there's a new engine you cannot go for a new one. Else do not enable it so you can always update to newer engines
+
+           - add DB cluster identifier and Master username (any name of your choice)
+              generally to login to a database you need a password
+          - since most often we forget password, AWS has added "managed in AWS Secrets Manager) . This password can be changed for every hour
+          - under Additional credential setting chose ==>> password or password and IAM
+          - Instance type ==>> for prod chose db.m5d.4xlarge
+          - storage type==>> allocated storage ( RDS supports max 64 TB of data)
+          - under compute resource==>> chose connect to an EC2 compute resource
+          - Check Public access and make sure "NO" because a database should not have public access
+          - under additional VPC security group==>> chose mysql
+          - Under RDS Proxy==>> if you enable RDS proxy the best advantage is we save alot of time and alot of money
+
+       interview question:
+                   As a cloud architect i want you to design an architect where you can save time and cost both?
+
+            ANswer: i will make use of RDS Proxy: with the help of RDS proxy it saves 55% of cost
+
+         - Once fully connected, scroll down to endpoint( it is like our url) and copy the endpoint and port
+         - go to your terminal and type
+                                 MySQL -h (endpoint and point) -u (host name of database by default) -p(copy from aws secret manager)
+
+             to get the password go back to secret manager
+        - create database kely;
+          show databases;
+          use kely;
+
+        CREATE TABLE users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100),
+            email VARCHAR(100),
+            password VARCHAR(20),
+            city VARCHAR(20),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+
+        - to run the queries
+                           SELECT * FROM users;
 
 
 
@@ -431,4 +486,7 @@
 
 
 
+
+
+            
         
