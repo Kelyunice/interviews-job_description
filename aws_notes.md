@@ -534,6 +534,14 @@
      WHEN users send their request, ===>> it goes to CLOUDFRONT ( Global CDN for fast content deliver) ==>> the request will go to ALB which will distribute traffic. Next the traffic goes to EKS/ECS ( container orchestration-Runs microservices). Since people will be using the app from the cluster , we will create  RDS proxy ( which manages and pools database connections). When it pools millions of request , it will send it to Primary DB( Primary DB handles writes). This Primary DB will send the same data to multiple READ REPLICAs. (netflix doesn't use multi-az it uses global aurora replication because once this is created it will available for all the regions.)
 
 
+ In real life when you type www.netflix.com, it goes to rout53( for domain  name resolution), then it goes to
+                                                        WAF ( WEB APP firewall which acts as security layer against DDOS/ other attacks 
+                                                        Next it goes to CDN (to maintain low latency)
+                                                        it goes to API gateway: centralize request and routes it to the different backend services)/ 
+                                                        it then goes to the microservices/ EKS cluster (manages or run workloads)
+                                                        it goes to kafka/apache kafka for messaging
+                                                        database (if the data crashes people will not be able to reach the app, then comes a war room
+
 
             
         
