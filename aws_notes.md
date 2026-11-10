@@ -342,6 +342,68 @@
          - Aurora PostgreSQL:
                  It is highest performance . Created by Aurora as well
 
-            Aurora supports MySQL and PostgreSQL dtabases
+            Aurora supports MySQL and PostgreSQL databases
    
-                                     
+         ================================================================================================================================
+                                          AWS RDS ARCHITECTURE
+
+
+        RDS is a fully managed database. AWS manages the database, so you can focus on your application.
+
+
+       As a user when ever you provide your data (e.g name, email, phone number), this data is stored in the RDS instance . For the application
+       to connect to the RDS instance it needs the RDS Endpoint. In the RDS instance what ever data you provide is stored in the EBS 
+
+                                COMPONENTS OF RDS
+
+                     - DB instance
+                     - STorage
+                     - Security Groups
+                     - Endponit
+                     - Parameter Groups
+                     - Option Groups
+                     - Snapshots
+
+             RDS INSTANCE CLASSES ( different types /size of engines)
+
+            - GENERAL PURPOSE:
+                     This type is used mostly for development , and for Testing 
+                     - db.t3
+                     - db.t4g
+            - MEMORY OPTIMIZED
+                     This type of engine is mostly used for Production Databases , and Large querires
+                     - db.r5
+                     - db.r6g
+                     - db.r7g
+
+            MULTI - AZ DEPLOYMENT
+
+            One of the most important architect tpoics
+
+            - SINGLE AZ
+                     Here we have the application and the data is stored in the primary Db only
+                     Here if AZ fails, Database id down
+            - MULTI - AZ
+                     Here we have the application and data is stored in 2 places. Firstly in the Primary Db(100% of the data)  and we also store the same 
+                      data on a standby DB with through a synchronous repliaction.
+
+                    BENEFITS:
+                    IF AZ fails we still have a copy on the standby DB. it provides 
+                    - high availability
+                    - Automatic Failover
+                    - enhances Disaster Recovery
+                    
+            
+
+
+
+
+
+
+
+
+
+
+
+
+        
