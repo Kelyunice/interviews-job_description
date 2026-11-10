@@ -525,6 +525,8 @@
         SNAPSHOTS: when ever you take backups, it is available for max 35 days. If you want it to be available forever you need to take snapshots
 
           - Go back to the database ===>> actions ==>> take a snapshot
+
+           - To delete the database select the database==>> modify at the top ==>> disable deletion protection ==>>modify DB instance
     ================================================================================================================================================
 
                                REAL LIFE CLOUD ARCHITECTURE DESIGN
