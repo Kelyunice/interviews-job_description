@@ -393,7 +393,13 @@
                     - Automatic Failover
                     - enhances Disaster Recovery
                     
-            
+            Interview Question:
+                 As a senior cloud architect how can you design a high level disaster recovery for database for automatic failure.
+                 What is the kind of architecture you are going to use?
+
+                 ANSWER. 
+                     i will use the multi AZ availability zone where by data will will sync automatically to a standby DB so that if Primary DB fails, 
+                       standby will still be available
 
 
 
