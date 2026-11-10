@@ -81,18 +81,19 @@
           add the pub Ip of server and port its listening to
                            then do a systemctl restartprometheuse service
 
-====================================================================================================================================================================        
+=================================================================================================================================================================      
                               Content Delivery Network (CDN) = GLOBAL CONTENT ACCELERATOR its most asked in interviews
 
  1- Generally when we launch vm and create load balancers for them
- 2- If you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select Image and                                                                                        templates ==> launch more like this. 
+ 2- If you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select           Image and templates ==> launch more like this. 
     You need to change the name and the availability zone, for high availability. Proceed now to create the load balancer 
-    select load balancers ==>> create load balancer ==>> select Application load balancer  then create ==>> add the name ==>> select scheme (internet facing bc it follows 
+    select load balancers ==>> create load balancer ==>> select Application load balancer  then create ==>> add the name ==>> select scheme (internet facing 
+     bc it follows 
                               Http protocols and all web servers use internet) ==>> create the availability zone and subnets ==>> launch the security groups. 
                               Proceed to create target group( add the name) ==>> select the instances you want to create the LB for
  3- We have a web server hosted in USA but people access the app in India at same speed. How does this happen. This is made possible through the use of 
               EDGE LOCATION which are dommy servers .
- 4- If an app uses CDN its benefits are( faster reach by user, lower latency, better user experience) wheras an app that doesn't use CDN faces challenges such as (high                  latency, slow video loading, Buffering, Expensive bandwidth)
+ 4- If an app uses CDN its benefits are( faster reach by user, lower latency, better user experience) wheras an app that doesn't use CDN faces challenges such as         (high latency, slow video loading, Buffering, Expensive bandwidth)
     
     WHY CDN EXIST
          - Performance: to reduce latency
@@ -108,7 +109,7 @@
          - CACHE
               Examples temporary storage: Images, Videos, CSS, JS, API Responses
 
-       when you make a request for the first time, your request goes to the edge location and since it doesn't have data it will go and fetch from origin server. The next         time you make a request it goes to edge location and since edge location now has data it no longer has to ask from origin, it will respond with the data (Cache) it        first collected.
+       when you make a request for the first time, your request goes to the edge location and since it doesn't have data it will go and fetch from origin server.        The next time you make a request it goes to edge location and since edge location now has data it no longer has to ask from origin, it will respond with          the data (Cache) it first collected.
 
                HOW TO IMPLEMENT THE CDN
 
@@ -294,12 +295,12 @@
          =====================================================================================================================================================
                                           INCREMENTAL SNAPSHOTS
 
-      - This is a process where by whenever you store volumes(snapshots) on day 1 and day 2 you need to store more snapshots, only the new snapshot not store on day 1 will          move to snapshot 2 to reduce cost
+      - This is a process where by whenever you store volumes(snapshots) on day 1 and day 2 you need to store more snapshots, only the new snapshot not store on           day 1 will move to snapshot 2 to reduce cost
       - You can have more than one volume attached to a vm 
          volume ==>> create the volume ==>> go back to actions and attach the volume ==>> chose the instance ==>> here you attach data volume not root volume
                     
                   
-         In real life we don't add multiple volumes on a vm. we instead increase the size of the  by choosing the volume and the ==>>actions
+         In real life we don't add multiple volumes on a vm. we instead increase the size of the storage by choosing the volume and the ==>>actions
 
 
        
