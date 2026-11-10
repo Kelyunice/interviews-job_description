@@ -479,7 +479,9 @@
         - to run the queries
                            SELECT * FROM users;
 
+        SNAPSHOTS: when ever you take backups, it is available for max 35 days. If you want it to be available forever you need to take snapshots
 
+          - Go back to the database ===>> actions ==>> take a snapshot
 
 
 
