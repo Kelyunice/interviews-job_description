@@ -398,12 +398,31 @@
                  What is the kind of architecture you are going to use?
 
                  ANSWER. 
-                     i will use the multi AZ availability zone where by data will will sync automatically to a standby DB so that if Primary DB fails, 
-                       standby will still be available
+                     i will use the multi AZ availability zone where by data will will sync automatically to a standby DB so that if Primary DB fails( due to                          network issue, or it was corrupted), standby will still be available. Automatically AWS will understand that there is an issue, it will                           remove the primary DB and promote the secondary DB (standby DB). AS users are entering data DNX will be updated automatically as well (URL)
+                       
+                       (failover : is usually 60 - 120 sec)
+
+           ==================================================================================================================================================
+
+                                      READ REPLICAS  -  It is used for SCALING PURPOSES
+
+          Architecture :
+                      We have the Primary DB which will be replicated through asynchronous replication and produce 
+                                                                      - Replica 1
+                                                                      - Replica 2
+                                                                      - Replica 3
+
+                     Used cases:
+                             It is used for reporting, Analytics, READ-Heavy APLLICATIOns
+
+           MUTLI - AZ VS READ REPLICA
 
 
-
-
+            FEATURE                         MULTI - AZ                          READ REPLICA
+           High avail                          YES                                   NO
+           Read Scaling                        No                                    Yes                     
+           Replication                         Sync                                  Async
+           Automatic failover                  yes                                   No
 
 
 
