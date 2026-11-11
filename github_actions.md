@@ -11,6 +11,21 @@
      How do you build cut cost optimization in GitHub actions ========>> by building with a light image like "ubuntu slim"
    ==============================================================================================================================================================
 
+                        DIFFERENCE BETWEEN GITHUB ACTIONS AND JENKINS
+
+     1- GitHub actions is a native C? tool while Jenkins is  based distributed builds
+     2- GitHub actions is best for GitHub repos and cloud automation while Jenkins is best for large enterprises and for on-prem/hybrid
+     3- GitHub actions auto-scales with GitHub-hosted runner while Jenkins scales with swarm agents
+     4- GitHub actions requires low maintenance while Jenkins has high maintenance
+     5- GitHub actions is modern, fast and simple while Jenkins is flexible , enterprise -ready.
+
+
+
+Interview question: 
+               where are workflows stored in gitHub Action/ or what is the default location of workflow files
+                                                         Answer: .github/workflows/
+
+    ===================================================================================================================================================
                                      uses: These are pre-build github actions command.
                                      Run: when you want to pass a shell command
 
