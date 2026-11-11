@@ -47,6 +47,7 @@ Interview question:
 
            1- Github Hosted Runner
            2- Self Hosted Runner
+
 ===================================================================================================================================================
 
                                  SAST  =  STATIC APPLICATION SECURITY TEST
@@ -75,8 +76,18 @@ Interview question:
        
        When your workflow gives runners the job to scan or do SAST , it needs to bring you the feedback . Under job ==>> permissions: give R, R, W
 
+   ======================================================================================================================================
 
-
+                         How to practice codeeQl test with cache dependencies
+                         
+                  1. Create the GitHub repository (demo).
+                  2. Create package.json in the root of the repository.
+                  3. Create a directory called .github/workflows/.
+                  4. Inside that directory, create generate-lock.yml.
+                  5. Run the workflow to generate package-lock.json.
+                  6. Download the artifact and extract package-lock.json.
+                  7. Upload package-lock.json into the root of demo.
+                  8. Create your main CI workflow inside .github/workflows/.
 
 
 
