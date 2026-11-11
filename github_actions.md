@@ -102,7 +102,8 @@ Interview question:
                    -  checks previous execution status
                    -  it uses success / failure/cancelled state of past jobs
                    - status checks comes in between the pipeline
-                         example: failure()
+                         example: failure() e.g( sending alerts and logs), or suceess() e.g when previous jobs/steps succeeded
+                                  runs regardless of whether previous steps succeeded or failed
 
                     Conditions decide, while status checks verify
                    
@@ -114,9 +115,49 @@ Interview question:
                                   security updates
 
 
-
                     To configure it on a repo / pipeline
                              we start by creating the dependabot file inside the rep
                              then we check for dependabot configurations/alerts
                              we ensure Ruleset to avoid branch merge when checks have not been validated
+
+                     - To use it==>> settings ==>>ruleset
+
+====================================================================================================================================================
+
+                                  Matrix JOB
+
+          It is used to save Time, reduce effort, and increase coverage. If you want to test your app to make sure it will be avail to all users / platforms
+
+          It enables you to run the same job on multiple OS and versions at the same time.
+
+                                   Where can we use matrix jobs?
+                - Test applications against multiple Node.js or Python versions.
+                - Test applications on Ubuntu, Windows and macOS.
+                - Test different application configurations.
+                - Build multiple versions of Docker images.
+
+
+
+
+
+
+
+
+
+
+
+                             
+
+
+
+
+
+
+
+
+
+
+
+
+                             
                                    
