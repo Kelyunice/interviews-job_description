@@ -89,8 +89,34 @@ Interview question:
                   7. Upload package-lock.json into the root of demo.
                   8. Create your main CI workflow inside .github/workflows/.
 
+    ==================================================================================================================================
+                                   CONDITIONS IN GITHUB ACTIONS
+
+                   - Conditions decide whether something should run
+                   - conditions can use branch/event information
+                   - conditions starts from the beginning of the pipeline
+                          example : github.ref
+
+                   
+                                     STATUS CHECK
+                   -  checks previous execution status
+                   -  it uses success / failure/cancelled state of past jobs
+                   - status checks comes in between the pipeline
+                         example: failure()
+
+                    Conditions decide, while status checks verify
+                   
+                                     DEPENDABOT
+                    It automatically checks projects dependencies for updates and vulnerabilities and creates pull request. 
+                    It helps with Outdated dependencies
+                                  vulnerable dependencies
+                                  dependency version updates
+                                  security updates
 
 
 
-
+                    To configure it on a repo / pipeline
+                             we start by creating the dependabot file inside the rep
+                             then we check for dependabot configurations/alerts
+                             we ensure Ruleset to avoid branch merge when checks have not been validated
                                    
