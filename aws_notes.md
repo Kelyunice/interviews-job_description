@@ -117,18 +117,22 @@
      A- create the LB
          check if the LB is active, copy the DNS name
 
-           504 gateway time-out means application is running but not loading due to port number issue
+          - 504 gateway time-out means application is running but not loading due to port number issue
                ( SG issues,
-           404 error means  application is loading but not running ( incorrect API endpoint ,incorrect file path, page not found, wrong url, routing problem)
+          - 404 error means  application is loading but not running ( incorrect API endpoint ,incorrect file path, page not found, wrong url, routing problem)
               
-           401 unauthorized meaning your credentials are not allowed or has expired or missing token
+          - 401 unauthorized meaning your credentials are not allowed or has expired or missing token
                check username and password spelling, check if API token is present or has expired, does the user have the required authentication method
-           400 bad request
-           500 internal server error
-           502 bad gateway. gateway or proxy cannot communicate properly
+               
+          - 400 bad request e.g you write number in the place of name, or a black space where information is expected
+          
+          - 500 internal server error. first check app logs - kubectl get logs
+          
+          - 502 bad gateway. gateway or proxy cannot communicate properly
                is backend app working (ps aux | grep node), is backend listening to correct port (sudo ss -tulpn), can the proxy reach the backend, 
                is the DNS name correct, are firewalls rules blocking, are there app crashes or timeouts
-           503 service unavailable( temporarily unavailable service ( may be down, undergoing maintenance, or have no healthy backend instance)
+               
+          - 503 service unavailable( temporarily unavailable service ( may be down, undergoing maintenance, or have no healthy backend instance)
                
                            What to check:
                 1. Are all application instances running? kubectl get pods
@@ -145,6 +149,7 @@
                    sudo -i
                    systemctl status (apache2.service)
                    if all good check security groups on AWS and change them
+                    
      B- create the CLOUDFRONT
         cloudfront ==>> create distribution ==>> choose plan based on how fast you want the app to be available to user ===>> add distribution name ==>>under              domain, if you have your own domain name you can use it ==>> click next ==>> under origin type chose Elastic Load balancer( based on how your traffic 
          is routed) ==>> browse load balancer and chose the name of the hosting zone where you created the LB, then select the name of the app ==> under 
@@ -178,9 +183,9 @@
 
                                                 TTL ( TIME TO LIVE) 
 
-      1- when you create an edge location served by a CDN or geolocation, when user send their request the first time is might take 4 sec to get a response and the next              time 3 sec or less since the data is stored in cache> you need to set the TTL after which if another request comes in it will go back to the origin server
+      1- when you create an edge location served by a CDN or geolocation, when user send their request the first time is might take 4 sec to get a response and             the next time 3 sec or less since the data is stored in cache> you need to set the TTL after which if another request comes in it will go back to the             origin server
 
-      2- TTL describes how much you are going to store the temporary content (cache) . It be 24 hours or up to 1 week
+      2- TTL describes how long you are going to store the temporary content (cache) . It be 24 hours or up to 1 week
 
       3- There are 2 types of content (cache)
            - STATIC CONTENT
@@ -191,11 +196,11 @@
                  More difficult to cache. Cache here can be put lower
 
    =================================================================================================================================================================
-                  MULTI-CDN STRATEGY
+                                    MULTI-CDN STRATEGY
                   
-      - In real life you can check the number servers on a particular cloud for a particular app e.g netflix servers on aws regions
+      - In real life you can check the number of servers on a particular cloud for a particular app e.g netflix servers on aws regions
       - This is the ability to use multiple CDNs for max Reliability and Performance. It is used by companies such as ( Netflix, META, GOOGLE, AMAZON
-      - The architecture is such that the user request is sent to (DN1, CDN 2, CDN3) and the all fetch their data from 1 CDN which is the origin server
+      - The architecture is such that the user request is sent to (DN1, CDN 2, CDN3) and they all fetch their data from 1 CDN which is the origin server
       - The benefits: It helps with better availability , Better performance, Failover capability
 
 ==============================================================================================================================================================
@@ -227,15 +232,15 @@
    - DATA VOLUME or non root volume
        It stores database files, logs, application data. It can be attached or detached ANYTIME
 
-        ( ROOT VOLUME = BOOT THE SERVER, DATA VOLUME = STORE YOUR DATA)
+                     (ROOT VOLUME = BOOT THE SERVER, DATA VOLUME = STORE YOUR DATA)
 
                                   There 2 kinds of EBS VOLUMES TYPES
      
     1- SSD
-       - Genral Purpose
+       - General Purpose
          GP3 and GP2 (Legacy)
          Here we store data that is not very important but we just want to store it for reusability. Here you store the data with no details
-         When creating webserver and Applications servers,containers, Dev/Test, medium databses we use genral purpose
+         When creating webserver and Applications servers,containers, Dev/Test, medium databses we use general purpose
          Features: it is independent IOPS, it is throughout, it has lower cost. 
          GP2 is an older version of GP3. 
        - Provisioned 
@@ -268,9 +273,9 @@
                 Amount of data transferred e.g ( 500 MB/s)
          4- Latency
               Time required to complete an operation. 
-            The goal is low latency especially for databases
+              The goal is low latency especially for databases
 
-               ==============================================================================================================
+       ===========================================================================================================================
 
               An app is running in (asia-singapore) hosted region and we want to migrate it to USA for example. How to proceed
 
@@ -325,7 +330,7 @@
         =======================================================================================================================================================
                                           AWS RELATIONAL DATA BASE
 
-         - Before RDS developers would have to:
+         - Before RDS, developers would have to:
                            - Develope the app code,
                            - install the EC2 server,
                            - install Database,
@@ -343,7 +348,6 @@
                            - Failover
                            - Scaling
        
-   
        =============================================================================================================================================
                           DIFFERENT DATABSE ENGINES SUPPORTED BY RDS
 
@@ -398,14 +402,14 @@
 
             MULTI - AZ DEPLOYMENT
 
-            One of the most important architect tpoics
+            One of the most important cloud architect topics
 
             - SINGLE AZ
                      Here we have the application and the data is stored in the primary Db only
-                     Here if AZ fails, Database id down
+                     Here if AZ fails, Database is down
             - MULTI - AZ
                      Here we have the application and data is stored in 2 places. Firstly in the Primary Db(100% of the data)  and we also store the same 
-                      data on a standby DB with through a synchronous repliaction.
+                      data on a standby DB through a synchronous repliaction.
 
                     BENEFITS:
                     IF AZ fails we still have a copy on the standby DB. it provides 
@@ -418,7 +422,7 @@
                  What is the kind of architecture you are going to use?
 
                  ANSWER. 
-                     i will use the multi AZ availability zone where by data will will sync automatically to a standby DB so that if Primary DB fails( due to                          network issue, or it was corrupted), standby will still be available. Automatically AWS will understand that there is an issue, it will                           remove the primary DB and promote the secondary DB (standby DB). AS users are entering data DNX will be updated automatically as well (URL)
+                     i will use the multi AZ availability zone where by data will sync automatically to a standby DB so that if Primary DB fails( due to                          network issue, or it was corrupted), standby will still be available. Automatically AWS will understand that there is an issue, it will                           remove the primary DB and promote the secondary DB (standby DB). AS users are entering data DNX will be updated automatically as well (URL)
                        
                        (failover : is usually 60 - 120 sec)
 
