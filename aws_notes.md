@@ -26,7 +26,7 @@
     - Env var can be set at different levels
                    - terminal level which will not be persisted
                    -  individual level which will persisted for that individual (.bashrc file) once done reinitialize it
-                   - Glosbl level so that every use locked into the system can use it (/etc/environment
+                   - Global level so that every use locked into the system can use it (/etc/environment
 
 ================================================================================================================================================
 
@@ -39,7 +39,7 @@
                 CloudTrail==>> Event History==> event name or even source
    2- which AWS resource Audits logs?
                 CloudTrial: It records every API call , user action, console login, CLI command, SDK request, and service activity happening inside your aws account
-   3- When ever you create a resource or click on create any resource what actually happends on the ebackend?
+   3- When ever you create a resource or click on create any resource what actually happends on the backend?
                USER REQUEST ==>>  API CALL (REST) ==>> Cloud control plane (Brain of the cloud)  ==>> Resource is created
    4- How can we log in to AWS?
                By using ; IAM USER, IAM ROLE or FEDERATED USER  which will be used check the authentication if you have the permission to login
@@ -49,8 +49,7 @@
    6- Connectivity.
             ones you create any server s3 or EKS cluster, without connectivity no resource can be able to communicate to the users?
    7- MONITORING AND AUDITING===VISIBILTY
-           Monitoring: it questions is it healthy by using tools such as ( cloudWatch, grafana, Prometheuse, Datadog) to check metrics such as (CPU, Memory,                       Disk, Network
-                       Errors, Latency)
+           Monitoring: it questions is it healthy by using tools such as ( cloudWatch, grafana, Prometheus, Datadog) to check metrics such as (CPU, Memory,                       Disk, Network, Errors, Latency)
            AUDITING: Questions who changes something by using tools such as ( cloudTrial, AWS config, Security Hub) to check metrics such as (who, what, when,                          from where)
    8- Data captured by CloudTrail on AWS can be stored either in s3 or CloudWatch logs        
    9- CloudTrial events and Pricing
