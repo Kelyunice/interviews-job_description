@@ -2,7 +2,7 @@
                                 WHAT IS A WAR ROOM
 
 
-  In real life you might create an application but application stops working. It might 
+  In real life you might create an application but application stops working. 
               - there might be bugs
               - there might be vulnerabiltities
               - there might be memory leakage
@@ -72,7 +72,7 @@
 
 ======================================================================================================================================
 
-                          GOLDEN SIGNALS  CONSIDER AN APPLICATION IS HEALTHY (SRE question)
+                          GOLDEN SIGNALS TO CONSIDER AN APPLICATION AS HEALTHY (SRE question)
 
       1- LATENCY:
              How long it takes to serve a request
