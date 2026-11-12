@@ -72,13 +72,13 @@
                          apt install stress -y
                          stress -c 10
                          
- 12- In aws with the help of which components are you going to monitor you use prometheus.
-        Prometheuse pulls the metrics fro the server (VM)
-        Grafana uses the metrics to create the dashboard and visualize the metrics
+ 12- In AWS with the help of which components are you going to monitor you use Prometheus.
+        Prometheuse pulls the metrics from the server (VM)
+        Grafana uses the metrics to create the dashboard so that we can visualize the metrics
 
 13- To monitor the metrics on grafana , you need to connect it and enter the Id of Prometheus by doing (vi /etc/Prometheus/prometheuse.yml) under targets 
           add the pub Ip of server and port its listening to
-                           then do a systemctl restartprometheuse service
+                           then do a systemctl restart prometheus service
 
 =================================================================================================================================================================      
                               Content Delivery Network (CDN) = GLOBAL CONTENT ACCELERATOR its most asked in interviews
@@ -118,8 +118,29 @@
          check if the LB is active, copy the DNS name
 
            504 gateway time-out means application is running but not loading due to port number issue
-           404 error means  application is loading but not running
+               ( SG issues,
+           404 error means  application is loading but not running ( incorrect API endpoint ,incorrect file path, page not found, wrong url, routing problem)
+              
+           401 unauthorized meaning your credentials are not allowed or has expired or missing token
+               check username and password spelling, check if API token is present or has expired, does the user have the required authentication method
+           400 bad request
+           500 internal server error
+           502 bad gateway. gateway or proxy cannot communicate properly
+               is backend app working (ps aux | grep node), is backend listening to correct port (sudo ss -tulpn), can the proxy reach the backend, 
+               is the DNS name correct, are firewalls rules blocking, are there app crashes or timeouts
+           503 service unavailable( temporarily unavailable service ( may be down, undergoing maintenance, or have no healthy backend instance)
+               
+                           What to check:
+                1. Are all application instances running? kubectl get pods
+                2. Are the servers overloaded? kubectl get services
+                3. Are Kubernetes pods healthy? 
+                4. Does the Kubernetes Service have healthy endpoints? kubectl get endpoints
+                5. Is the application undergoing maintenance? kubectl logs POD_NAME
+                6. Are resource limits such as CPU and memory causing problems? ps aux
 
+
+
+    
           to check this go to your terminal and do
                    sudo -i
                    systemctl status (apache2.service)
