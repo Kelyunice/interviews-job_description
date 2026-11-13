@@ -477,14 +477,14 @@
 
            - add DB cluster identifier and Master username (any name of your choice)
               generally to login to a database you need a password
-          - since most often we forget password, AWS has added "managed in AWS Secrets Manager) . This password can be changed for every hour
-          - under Additional credential setting chose ==>> password or password and IAM
-          - Instance type ==>> for prod chose db.m5d.4xlarge
-          - storage type==>> allocated storage ( RDS supports max 64 TB of data)
-          - under compute resource==>> chose connect to an EC2 compute resource
-          - Check Public access and make sure "NO" because a database should not have public access
-          - under additional VPC security group==>> chose mysql
-          - Under RDS Proxy==>> if you enable RDS proxy the best advantage is we save alot of time and alot of money
+           - since most often we forget password, AWS has added "managed in AWS Secrets Manager) . This password can be changed for every hour
+           - under Additional credential setting chose ==>> password or password and IAM
+           - Instance type ==>> for prod chose db.m5d.4xlarge
+           - storage type==>> allocated storage ( RDS supports max 64 TB of data)
+           - under compute resource==>> chose connect to an EC2 compute resource
+           - Check Public access and make sure "NO" because a database should not have public access
+           - under additional VPC security group==>> chose mysql
+           - Under RDS Proxy==>> if you enable RDS proxy the best advantage is we save alot of time and alot of money
 
        
        FOr example 10,000 people are trying to access the database. They want to run queries. We can pull all of them and serve the traffic
@@ -494,12 +494,12 @@
                  AS for ENGINES UPGRADES OR MAINTENANCE WINDOW
 
                  
-      - we have MINOR UPGRADE
+        - we have MINOR UPGRADE
                       mysql 8.0.35 ==>> mysql 8.0.36
-      - WE HAVE MAJOR UPGRADE
+        - WE HAVE MAJOR UPGRADE
                      mysql 5.7 ==>> mysql 8
 
-       - GENRALLY for database while we are doing Patching and minor upgrades, server needs to be stopped especially for production and 
+        - GENRALLY for database while we are doing Patching and minor upgrades, server needs to be stopped especially for production and 
           nobody can access the data.
              - we enable AWS upgrades for AWS performs maintenance during configured window. to do so
 
@@ -508,7 +508,7 @@
 
   ==========================================================================================================================================
   
-       interview question:
+       Interview question:
                    As a cloud architect i want you to design an architect where you can save time and cost both?
 
             ANswer: I will make use of RDS Proxy: with the help of RDS proxy it saves 55% of cost
@@ -557,10 +557,10 @@
 
                                REAL LIFE CLOUD ARCHITECTURE DESIGN
 
-     WHEN users send their request, ===>> it goes to CLOUDFRONT ( Global CDN for fast content deliver) ==>> the request will go to ALB which will distribute traffic. Next the traffic goes to EKS/ECS ( container orchestration-Runs microservices). Since people will be using the app from the cluster , we will create  RDS proxy ( which manages and pools database connections). When it pools millions of request , it will send it to Primary DB( Primary DB handles writes). This Primary DB will send the same data to multiple READ REPLICAs. (netflix doesn't use multi-az it uses global aurora replication because once this is created it will available for all the regions.)
+        WHEN users send their request, ===>> it goes to CLOUDFRONT ( Global CDN for fast content deliver) ==>> the request will go to ALB which will distribute           traffic. Next the traffic goes to EKS/ECS ( container orchestration-Runs microservices). Since people will be using the app from the cluster , we will            create  RDS proxy ( which manages and pools database connections). When it pools millions of request , it will send it to Primary DB( Primary DB handles          writes). This Primary DB will send the same data to multiple READ REPLICAs. (netflix doesn't use multi-az it uses global aurora replication because once          this is created it will available for all the regions.)
 
 
- In real life when you type www.netflix.com, it goes to rout53( for domain  name resolution), then it goes to
+        In real life when you type www.netflix.com, it goes to rout53( for domain  name resolution), then it goes to
                                                         WAF ( WEB APP firewall which acts as security layer against DDOS/ other attacks 
                                                         Next it goes to CDN (to maintain low latency)
                                                         it goes to API gateway: centralize request and routes it to the different backend services)/ 
