@@ -162,23 +162,23 @@
                                               take the CDN and paste on another browser and test which is faster
 
    9-  Interview question
-       How can you limit users from hitting your servers multiple times?
-        By using rate limiting in cloufront as you create your distribution
+           How can you limit users from hitting your servers multiple times?
+           By using rate limiting in cloufront as you create your distribution
 
-  10- How to block the app for certain region
-       Go to security still while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block list ==>>
-  11- what is CDN?
-        It is a globally distributed network that caches content closer to users
-  12- what is cache HIT?
-        Content serves from EDGE CACHE
-  13- What is cache MISS?
-        Content fetched from origin
-  14- What is TTL?
-        Duration content remains in cache
-  15- What is CloudFront?
-        It is the service used in Aws to implement CDN service.
-  16- What is Origin?
-       source location of content
+   10- How to block the app for certain region
+        Go to security still while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block list ==>>
+   11- what is CDN?
+         It is a globally distributed network that caches content closer to users
+   12- what is cache HIT?
+         Content serves from EDGE CACHE
+   13- What is cache MISS?
+         Content fetched from origin
+   14- What is TTL?
+         Duration content remains in cache
+   15- What is CloudFront?
+         It is the service used in Aws to implement CDN service.
+   16- What is Origin?
+         source location of content
 
    ==============================================================================================================================================================
 
@@ -244,9 +244,10 @@
          When creating webserver and Applications servers,containers, Dev/Test, medium databses we use general purpose
          Features: it is independent IOPS, it is throughout, it has lower cost. 
          GP2 is an older version of GP3. 
-       - Provisioned 
-       Here we store important data. It is also known as IOPS. Once you store data and provision IOPS , your data will be very fast(speed to open)
-       when creating volumes for database you need to provision it reason why we us IOPS
+       
+      - Provisioned 
+          Here we store important data. It is also known as IOPS. Once you store data and provision IOPS , your data will be very fast(speed to open)
+          when creating volumes for database you need to provision it reason why we us IOPS
           - IO2: used for high performance SSD
                 it used for oracle, SQL server, SAP HANA, MYSQL Production PostgrSQL
                 It provides extremly high IOPS
