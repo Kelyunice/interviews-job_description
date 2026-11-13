@@ -14,6 +14,7 @@
     - To copy a file from another into another server
              sudo scp -i ~/.ssh/id_rsa filename ubuntu@IP:/path to the directory
 ============================================================================================================================================
+                                
                                 How to use environment variables
     - When you copy a file or script from a server to another , you cannot run it because you are not in the path of the file or script
     - All commands we run have their env stored in the .bashrc dir
