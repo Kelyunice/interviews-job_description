@@ -543,9 +543,9 @@ VIII - StatefulSet
              → Velero backs up your cluster. 
              → Longhorn provides cloud-native storage.
 
-     The beauty of Kubernetes isnt Kubernetes itself. 
-    The beauty is the ecosystem that allows organizations to build secure, observable, resilient, and highly automated platforms using specialized
-    tools that work together.
+             The beauty of Kubernetes isnt Kubernetes itself. 
+             The beauty is the ecosystem that allows organizations to build secure, observable, resilient, and highly automated platforms using specialized
+             tools that work together.
 =====================================================================================================================================================================
 Running Kubernetes in production is not just about deploying applications. The real skill is knowing how to diagnose what breaks — and where to look first.
 
