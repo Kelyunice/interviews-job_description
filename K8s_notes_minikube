@@ -210,11 +210,11 @@ A Service provides a stable way to reach the application, but it does not guaran
            it sepcific to legacy app because it takes time to fully initialize. it delays the liveness and readiness probe while the app initailises. 
 
 
-Our next office experiment: Remove one worker from the staffing plan  --- (deleting a service)
-          kubectl scale deployment office-web --replicas=2
-          kubectl get deployments
-          kubectl get pods
-          kubectl get endpointslices
+          Our next office experiment: Remove one worker from the staffing plan  --- (deleting a service)
+               kubectl scale deployment office-web --replicas=2
+               kubectl get deployments
+               kubectl get pods
+               kubectl get endpointslices
 
 Save our application configuration in YAML  -- Create our first Kubernetes YAML file        
          nano office-web-deployment.yaml -  paste the yaml manifset file provided by AI
