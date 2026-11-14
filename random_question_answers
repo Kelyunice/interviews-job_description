@@ -248,21 +248,34 @@ DevSecOps adds security throughout that process rather than waiting until the ap
 
       12-  What is a End-to-end Linux boot process
                 1. BIOS / UEFI
-                         Initialises hardware and performs POST.
+                         Initialises hardware and performs POST. /boot/efi/EFI/
                 2. GRUB Bootloader
-                         Finds and loads the Linux kernel.
+                         Finds and loads the Linux kernel. /boot/grub/ or /boot/grub2/
                 3. Linux Kernel
-                         Initialises hardware and core operating system functions.
+                         Initialises hardware and core operating system functions. /boot/vmlinuz-*
                 4. Initramfs
-                         Helps locate and mount the real root filesystem.
+                         Helps locate and mount the real root filesystem. /boot/initrd.img-* or /boot/initramfs-*
                 5. systemd (PID 1)
-                         Starts services and brings the system to its configured target.
+                         Starts services and brings the system to its configured target. /etc/systemd/systemd
                 6. Login / Shell
-                         The user can now work with Linux.
+                         The user can now work with Linux. /usr/bin/login, /bin/bash,
            
-   13- 
+   13- what is umask?
+                It is a mask subtracted from default permissions when new files/dir are cread. default files = 666, dir = 777
 
-
+   14- What does umask 022 mean?
+                it means the group and others lose write permission.
+   15- What are the different process states in Linux?
+                 1- R:
+                     Running:
+                 2- S:
+                     Sleeping (interruptible):
+                 3- D
+                     Sleeping (uniterruptible)
+                 4- Z
+                     Zombie:
+                 5- T
+                     Stopped
 
 
 
