@@ -363,7 +363,7 @@ configMaps and secrete are k8s volumes managed by k8s while PV,PVC are managed e
            - volumes
 
        How to create configMaps
-      - lietral values e.g kubectl create configMap ( ) --from-literal=key1=value1 --from-literal=key2=value2
+      - literal values e.g kubectl create configMap ( ) --from-literal=key1=value1 --from-literal=key2=value2
       - from configuration files
       - from one or more files or directories
 
