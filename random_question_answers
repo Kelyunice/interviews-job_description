@@ -241,13 +241,25 @@ DevSecOps adds security throughout that process rather than waiting until the ap
              Access control and risk management	NIST-aligned control assessments
              Evidence of release approval	Jenkins logs and deployment records
 
-          Compliance is not simply about running security tools and getting green results. It also involves evidence, policies, access controls, risk acceptance,
-          audit trails and human approvals.
+            Compliance is not simply about running security tools and getting green results. It also involves evidence, policies, access controls, risk acceptance,
+             audit trails and human approvals.
 
-         Depending on the bank and jurisdiction, other requirements may apply, such as PCI DSS for payment card environments.
+              Depending on the bank and jurisdiction, other requirements may apply, such as PCI DSS for payment card environments.
 
-   12- 
-
+      12-  What is a End-to-end Linux boot process
+                1. BIOS / UEFI
+                         Initialises hardware and performs POST.
+                2. GRUB Bootloader
+                         Finds and loads the Linux kernel.
+                3. Linux Kernel
+                         Initialises hardware and core operating system functions.
+                4. Initramfs
+                         Helps locate and mount the real root filesystem.
+                5. systemd (PID 1)
+                         Starts services and brings the system to its configured target.
+                6. Login / Shell
+                         The user can now work with Linux.
+           
    13- 
 
 
