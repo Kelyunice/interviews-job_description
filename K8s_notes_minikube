@@ -269,6 +269,7 @@ test the rolling update deployment strategy which is k8s default strategy.
          
           kubectl set image deployment/office-web nginx=nginx:1.28
           kubectl rollout status deployment/office-web
+
            OR
           vi office-web-deployment.yaml and change  ( nginx : latest to nginx:1.28)
           grep 'image:' office-web-deployment.yaml  ---Verify the change in the file.
