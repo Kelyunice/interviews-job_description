@@ -52,15 +52,15 @@
 
                                  SAST  =  STATIC APPLICATION SECURITY TEST
 
-          Nowadays most company use it because when dev push code it has issues such as
-                   - coding flaws 
-                   - hardcoded credentials ( dev mistakenly pushed their credentials)
-                   - SQL injections
-                   - security vulnerabilities
-          Some of the tools used for SAST include
-                   - sonaqube
-                   - codeQl
-                   - vera cora
+             Nowadays most company use it because when dev push code it has issues such as
+                        - coding flaws 
+                        - hardcoded credentials ( dev mistakenly pushed their credentials)
+                        - SQL injections
+                        - security vulnerabilities
+             Some of the tools used for SAST include
+                        - sonaqube
+                        - codeQl
+                        - vera cora
 
 =============================================================================================================================================
 
@@ -72,9 +72,9 @@
           3- ANALYZE
                    Runs thousands of security queries and uploads a report to the Github Security UI
 
-       CodeQl automatically scans your code for security bugs and blocks risky code.
+          CodeQl automatically scans your code for security bugs and blocks risky code.
        
-       When your workflow gives runners the job to scan or do SAST , it needs to bring you the feedback . Under job ==>> permissions: give R, R, W
+          When your workflow gives runners the job to scan or do SAST , it needs to bring you the feedback . Under job ==>> permissions: give R, R, W
 
    ======================================================================================================================================
 
