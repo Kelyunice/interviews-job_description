@@ -21,14 +21,14 @@
 
 
 
-Interview question: 
-               where are workflows stored in gitHub Action/ or what is the default location of workflow files
+       Interview question: 
+                     where are workflows stored in gitHub Action/ or what is the default location of workflow files
                                                          Answer: .github/workflows/
-               how do you make your pipeline faster:
+                     how do you make your pipeline faster:
                                                    By using cache (cache helps to store the dependencies(on your local) so that your next build 
                                                    doesn't need to download dependencies again)
-               What is .npm?
-                            it is a node manager folder
+                     What is .npm?
+                                It is a node manager folder
 
                
     ===================================================================================================================================================
