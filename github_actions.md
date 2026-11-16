@@ -179,6 +179,7 @@
                                           COMPOSITE ACTION
 
          Here instead of packing multiple steps, we put all into one reusable block to avoid repeating the same steps.
+         we can also make use of input parameters when ever we have workflow_dispatch to pass parameters
 
 
 
