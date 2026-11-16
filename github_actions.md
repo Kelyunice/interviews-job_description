@@ -116,9 +116,9 @@
 
 
                     To configure it on a repo / pipeline
-                             we start by creating the dependabot file inside the rep
-                             then we check for dependabot configurations/alerts
-                             we ensure Ruleset to avoid branch merge when checks have not been validated
+                                  we start by creating the dependabot file inside the rep
+                                  then we check for dependabot configurations/alerts
+                                  we ensure Ruleset to avoid branch merge when checks have not been validated
 
                      - To use it==>> settings ==>>ruleset
 
