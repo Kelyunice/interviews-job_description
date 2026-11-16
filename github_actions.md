@@ -135,11 +135,22 @@
                 - Test applications on Ubuntu, Windows and macOS.
                 - Test different application configurations.
                 - Build multiple versions of Docker images.
+  ===============================================================================================================================================
 
+                   1-  PARALLEL AND SEQUENTIAL BUILDS
 
+     Parellel build are used when we need each job to run a separate vm.(build, test, secure)
+                - We use parallel builds ro reduce pipeline execution time
+                - to improve CI/CD speed
+                - To allow independent tasks to run simultaneously
+                - It is useful for large projects
 
+    Interview Question: How do you optimize your build?
+                        By using parallel buinds
 
+                  2- SEQUENTIAL BUILDS
 
+     Here a job starts only after the required previous job has completed. GitHub actions uses "needs" keyword to create dependencies between jobs.
 
 
 
