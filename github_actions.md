@@ -152,6 +152,22 @@
 
      Here a job starts only after the required previous job has completed. GitHub actions uses "needs" keyword to create dependencies between jobs.
 
+     If our pipeline breaks we can make use of copilot to fix it.
+
+        - copilot can write yaml files
+        - it can understand workflows
+        - it can create scripts
+        - it can troubleshoot errors
+        - it can help in explaining commands
+        - it can improve code
+        - it can generate tests
+
+  ===================================================================================================================================================
+
+                    SELF HOSTED RUNNERS
+
+     
+
 
 
 
