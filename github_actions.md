@@ -162,12 +162,23 @@
         - it can improve code
         - it can generate tests
 
-  ===================================================================================================================================================
+       ===================================================================================================================================================
 
                     SELF HOSTED RUNNERS
 
-     
+     These are EC2 vm that we create on the cloud and connect them with our repository
+        - after creating the vm
+        - go back to your repo and on the left side Actions ==>> runner ==>> add runners
+        - copy and paste the provided commands till the end to connect
+        - Enter the name of the runner group to add this runner to : fill out the infos
+        - when runner is fully connected . Test with a shell script
+        - once everything is okay, go back to your workflow and change the "runs-on"
 
+     ============================================================================================================================================
+
+                                          COMPOSITE ACTION
+
+         Here instead of packing multiple steps, we put all into one reusable block to avoid repeating the same steps.
 
 
 
