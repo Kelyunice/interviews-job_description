@@ -645,10 +645,34 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   --set serviceAccount.create=true \
   --set replicationController.replicaCount=1
 
+==========================================================================================================================================================
 
+                                               NOTES
 
+          - What is monitoring:
+                             It is the continous process of checking the health, performance, and the availabiltiy of servers, applications,
+                             networks, and infrastructure.
+                             For example: monitoring and EC2 instance to check whether CPU USAGE is 90% or MORE USAGE is increasing.
 
+          
+                           IMPORTANCE OF MONITORING
 
+          - AVAILABILITY:
+                        To ensure applications and servers are running
+          - PERFORMANCE:
+                        It helps identify slow applications and services
+          - TROUBLESHOOTING:
+                        It helps identify issues quickly
+          - ALERTING:
+                    It notifies engineers when something goes wrong
+          - SECURITY:
+                     It helps detect unusual activities
+          - CAPACITY PLANNING:
+                     It helps predict future infrastructure requirements
+          - RELIABILITY:
+                      It reduces downtime and improves user experience
+          
+                 
 
 
 
