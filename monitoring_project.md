@@ -337,7 +337,7 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9091"]
 
-
+======================================================================================================================================================
 STEP 3: Create Backup Script (THIS IS CORE)
 
 vim /tmp/backup.sh
@@ -376,7 +376,7 @@ Sheild Symbol → Users → Add user
 SETTINGS → Teams → Create Team
 FOLDER -- > PERMISSION -- > ADD TEAM AND GIVE PERMISSIONS
 
-
+=========================================================================================================================
 LOKI:
 
 Loki is a log aggregation system created by Grafana Labs. 
@@ -707,6 +707,9 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
             - Use cases:
                      CPU utilization, Memory utilization, Disk usage, Network Traffic and server load, the number of processes running in the server
             - Its default port: 9100
+            - The duration of data is 30 days , but we can store for lifetime in S3
+
+                             to create multiple servers at the same time= actions==== image and template==create image
 
      ==========================================================================================================================
 
