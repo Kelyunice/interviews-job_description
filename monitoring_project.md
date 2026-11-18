@@ -709,7 +709,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
             - Its default port: 9100
             - The duration of data is 30 days , but we can store for lifetime in S3
 
-                             to create multiple servers at the same time= actions==== image and template==create image
+               to create multiple servers at the same time ===>> actions  ====>> image and template ==>> create image
 
      ==========================================================================================================================
 
