@@ -664,7 +664,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
           - TROUBLESHOOTING:
                         It helps identify issues quickly
           - ALERTING:
-                    It notifies engineers when something goes wrong
+                    It notifies engineers when something goes wrong e.g RAM is leaking
           - SECURITY:
                      It helps detect unusual activities
           - CAPACITY PLANNING:
@@ -672,11 +672,51 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
           - RELIABILITY:
                       It reduces downtime and improves user experience
           
-                 
+  ========================================================================================================================================
+
+                      TOP MONITORING TOOLS IN DEVOPS
+  Prometheus: Collects and stores monitoring metrics
+  Grafana: Displays metrics through dashboards and graphs
+  Nagios: Monitors infrastructure and checks availability
+  Zabbix: Monitors servers, networks, and applications
+  Datadog: Provides cloud infrastructure and application monitoring
+  New Relic: Monitors application performance and user experience
+  Dynatrice: Provides automated application and infrastructure abservability
+  Elastic Stack: collects, search, and analyzes logs
+  Splunk: Analyzes machine-generated data and logs
+  OpenTelemetry: collects and exports metrics, logs, and traces
+  
+=======================================================================================================================================================
+
+                                          PROMETHEUS
+
+            - Its is an open-source monitoring tool that collects , stores, and queries time-series metrics from servers and applications
+            - It scrapes metrics every 15 seconds
+            - It monitors EC2 , CPU, and memory metrics
+            - Monitors Kubernetes pod health
+            - Monitors application request rates
+            - It tracks HTTP error rates
+            - It stores data it the TSDB
+            - It default port is 9090
 
 
+                                          WHAT IS A Node EXPORTER
+            - It is a Prometheus exporter that collects linux server hardware and operating system metrics and exposes them for Prometheus to scrape.
+            - Use cases:
+                     CPU utilization, Memory utilization, Disk usage, Network Traffic and server load, the number of processes running in the server
+            - Its default port: 9100
 
+     =========================================================================================================================================
 
+                                            GRAFANA
+
+          Grafana is an open-source visualization tool used to display monitoring data through dashboards, graphs, and charts,
+          - use cases:
+                    Create CPU and memory dashboards
+                    Monitor Kubernetes clusters
+                    Visualize application performance
+                    Track server health in real time
+          - It default port is 3000
 
 
 
