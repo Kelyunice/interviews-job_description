@@ -21,7 +21,7 @@ Memory exceeds 85%	Slack sends an alert
 Website becomes unavailable	Slack sends an alert
 Container recovers	Slack sends a recovery notification
 
-   ==========================================================================================================================================
+   ========================================================================================================================
 
                      docker --version 
                      docker compose version
@@ -39,7 +39,7 @@ Container recovers	Slack sends a recovery notification
                      docker network connect monitoring-network mango-website
 
                      docker network inspect monitoring-network
-     ============================================================================================================================================================
+     ================================================================================================================================
                      
                                              WHAT IS PROMETHEUS
                                     NAME              : PROMETHEUS
@@ -672,7 +672,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
           - RELIABILITY:
                       It reduces downtime and improves user experience
           
-  ========================================================================================================================================
+  ======================================================================================================================
 
                       TOP MONITORING TOOLS IN DEVOPS
   Prometheus: Collects and stores monitoring metrics
@@ -686,7 +686,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   Splunk: Analyzes machine-generated data and logs
   OpenTelemetry: collects and exports metrics, logs, and traces
   
-=======================================================================================================================================================
+=========================================================================================================================
 
                                           PROMETHEUS
 
@@ -706,7 +706,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
                      CPU utilization, Memory utilization, Disk usage, Network Traffic and server load, the number of processes running in the server
             - Its default port: 9100
 
-     =========================================================================================================================================
+     ==========================================================================================================================
 
                                             GRAFANA
 
