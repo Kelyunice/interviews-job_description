@@ -74,11 +74,13 @@ Container recovers	Slack sends a recovery notification
                  use ubuntu-pegion script to install 
 
 
-              STEP-1: CREATE A WEB-SERVER AND INSTALL NODE-EXPORTER
+              STEP-1: CREATE A WEB-SERVER AND INSTALL NODE-EXPORTER ( install any app : sudo -i, vim ne.sh(copu from doc), sh ne.sh, apt update)
               STEP-2: CREATE A MONITORING-SERVER AND INSTALL PROMETHEUS & GRAFANA
 
                CONNECTION TO WORKER NODES
-           STEP-3: GO TO MONITORING SERVER [vim /etc/prometheus/prometheus.yml] 
+           STEP-3: GO TO MONITORING SERVER 
+                   sudo -i
+                   [vim /etc/prometheus/prometheus.yml] 
                     ADD IP OF YOUR WORKER NODES in target
 
            NOTE: AFTER MODIFIYING PROPERTY OF ANY SERVERCIE WE NEED TO RESTART.
