@@ -232,6 +232,17 @@
                                 - docker ps
           5- login to grafana on browser using public Ip and add dashboard. 
                                  - you can add all visualization and select stat on the left hand side
+  7- connect to the application vm
+           1- install node exporter
+           2- install docker 
+           3- install cadvisor
+           4- verify cAdvisor 
+                   docker ps
+                   curl -s http://localhost:8080/metrics | head
+                   systemctl is-active node_exporter
+                   docker exec prometheus promtool check config /etc/prometheus/prometheus.yml
+
+
 
 
     
