@@ -134,8 +134,42 @@
 
                 -  apt update && apt install stress -y && stress -c 10
 
+==========================================================================================================================================
+                                  MONITORING TEST 
+
+    1- Create VPC
+                                VPC configuration
+                                
+                             Setting	                                 Value
+                           Name tag	devops-monitoring-vpc
+                          IPv4 CIDR	10.20.0.0/16
+                          IPv6 CIDR	No IPv6 CIDR block
+                          Tenancy	Default
+                           Number of Availability Zones	2
+                           Number of public subnets	2
+                           Number of private subnets	0
+                           NAT gateways	None
+                             VPC endpoints	None
 
 
+                                      Customize subnet CIDR blocks, if the wizard allows:
+                                              - Public subnet 1: 10.20.1.0/24
+                                              - Public subnet 2: 10.20.2.0/24
+  
+                                                 Additional settings
+                                               - Enable DNS resolution.
+                                               - Enable DNS hostnames.
+
+                  1- Next inspect 
+                         - VPC.
+                         - Subnets.
+                         - Internet Gateway.
+                         - Route tables.
+                         - Security Groups.
+
+
+2- bb
+3- 
 
 
 
