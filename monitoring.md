@@ -212,7 +212,26 @@
                   Key pair: dev-new-key
                  Public subnet: 10.20.2.0/24
 
+ 6- connect the monitoring vm 
+          1- install docker with a script
+              check docker --version
+              check docker compose version
+              check docker ps
+          2- create a project directory: mkdir -p /opt/monitoring/{prometheus,grafana,alertmanager,blackbox}
+                                         cd /opt/monitoring
 
+          3- create the prometheus configuration file 
+                                        vim prometheus/prometheus.yml
+
+          4- create the Docker compose file 
+                                - vi compose.yaml
+                                - validate the file( docker compose config)
+                                - pull the images ( docker compose pull)
+                                - docker images
+                                - docker compose up -d
+                                - docker ps
+          5- login to grafana on browser using public Ip and add dashboard. 
+                                 - you can add all visualization and select stat on the left hand side
 
 
     
