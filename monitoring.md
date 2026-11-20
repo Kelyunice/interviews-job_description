@@ -184,6 +184,21 @@
                    - mkdir -p ~/.ssh
                    - cp /mnt/c/Users/YOUR_WINDOWS_USERNAME/Downloads/devops-monitoring-key.pem ~/.ssh/
                    - chmod 400 ~/.ssh/devops-monitoring-key.pem
+4- step 4: create sg
+      1- monitoring server
+                  - inbound role 1  SSH with source My Ip
+                  - Inbound role 2  grafana port 3000 and source My IP
+                  - inn bound role 3- Prometheus 9090 with source My IP
+
+
+                  - Outbound role A:: traffic
+                  
+       2- Application server
+                   - inbound roles 1 SSH port 22 source My IP
+                                     HTTP port 80 source anywhere
+                                     custom TCP port 8080 source monitoring server
+                                     custom TCP port 9100 source monitoring server
+                   - outbound rules all traffic
 
 
 
