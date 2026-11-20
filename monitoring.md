@@ -168,9 +168,22 @@
                          - Security Groups.
 
 
-2- bb
-3- 
+                             VPC: Our own isolated virtual network in AWS
+                             Subnet: A smaller network inside our VPC.
+                             Availability Zone: A separate physical location within the AWS region.
+                             Internet Gateway: Provides a path between our VPC and the internet.
+                             Route table: Determines where network traffic goes
 
+
+2- Step 2: Create our EC2 key pair
+
+        
+3- Step 3: Prepare your SSH key in Ubuntu WSL
+                  if you don't have a key pair already created and dowload
+
+                   - mkdir -p ~/.ssh
+                   - cp /mnt/c/Users/YOUR_WINDOWS_USERNAME/Downloads/devops-monitoring-key.pem ~/.ssh/
+                   - chmod 400 ~/.ssh/devops-monitoring-key.pem
 
 
 
