@@ -195,12 +195,22 @@
                   
        2- Application server
                    - inbound roles 1 SSH port 22 source My IP
-                                     HTTP port 80 source anywhere
+                                     HTTP port 80 source anywhere IPv4 (0.0.0.0/0)
                                      custom TCP port 8080 source monitoring server
                                      custom TCP port 9100 source monitoring server
                    - outbound rules all traffic
 
-
+ 5- Launch The EC2 intsnaces
+          1- launch the monitoring EC2 instance
+                 Instance type: t3.medium
+                 Security group: monitoring-server2
+                 Key pair: self-hosting
+                 Public subnet: 10.20.1.0/24
+          2- Launch the application EC2 instance
+                 Instance type: t3.small
+                 Security group: application-server
+                 Key pair: dev-new-key
+                 Public subnet: 10.20.2.0/24
 
 
 
