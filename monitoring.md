@@ -207,9 +207,9 @@
                  Key pair: self-hosting
                  Public subnet: 10.20.1.0/24
           2- Launch the application EC2 instance
-                 Instance type: t3.small
-                 Security group: application-server
-                 Key pair: dev-new-key
+                  Instance type: t3.small
+                  Security group: application-server
+                  Key pair: dev-new-key
                  Public subnet: 10.20.2.0/24
 
 
