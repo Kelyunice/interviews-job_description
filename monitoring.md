@@ -241,6 +241,22 @@
                    curl -s http://localhost:8080/metrics | head
                    systemctl is-active node_exporter
                    docker exec prometheus promtool check config /etc/prometheus/prometheus.yml
+                   curl -X POST http://localhost:9090/-/reload
+                   docker restart prometheus
+
+                   
+  8- Step 7: Connect Grafana to our monitoring data
+               1. Open Grafana: http://MONITORING-PUBLIC-IP:3000
+               2. Log in.
+               3. Open Dashboards → AWS Monitoring Dashboard.
+               4. Open your existing Monitoring Target Status panel.
+               5. Click Edit.
+               6. Use this PromQL query:
+               
+ 
+ 
+ 
+ 9- 
 
 
 
