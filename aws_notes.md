@@ -488,7 +488,7 @@
 
        
        FOr example 10,000 people are trying to access the database. They want to run queries. We can pull all of them and serve the traffic
-       from RDS proxy. The advantage of RDS proxy is that instaed of having individual queries we will pull all the queries togther and serve 
+       from RDS proxy. The advantage of RDS proxy is that instaed of having individual queries we will pull all the queries together and serve 
        the data as one. We can also do better scaling with the help of RDS proxy and connection will be faster and safer
          
                  AS for ENGINES UPGRADES OR MAINTENANCE WINDOW
@@ -511,7 +511,7 @@
        Interview question:
                    As a cloud architect i want you to design an architect where you can save time and cost both?
 
-            ANswer: I will make use of RDS Proxy: with the help of RDS proxy it saves 55% of cost
+            Answer: I will make use of RDS Proxy: with the help of RDS proxy it saves 55% of cost
 
          - Once fully connected, scroll down to endpoint( it is like our url) and copy the endpoint and port
          - go to your terminal and type
