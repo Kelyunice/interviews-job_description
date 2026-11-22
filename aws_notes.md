@@ -85,7 +85,7 @@
                               Content Delivery Network (CDN) = GLOBAL CONTENT ACCELERATOR its most asked in interviews
 
  1- Generally when we launch vm and create load balancers for them
- 2- If you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select           Image and templates ==> launch more like this. 
+ 2- If you want to create a copy of a server without going through the normal procedure, select the vm that you already created ==>> actions drop down select                           Image and templates ==> launch more like this. 
     You need to change the name and the availability zone, for high availability. Proceed now to create the load balancer 
     select load balancers ==>> create load balancer ==>> select Application load balancer  then create ==>> add the name ==>> select scheme (internet facing 
      bc it follows 
@@ -152,7 +152,7 @@
                    if all good check security groups on AWS and change them
                     
      B- create the CLOUDFRONT
-        cloudfront ==>> create distribution ==>> choose plan based on how fast you want the app to be available to user ===>> add distribution name ==>>under              domain, if you have your own domain name you can use it ==>> click next ==>> under origin type chose Elastic Load balancer( based on how your traffic 
+        cloudfront ==>> create distribution ==>> choose plan based on how fast you want the app to be available to user ===>> add distribution name ==>>under                        domain, if you have your own domain name you can use it ==>> click next ==>> under origin type chose Elastic Load balancer( based on how your traffic 
          is routed) ==>> browse load balancer and chose the name of the hosting zone where you created the LB, then select the name of the app ==> under 
          settings select customize origin settings. For security you can enable origin mutual TLS for high security, proceed to create the CDN. 
         
@@ -166,7 +166,7 @@
            By using rate limiting in cloufront as you create your distribution
 
    10- How to block the app for certain region
-        Go to security still while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block list ==>>
+        Go to security while inside the cloudFront, scroll down to==>> CloudFront geographic restrictions ==>> countries select Block list ==>>
    11- what is CDN?
          It is a globally distributed network that caches content closer to users
    12- what is cache HIT?
@@ -184,7 +184,7 @@
 
                                                 TTL ( TIME TO LIVE) 
 
-      1- when you create an edge location served by a CDN or geolocation, when user send their request the first time is might take 4 sec to get a response and             the next time 3 sec or less since the data is stored in cache> you need to set the TTL after which if another request comes in it will go back to the             origin server
+      1- when you create an edge location served by a CDN or geolocation, when user send their request the first time is might take 4 sec to get a response and                   the next time 3 sec or less since the data is stored in cache> you need to set the TTL after which if another request comes in it will go back to the origin server
 
       2- TTL describes how long you are going to store the temporary content (cache) . It be 24 hours or up to 1 week
 
@@ -221,7 +221,7 @@
 
                 CHARCTERISTICS OF EBS 
     - PERSISTENT STORAGE
-          It means data survives even if you reboot the server, you stop and start your server, or you migrate the server( instance replacement) data will not be           removed So it is persistent
+          It means data survives even if you reboot the server, you stop and start your server, or you migrate the server( instance replacement) data will not be                       removed So it is persistent
     - BLOCK STORAGE
          It provides raw disk blocks. examples NTFS, EXT4 (it supports EXT by default), XFS .
          You can format it just like a physical hard disk
