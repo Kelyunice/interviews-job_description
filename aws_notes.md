@@ -557,7 +557,7 @@
 
                                REAL LIFE CLOUD ARCHITECTURE DESIGN
 
-        WHEN users send their request, ===>> it goes to CLOUDFRONT ( Global CDN for fast content deliver) ==>> the request will go to ALB which will distribute           traffic. Next the traffic goes to EKS/ECS ( container orchestration-Runs microservices). Since people will be using the app from the cluster , we will            create  RDS proxy ( which manages and pools database connections). When it pools millions of request , it will send it to Primary DB( Primary DB handles          writes). This Primary DB will send the same data to multiple READ REPLICAs. (netflix doesn't use multi-az it uses global aurora replication because once          this is created it will available for all the regions.)
+        WHEN users send their request, ===>> it goes to CLOUDFRONT ( Global CDN for fast content deliver) ==>> the request will go to ALB which will distribute           traffic. Next the traffic goes to EKS/ECS ( container orchestration-Runs microservices). Since people will be using the app from the cluster , we will create  RDS proxy ( which manages and pools database connections). When it pools millions of request , it will send it to Primary DB( Primary DB handles writes). This Primary DB will send the same data to multiple READ REPLICAs. (netflix doesn't use multi-az it uses global aurora replication because once this is created it will available for all the regions.)
 
 
         In real life when you type www.netflix.com, it goes to rout53( for domain  name resolution), then it goes to
