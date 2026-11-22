@@ -54,12 +54,12 @@
            AUDITING: Questions who changes something by using tools such as ( cloudTrial, AWS config, Security Hub) to check metrics such as (who, what, when,                          from where)
    8- Data captured by CloudTrail on AWS can be stored either in s3 or CloudWatch logs        
    9- CloudTrial events and Pricing
-           Management Events are free. Events such as e. creating, stop , start deleting resources ( Control AWS resourcs, ENable by default, cheap, create EC@,
+           Management Events are free. Events such as e. creating, stop , start deleting resources ( Control AWS resourcs, Enable by default, cheap, create EC2,
                                        Create IAM USer)
            Data Reource are not free. Events such as upload, download , copying data ( ACCESS resource data, Disabled, Expensive, Read file in s3, GetObject)
 
   10- To track the records of a particular resource e.g ECS you need to record the trial although by default AWS records everything.
-          TO create the Trial: CLoudTrial==>> Trials ==>> Add Trail Name ==>. Storage Location ==> Disable Log file SSE-KMS encryption ==>. Enable additional                                     setting
+          TO create the Trial: CLoudTrial==>> Trials ==>> Add Trail Name ==> Storage Location ==> Disable Log file SSE-KMS encryption ==>. Enable additional                                     setting
                                click on next ==> chose and management events or add data events ==>> select all the resource type (EC2 , S3) ==>> next
                               under aggregation templates==>> select ALL ==>> Next and create the trial
  11- In AWS by default every resource is being monitored, but if you want to monitor your resource you are going  to create a dashboard. 
