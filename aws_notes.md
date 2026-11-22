@@ -65,7 +65,7 @@
  11- In AWS by default every resource is being monitored, but if you want to monitor your resource you are going  to create a dashboard. 
       99% of the time we use PROMETHEUSE for monitoring but it can also be done using AWS cloudWatch
       To create a dashboard
-          cloudwatch ==>> dashboards ==>> create dashboards ==.. add the name you want ==>> chose what you want to monitor ( metrics, logs, Alarms)==>> then                                widget type
+          cloudwatch ==>> dashboards ==>> create dashboards ==>> add the name you want ==>> chose what you want to monitor ( metrics, logs, Alarms)==>> then                                widget type
                         metrics are in line widget form ==>> next ==>> which resource ==>> copy the server private Ip and paste under Per-instance Metrics ==>>
                          chose what you want to monitor e.g CPU Utilization by checking options==>> create ==>> save dashboard
 
