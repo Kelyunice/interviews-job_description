@@ -166,13 +166,14 @@ DevSecOps adds security throughout that process rather than waiting until the ap
 
      3. The difference between all six
             This is particularly important for technical interviews.
-            Concept	Main purpose	What it examines
-            SAST	Find coding vulnerabilities	Source code
-            OWASP	Provide application security guidance	Application security risks and requirements
-            SCA	Find vulnerable dependencies	Third-party libraries
-            DAST	Find vulnerabilities in running applications	Running application
-            CIS	Provide secure configuration benchmarks	Infrastructure and systems
-            NIST	Provide cybersecurity frameworks	Organisation-wide security and risk management
+            
+            Concept	             Main purpose	                                           What it examines
+            SAST	              Find coding vulnerabilities	                               Source code
+            OWASP	              Provide application security guidance	                     Application security risks and requirements
+            SCA	               Find vulnerable dependencies	                               Third-party libraries
+            DAST	             Find vulnerabilities in running applications	                Running application
+            CIS	               Provide secure configuration benchmarks	                   Infrastructure and systems
+            NIST	             Provide cybersecurity frameworks	Organisation-wide          security and risk management
 
             Notice something important:
 
