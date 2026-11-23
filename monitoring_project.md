@@ -752,8 +752,11 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
 ===========================================================================================================
 
                        LOGGING 
-
-
+  - usually all logs are stored in (/var/logs) These events and
+  - on your web vm sudo -i
+                cd /var/log/nginx/
+                tail -f /var/log/nginx/access.log
+  - to collect logs we don't need to go to each server to collect the logs. We will install loki and Promtail to do that
 
 
 
