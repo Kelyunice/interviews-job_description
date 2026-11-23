@@ -758,9 +758,15 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
                 tail -f /var/log/nginx/access.log
   - to collect logs we don't need to go to each server to collect the logs. We will install loki and Promtail to do that
 
+     LOKI is a storage and search engine for applications, containers, and Kubernetes logs.
+    PROMTAIL collects and forward that read logs, adds labels (pod, namespace, app) and sends to LOKI
 
+      Logs (application, container, and kubernetes logs)  ==>> PROMTAIl ==>> LOKI ==>> Grafana
 
+      FOR applications running in a kubernetes cluster
 
-
-
+   k8s cluster       =====>>     PROmtail         ====>>>>>   LOKI                  ===>>   GRAFANA               =====>>>   DevOps Engineer
+  (app pod crashes)              log collector                log storage                   log Viewer                        Root Cause
+                           collects logs from k8s pods       stores and indexes         Helps engineers search            Identifies the root 
+                                                             logs using labels            and visualize logs                cause of the app failur
    
