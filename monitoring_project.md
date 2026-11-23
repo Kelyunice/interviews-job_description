@@ -769,4 +769,32 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   (app pod crashes)              log collector                log storage                   log Viewer                        Root Cause
                            collects logs from k8s pods       stores and indexes         Helps engineers search            Identifies the root 
                                                              logs using labels            and visualize logs                cause of the app failur
+
+
+   - install docker of the web vm ==>. apt update && apt install docker.io -y
+   - cd in /var/log/nginx  then download loki and grafana
+              - wget https://raw.githubusercontent.com/grafana/loki/v2.8.0/cmd/loki/loki-local-config.yaml -O loki-config.yaml
+                docker run -itd --name loki -v /root/:/mnt/config -p 3100:3100 grafana/loki:2.8.0
+                 publicip:3100/ready
+
+              - wget https://raw.githubusercontent.com/grafana/loki/v2.8.0/clients/cmd/promtail/promtail-docker-config.yaml -O promtail-config.yaml
+                docker run -itd --name promtail -v $(pwd):/mnt/config -v /var/log:/var/log --link loki grafana/promtail:2.8.0 --config.file=/mnt/config/promtail-config.yaml
+
+              - if promtail not found use this
+                      wget -O promtail-config.yaml https://raw.githubusercontent.com/grafana/loki/v2.8.0/clients/cmd/promtail/promtail-docker-config.yaml
+
+               - if promtail not working (docker rm -f promtail)
+               - docker run -d \
+  --name promtail \
+  --restart unless-stopped \
+  --link loki \
+  -v "$(pwd)/promtail-config.yaml:/etc/promtail/config.yml:ro" \
+  -v /var/log/nginx:/var/log/nginx:ro \
+  -v /tmp:/tmp \
+  grafana/promtail:2.8.0 \
+  -config.file=/etc/promtail/config.yml
+
+
+
+            
    
