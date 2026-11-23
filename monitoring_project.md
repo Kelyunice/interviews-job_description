@@ -793,7 +793,12 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   -v /tmp:/tmp \
   grafana/promtail:2.8.0 \
   -config.file=/etc/promtail/config.yml
+=============================================================================================================================
 
+- in every org several people monitorr the cluster
+- if we have a new team member who is a junior engineer , they cannot have full access to the monitoring boards
+                              - still grafana we have a shield simple on the left side ==>> setting ==> 
+- 
 
 
             
