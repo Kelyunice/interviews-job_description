@@ -651,6 +651,17 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
 
                                                NOTES
 
+
+                                               WHEN WE TALK OF OBSERVABILITY WE"RE TALKING ABOUT
+                                    1- Monitoring
+                                    2- Alerting
+                                    3- logging
+                                    4- Telemetry
+                                    5- Tracing
+                                    6- Spaning
+
+                                    
+
           - What is monitoring:
                              It is the continous process of checking the health, performance, and the availabiltiy of servers, applications,
                              networks, and infrastructure.
@@ -729,7 +740,9 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
 
    - first create AMIs
    - create IAM role
-   - 
+   - go back to the monitoring vm and ==>> actions ==>>security==>> Modify IAM
+   - Go back to AMi and launch more vm ==>. use existing security group which you previously created
+   - add the service discovery configuration in the vim /etc/prometheus/prometheus.yml
 
 
 
