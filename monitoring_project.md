@@ -749,7 +749,9 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
     DURING MAINTENANCE AND PATCHING
     - we implement a strategy called SILENCERS in Alertmanager to avoid having unnecessary alerts
 
+===========================================================================================================
 
+                       LOGGING 
 
 
 
