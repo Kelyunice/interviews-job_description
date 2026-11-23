@@ -723,7 +723,13 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
                     Track server health in real time
           - It default port is 3000
 
+==================================================================================================================
 
+                       FOR SERVICE DISCOVER
+
+   - first create AMIs
+   - create IAM role
+   - 
 
 
 
