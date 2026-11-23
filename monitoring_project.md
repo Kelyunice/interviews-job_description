@@ -744,6 +744,11 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
    - Go back to AMi and launch more vm ==>. use existing security group which you previously created
    - add the service discovery configuration in the vim /etc/prometheus/prometheus.yml
 
+===============================================================================================================
+
+    DURING MAINTENANCE AND PATCHING
+    - we implement a strategy called SILENCERS in Alertmanager to avoid having unnecessary alerts
+
 
 
 
