@@ -722,6 +722,11 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
             - INDEX: it helps to map metric names and labels to their time-series data
 
 
+                      THANOS ============================= WHY DO WE NEED IT?
+
+                      Thanos helps extend Prometheus to store metrics for months/years, query them globally, and keep monitoring highly available
+                      It collects metrics from prometheus and gives to backend cloud provides  (AWS S3, GCS, AZURE, Openstack swift) it can be intergrated to them.
+                      it is very important beacuse even if prometheus crashed we can have data on the backend
 
                                 WHAT IS A Node EXPORTER
                                 
