@@ -712,6 +712,24 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
             - It stores data it the TSDB
             - It default port is 9090
 
+                     HOW IS DATA ORGANIZE IN THE TSDB
+            - HEAD BLOCK : the lates data stored in memory> data here is mutable ( can be modifies)
+            - WAL: also known as write-ahead log) if anybody deletes data or there's a crash it still keeps Records of incoming samples on disk so premetheus can recover
+            - PERSISTED BLOCKS: after some time the data comes to this block so that new data can have space in the head block. Data here is immutable 
+            - CHUNKS: data in Prometheus is actually stored in chunks which are compressed collections of time-series samples inside TSDB blocks
+            - INDEX: it helps to map metric names and labels to their time-series data
+
+
+
+
+
+
+
+
+
+
+            
+
 
                                           WHAT IS A Node EXPORTER
             - It is a Prometheus exporter that collects linux server hardware and operating system metrics and exposes them for Prometheus to scrape.
