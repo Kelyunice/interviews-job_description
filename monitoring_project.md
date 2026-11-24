@@ -797,8 +797,35 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
 
 - in every org several people monitorr the cluster
 - if we have a new team member who is a junior engineer , they cannot have full access to the monitoring boards
-                              - still grafana we have a shield simple on the left side ==>> setting ==> 
-- 
+                              - still grafana we have a shield sample on the left side ==>> setting ==> 
+- you can also build your own custom dashboards on grafana
+                              - dashboard on the left==>. add new dashboard ++>. check at the query and input the metric you want(node disk infos) chose stat on right
+                                node-info
+                                node_memory_active Bytes
+                                node_network_info
+-   if you don't want a junior team member to have access to a specific dashboards not all our dashboards , check on the top while in dashboard mode you'll
+                               find dashboard setting on the left you'll find permissions ==> add permission ==>. user 
+-   If any hierachy in org want to see the dashboard without logging in , you can open the dashboard and shre the link from the top or share as a snapshot 
+                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             
