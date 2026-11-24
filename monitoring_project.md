@@ -39,7 +39,7 @@ Container recovers	Slack sends a recovery notification
                      docker network connect monitoring-network mango-website
 
                      docker network inspect monitoring-network
-     ================================================================================================================================
+     ============================================================================================================
                      
                                              WHAT IS PROMETHEUS
                                     NAME              : PROMETHEUS
@@ -52,7 +52,7 @@ Container recovers	Slack sends a recovery notification
                                    PORT              : 9090
                                 TO SHOW      : PROMQL -- > PROMETHEUS QUERY LANGUAGE
 
-=======================================================================================================================================
+=================================================================================================================
 
                                      WHAT IS GRAFANA
                                TOOL            : GRAFANA
@@ -62,7 +62,7 @@ Container recovers	Slack sends a recovery notification
                                INTEGRATE   : TO ALEART MANAGER LIKE EMAIL, MOBILE, SLACK --
                                CREDS           : Username:admin & Password: admin
 
-========================================================================================================================================
+====================================================================================================
                               WHAT IS NODE-EXPORTER
                           TOOL          : NODE EXPORTER
                           TYPE           : ITS A DATA SOURCE
@@ -98,7 +98,7 @@ Container recovers	Slack sends a recovery notification
             to show disk information		: node_disk_info
 
 
-=======================================================================================================================
+==================================================================================================
                  connect to grafana dashboard 
            STEP-1: LOGIN TO GRAFANA (username: admin password: admin)
            STEP-2: ADD DATA SOURCE (WHERE DATA IS COMMING FROM)
@@ -117,7 +117,7 @@ Container recovers	Slack sends a recovery notification
            11074
            8919
 
-==============================================================================================
+========================================================================================
 
 
 SD:
@@ -318,7 +318,7 @@ systemctl restart prometheus.service
 
 SILENCES: IF YOU WANT TO MUTE ANY ALERTS USE SILENCES
 GO TO UI AND CREATE SILENCES FOR PATCHING AND GIVE EXPIRY TIME
-=========================================================================================================================
+========================================================================================
 
 PUSH GATEWAY:
 
@@ -337,7 +337,7 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9091"]
 
-======================================================================================================================================================
+=============================================================================
 STEP 3: Create Backup Script (THIS IS CORE)
 
 vim /tmp/backup.sh
@@ -376,7 +376,7 @@ Sheild Symbol → Users → Add user
 SETTINGS → Teams → Create Team
 FOLDER -- > PERMISSION -- > ADD TEAM AND GIVE PERMISSIONS
 
-=========================================================================================================================
+========================================================================================
 LOKI:
 
 Loki is a log aggregation system created by Grafana Labs. 
@@ -647,12 +647,11 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   --set serviceAccount.create=true \
   --set replicationController.replicaCount=1
 
-==========================================================================================================================================================
+===============================================================================
 
                                                NOTES
 
-
-                                               WHEN WE TALK OF OBSERVABILITY WE"RE TALKING ABOUT
+                 WHEN WE TALK OF OBSERVABILITY WE"RE TALKING ABOUT
                                     1- Monitoring
                                     2- Alerting
                                     3- logging
@@ -685,7 +684,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
           - RELIABILITY:
                       It reduces downtime and improves user experience
           
-  ======================================================================================================================
+  =====================================================================================
 
                       TOP MONITORING TOOLS IN DEVOPS
   Prometheus: Collects and stores monitoring metrics
@@ -699,7 +698,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   Splunk: Analyzes machine-generated data and logs
   OpenTelemetry: collects and exports metrics, logs, and traces
   
-=========================================================================================================================
+======================================================================================
 
                                           PROMETHEUS
 
@@ -738,7 +737,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
 
                to create multiple servers at the same time ===>> actions  ====>> image and template ==>> create image
 
-     ==========================================================================================================================
+     ===============================================================================================
 
                                             GRAFANA
 
@@ -750,7 +749,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
                     Track server health in real time
           - It default port is 3000
 
-==================================================================================================================
+=====================================================================================================
 
                        FOR SERVICE DISCOVER
 
@@ -809,7 +808,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   -v /tmp:/tmp \
   grafana/promtail:2.8.0 \
   -config.file=/etc/promtail/config.yml
-=============================================================================================================================
+=====================================================================================================
 
 - in every org several people monitorr the cluster
 - if we have a new team member who is a junior engineer , they cannot have full access to the monitoring boards
@@ -823,7 +822,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
                                find dashboard setting on the left you'll find permissions ==> add permission ==>. user 
 -   If any hierachy in org want to see the dashboard without logging in , you can open the dashboard and shre the link from the top or share as a snapshot 
                                
-=========================================================================================================================
+===================================================================================================
 
                       PUSHGATEWAY
 
