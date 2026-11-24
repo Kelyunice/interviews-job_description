@@ -823,10 +823,25 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
                                find dashboard setting on the left you'll find permissions ==> add permission ==>. user 
 -   If any hierachy in org want to see the dashboard without logging in , you can open the dashboard and shre the link from the top or share as a snapshot 
                                
+=========================================================================================================================
+
+                      PUSHGATEWAY
+
+      it allows short-lived or batch jobs to push their metrics to an endpoint, which Prometheus can scrape later. It is installed in prometheus vm only
+      once you have configured pushgateway in prometheus.yml file create a backup script
 
 
-
-
+        COMPONENTS OF PROMETHEUS ARCHITECTURE
+        1- Retrieval:
+                it charge of collecting data from job/exporters(prometheus targets)
+                it also ensure short-lived jobs push metrics through pushgateway to prometheus
+                it allows node that are being created randomly to send metrics through service discovery
+        2- TSDB
+               All metrics collect3d in retrieval needs to stored 
+        3-HTTP
+               it allows visualization by quering dtat using PromQL for Prometheus UI, grafana,API clients
+               it can we cannot visualize our boards we can check HTTP server 
+               it also allows to send alerts through alert manager to (pagerduty, Email,etc or slack)
 
 
 
